@@ -24,6 +24,10 @@
       return str.slice(str.length - end.length) === end;
     };
 
+    Utils.concat = function(arr1, arr2) {
+      return arr1.push.apply(arr1, arr2);
+    };
+
     return Utils;
 
   })();

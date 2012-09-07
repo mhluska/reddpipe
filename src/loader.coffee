@@ -2,33 +2,80 @@ class window.Loader
 
     constructor: ->
 
+        @_urls = []
+        @_urlsIndex = 0
+
         @_count = 0
-        @_before = null
         @_after = null
+        @_resultsPerPage = 25
 
-    loadNext: (callback) ->
+    # Loads an initial group of urls.
+    setup: (callback) ->
+        
+        @_addUrls('next').done =>
+            
+            @_urlsIndex = Math.floor(@_urls.length / 2)
+            console.log "urlsIndex is #{@_urlsIndex}"
+            callback @_urls[@_urlsIndex]
 
-        @_count += 25
+    nextUrl: ->
+        
+        @_getUrl 'next'
 
-        params = "count=#{@_count}"
-        params += "&after=#{@_after}" if @_before
+    prevUrl: ->
 
-        @loadUrls params, callback
+        @_getUrl 'prev'
 
-    loadPrev: (callback) ->
+    _getUrl: (direction) ->
 
-        @_count -= 25
+        unless @_urls.length
+            throw new Error 'No initial urls. Did you call loader.setup?'
 
-        params = "count=#{@_count}"
-        params += "&before=#{@_before}" if @_before
+        @_addUrls(direction) if @_indexNearBoundaries()
 
-        @loadUrls params, callback
+        if @_urlsIndex > 0 and @_urlsIndex < @_urls.length
 
-    loadUrls: (params, callback) ->
+            @_urlsIndex += if direction is 'next' then 1 else -1
+
+        @_urls[@_urlsIndex]
+
+    _addUrls: (direction) ->
+
+        @_loadUrls (newUrls) =>
+
+            if direction is 'next'
+
+                Utils.concat @_urls, newUrls
+
+            else if direction is 'prev'
+
+                @_urls = newUrls.concat @_urls
+                @_urlsIndex += newUrls.length
+
+            console.log 'urls is now...'
+            console.log @_urls
+            console.log ''
+
+    _indexNearBoundaries: ->
+
+        length = @_urls.length
+        lowerIndex = 5
+        upperIndex = length - lowerIndex
+
+        @_urlsIndex <= lowerIndex or @_urlsIndex >= upperIndex
+
+    _loadUrls: (callback) ->
+
+        @_count += @_resultsPerPage
+
+        url = 'http://www.reddit.com/r/aww'
+
+        params = "limit=#{@_resultsPerPage}&count=#{@_count}"
+        params += "&after=#{@_after}" if @_after
 
         $.ajax
             type: 'GET'
-            url: "http://www.reddit.com/r/realasians.json?#{params}"
+            url: "#{url}.json?#{params}"
             dataType: 'jsonp'
             jsonp: 'jsonp'
 
@@ -40,5 +87,5 @@ class window.Loader
                 urls = (link.data.url for link in data.data.children)
                 valid = (url for url in urls when Utils.isImageUrl url)
 
-                callback valid
+                callback? valid
 

@@ -1,19 +1,18 @@
 loader = new Loader
-urls = []
-index = 5
 
-loader.loadNext (loaded) ->
+loader.setup (url) ->
 
-    urls = loaded
-    $('#goldie').append "<img src='#{urls[index]}' />"
-    console.log urls
+    $('#goldie').append "<img src='#{url}' />"
 
-$(window).keydown (event) ->
+    $(window).keydown (event) ->
 
-    if event.which in [37, 39]
+        if event.which in [37, 39]
 
-        switch event.which
-            when 37 then index -= 1
-            when 39 then index += 1
+            url = switch event.which
+                when 37 then loader.prevUrl()
+                when 39 then loader.nextUrl()
 
-        $('#goldie').html("<img src='#{urls[index]}' />") if urls[index]
+            console.log "url is #{url}"
+
+            $('#goldie').html("<img src='#{url}' />")
+

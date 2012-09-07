@@ -4,40 +4,82 @@
   window.Loader = (function() {
 
     function Loader() {
+      this._urls = [];
+      this._urlsIndex = 0;
       this._count = 0;
-      this._before = null;
       this._after = null;
+      this._resultsPerPage = 25;
     }
 
-    Loader.prototype.loadNext = function(callback) {
-      var params;
-      this._count += 25;
-      params = "count=" + this._count;
-      if (this._before) {
+    Loader.prototype.setup = function(callback) {
+      var _this = this;
+      return this._addUrls('next').done(function() {
+        _this._urlsIndex = Math.floor(_this._urls.length / 2);
+        console.log("urlsIndex is " + _this._urlsIndex);
+        return callback(_this._urls[_this._urlsIndex]);
+      });
+    };
+
+    Loader.prototype.nextUrl = function() {
+      return this._getUrl('next');
+    };
+
+    Loader.prototype.prevUrl = function() {
+      return this._getUrl('prev');
+    };
+
+    Loader.prototype._getUrl = function(direction) {
+      if (!this._urls.length) {
+        throw new Error('No initial urls. Did you call loader.setup?');
+      }
+      if (this._indexNearBoundaries()) {
+        this._addUrls(direction);
+      }
+      if (this._urlsIndex > 0 && this._urlsIndex < this._urls.length) {
+        this._urlsIndex += direction === 'next' ? 1 : -1;
+      }
+      return this._urls[this._urlsIndex];
+    };
+
+    Loader.prototype._addUrls = function(direction) {
+      var _this = this;
+      return this._loadUrls(function(newUrls) {
+        if (direction === 'next') {
+          Utils.concat(_this._urls, newUrls);
+        } else if (direction === 'prev') {
+          _this._urls = newUrls.concat(_this._urls);
+          _this._urlsIndex += newUrls.length;
+        }
+        console.log('urls is now...');
+        console.log(_this._urls);
+        return console.log('');
+      });
+    };
+
+    Loader.prototype._indexNearBoundaries = function() {
+      var length, lowerIndex, upperIndex;
+      length = this._urls.length;
+      lowerIndex = 5;
+      upperIndex = length - lowerIndex;
+      return this._urlsIndex <= lowerIndex || this._urlsIndex >= upperIndex;
+    };
+
+    Loader.prototype._loadUrls = function(callback) {
+      var params, url,
+        _this = this;
+      this._count += this._resultsPerPage;
+      url = 'http://www.reddit.com/r/aww';
+      params = "limit=" + this._resultsPerPage + "&count=" + this._count;
+      if (this._after) {
         params += "&after=" + this._after;
       }
-      return this.loadUrls(params, callback);
-    };
-
-    Loader.prototype.loadPrev = function(callback) {
-      var params;
-      this._count -= 25;
-      params = "count=" + this._count;
-      if (this._before) {
-        params += "&before=" + this._before;
-      }
-      return this.loadUrls(params, callback);
-    };
-
-    Loader.prototype.loadUrls = function(params, callback) {
-      var _this = this;
       return $.ajax({
         type: 'GET',
-        url: "http://www.reddit.com/r/realasians.json?" + params,
+        url: "" + url + ".json?" + params,
         dataType: 'jsonp',
         jsonp: 'jsonp',
         success: function(data) {
-          var link, url, urls, valid;
+          var link, urls, valid;
           _this._before = data.data.before;
           _this._after = data.data.after;
           urls = (function() {
@@ -61,7 +103,7 @@
             }
             return _results;
           })();
-          return callback(valid);
+          return typeof callback === "function" ? callback(valid) : void 0;
         }
       });
     };
