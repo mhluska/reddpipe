@@ -1,5 +1,5 @@
-feed = new Feed document.getElementById 'feed'
 loader = new Loader
+feed = new Feed loader, document.getElementById 'feed'
 
 loader.loadUrls (urls) ->
 
