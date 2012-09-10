@@ -1,28 +1,48 @@
 class window.Feed
 
-    constructor: (@_loader, container) ->
+    constructor: (container) ->
 
+        @_loader = new Loader
         @_container = $(container)
         @_containerWidth = 600
         @_loadThreshold = 1000
-        @_loading = false
 
         @_container.attr 'id', 'feed'
         @_container.width @_containerWidth
 
         @_setupInfiniteScroll()
 
-    addImage: (url) ->
+    loadUrls: ->
 
-        image = $("<img src='#{url}' />")
-        image.load =>
+        @_loading = true
+        @_loader.loadUrls (urls) =>
+
+            @_addImages urls
+            @_loading = false
+
+    _addImages: (urls) ->
+
+        @_container.append @_loadingNode
+        @_addImage url for url in urls
+
+    _addImage: (url) ->
+
+        image = new Image()
+        $(image).load =>
+
+            if image.width < @_containerWidth
+                console.log "removing #{url} #{image.width}"
 
             return if image.width < @_containerWidth
 
-            image.width @_containerWidth
-            @_container.append image
+            image.width = @_containerWidth
+            $(image).insertBefore @_loadingNode
+
+        image.src = url
 
     _setupInfiniteScroll: ->
+
+        @_loadingNode = $('<div class="loading">loading</div>')
 
         $(document).scroll =>
 
@@ -31,9 +51,4 @@ class window.Feed
             spaceLeft = $(document).height() - $(document).scrollTop()
             return if spaceLeft > @_loadThreshold
 
-            @_loading = true
-            @_loader.loadUrls (urls) =>
-
-                @addImage url for url in urls
-                @_loading = false
-
+            @loadUrls()
