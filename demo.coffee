@@ -1,9 +1,13 @@
+field = $('.subreddit-field')
+
 feed = new Feed document.getElementById 'feed'
+feed.error ->
+
+    field.addClass 'error'
 
 $('.get-pictures').click ->
 
-    feed.setSubreddit $('.subreddit-field').val()
-    feed.clear()
-    feed.loadUrls()
+    field.removeClass 'error'
+    feed.setSubreddit field.val()
 
 feed.loadUrls()

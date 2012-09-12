@@ -17,6 +17,7 @@ class window.Loader
         params = "limit=#{@_resultsPerPage}&count=#{@_count}"
         params += "&after=#{@_after}" if @_after
 
+        # TODO: Fix error from jQuery when data type doesn't come back as json.
         $.ajax
             type: 'GET'
             url: "#{url}.json?#{params}"

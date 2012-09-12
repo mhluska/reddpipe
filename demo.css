@@ -30,6 +30,12 @@ input {
     padding: 10px;
 }
 
+input.error {
+
+    border-color: red;
+}
+
+
 #feed {
 
     margin-top: 40px;

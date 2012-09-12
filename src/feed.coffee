@@ -7,6 +7,9 @@ class window.Feed
         @_containerWidth = 500
         @_loadThreshold = 1000
 
+        # A callback to execute if the feed encounters an error.
+        @_error = null
+
         @_container.attr 'id', 'feed'
         @_container.width @_containerWidth
 
@@ -14,7 +17,16 @@ class window.Feed
 
     setSubreddit: (subreddit) ->
 
+        # Alphanumeric characters only.
+        return @_error?() unless /^[a-z0-9]+$/i.test subreddit
+
         @_loader = new Loader subreddit
+        @clear()
+        @loadUrls()
+
+    error: (callback) ->
+        
+        @_error = callback
 
     clear: ->
 
@@ -23,9 +35,17 @@ class window.Feed
     loadUrls: ->
 
         @_loading = true
-        @_loader.loadUrls (urls) =>
+
+        deferred = @_loader.loadUrls (urls) =>
 
             @_addImages urls
+
+        deferred.fail =>
+            
+            @_error?()
+
+        deferred.always =>
+
             @_loading = false
 
     _addImages: (urls) ->
