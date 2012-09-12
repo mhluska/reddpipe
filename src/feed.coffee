@@ -4,13 +4,21 @@ class window.Feed
 
         @_loader = new Loader
         @_container = $(container)
-        @_containerWidth = 600
+        @_containerWidth = 500
         @_loadThreshold = 1000
 
         @_container.attr 'id', 'feed'
         @_container.width @_containerWidth
 
         @_setupInfiniteScroll()
+
+    setSubreddit: (subreddit) ->
+
+        @_loader = new Loader subreddit
+
+    clear: ->
+
+        @_container.html ''
 
     loadUrls: ->
 
@@ -43,6 +51,7 @@ class window.Feed
     _setupInfiniteScroll: ->
 
         @_loadingNode = $('<div class="loading">loading</div>')
+        @_container.append @_loadingNode
 
         $(document).scroll =>
 

@@ -1,16 +1,18 @@
 class window.Loader
 
-    constructor: ->
+    constructor: (@subreddit = 'aww') ->
 
         @_count = 0
         @_after = null
         @_resultsPerPage = 25
 
+    setup: (subreddit) ->
+
     loadUrls: (callback) ->
 
         @_count += @_resultsPerPage
 
-        url = 'http://www.reddit.com/r/aww'
+        url = "http://www.reddit.com/r/#{@subreddit}"
 
         params = "limit=#{@_resultsPerPage}&count=#{@_count}"
         params += "&after=#{@_after}" if @_after
