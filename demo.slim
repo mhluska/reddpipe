@@ -10,9 +10,13 @@ html
 
     body
         h1 Reddit Pipeline
-        label for="subreddit" (Subreddit)
-        br
-        input class="subreddit-field" type="text" value="aww"
-        input class="get-pictures" type="button" value="Go!"
+
+        form class="get-pictures" action=""
+          label for="subreddit" (Enter a subreddit)
+          br
+          input class="subreddit-field" type="text" value="aww"
+          input type="submit" value="Go!"
+
         #feed
+
         script src="demo.js"

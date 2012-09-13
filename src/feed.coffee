@@ -2,6 +2,8 @@ class window.Feed
 
     constructor: (container, @subreddit = 'aww') ->
 
+        @_resetPagination()
+
         @_container = $(container)
         @_containerWidth = 500
         @_loadThreshold = 1000
@@ -14,12 +16,12 @@ class window.Feed
 
         @_setupInfiniteScroll()
 
-    setSubreddit: (subreddit) ->
+    setSubreddit: (@subreddit) ->
 
         # Alphanumeric characters only.
         return @_error?() unless /^[a-z0-9]+$/i.test subreddit
 
-        @_reset()
+        @_resetPagination()
         @_container.html ''
         @loadUrls()
 
@@ -65,8 +67,14 @@ class window.Feed
 
                 console.log 'completing'
                 console.log xhr.status
-
                 @_loading = false
+
+    _resetPagination: ->
+
+        # Used to get more pages from the API call.
+        @_count = 0
+        @_after = null
+        @_resultsPerPage = 25
 
     _addImages: (urls) ->
 

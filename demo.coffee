@@ -5,9 +5,11 @@ feed.error ->
 
     field.addClass 'error'
 
-$('.get-pictures').click ->
+$('.get-pictures').submit (event) ->
+
+    event.preventDefault()
 
     field.removeClass 'error'
     feed.setSubreddit field.val()
 
-feed.loadUrls()
+.trigger 'submit'
