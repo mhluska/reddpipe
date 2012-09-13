@@ -1,8 +1,7 @@
 class window.Feed
 
-    constructor: (container) ->
+    constructor: (container, @subreddit = 'aww') ->
 
-        @_loader = new Loader
         @_container = $(container)
         @_containerWidth = 500
         @_loadThreshold = 1000
@@ -20,33 +19,54 @@ class window.Feed
         # Alphanumeric characters only.
         return @_error?() unless /^[a-z0-9]+$/i.test subreddit
 
-        @_loader = new Loader subreddit
-        @clear()
+        @_reset()
+        @_container.html ''
         @loadUrls()
 
     error: (callback) ->
         
         @_error = callback
 
-    clear: ->
-
-        @_container.html ''
-
     loadUrls: ->
 
+        return if @_loading
+
         @_loading = true
+        @_count += @_resultsPerPage
 
-        deferred = @_loader.loadUrls (urls) =>
+        url = "http://www.reddit.com/r/#{@subreddit}"
 
-            @_addImages urls
+        params = "limit=#{@_resultsPerPage}&count=#{@_count}"
+        params += "&after=#{@_after}" if @_after
 
-        deferred.fail =>
-            
-            @_error?()
+        # TODO: Fix error from jQuery when data type doesn't come back as json.
+        $.ajax
+            type: 'GET'
+            url: "#{url}.json?#{params}"
+            dataType: 'jsonp'
+            jsonp: 'jsonp'
+            timeout: 4000
 
-        deferred.always =>
+            success: (data) =>
 
-            @_loading = false
+                @_after = data.data.after
+
+                urls = (link.data.url for link in data.data.children)
+                valid = (url for url in urls when Utils.isImageUrl url)
+
+                @_addImages valid
+
+            error: =>
+
+                console.log 'failing'
+                @_error?()
+
+            complete: (xhr) =>
+
+                console.log 'completing'
+                console.log xhr.status
+
+                @_loading = false
 
     _addImages: (urls) ->
 
