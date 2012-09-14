@@ -22,14 +22,17 @@ class window.Feed
         return @_error?() unless /^[a-z0-9]+$/i.test subreddit
 
         @_resetPagination()
-        @_container.html ''
-        @loadUrls()
+        @_container
+            .html('')
+            .append @_loadingNode
+
+        @_loadUrls()
 
     error: (callback) ->
         
         @_error = callback
 
-    loadUrls: ->
+    _loadUrls: ->
 
         return if @_loading
 
@@ -51,12 +54,19 @@ class window.Feed
 
             success: (data) =>
 
+                console.log data
+
                 @_after = data.data.after
 
-                urls = (link.data.url for link in data.data.children)
-                valid = (url for url in urls when Utils.isImageUrl url)
+                for link in data.data.children
 
-                @_addImages valid
+                    data = link.data
+
+                    continue unless Utils.isImageUrl data.url
+
+                    @_addImage
+                        title: data.title
+                        url: data.url
 
             error: =>
 
@@ -76,25 +86,21 @@ class window.Feed
         @_after = null
         @_resultsPerPage = 25
 
-    _addImages: (urls) ->
+    _addImage: (data) ->
 
-        @_container.append @_loadingNode
-        @_addImage url for url in urls
-
-    _addImage: (url) ->
+        template = $('#tmpl-image-wrap').text()
+        node = $(Mustache.render template, data)
 
         image = new Image()
         $(image).load =>
 
-            if image.width < @_containerWidth
-                console.log "removing #{url} #{image.width}"
-
             return if image.width < @_containerWidth
 
             image.width = @_containerWidth
-            $(image).insertBefore @_loadingNode
+            node.prepend image
+            node.insertBefore @_loadingNode
 
-        image.src = url
+        image.src = data.url
 
     _setupInfiniteScroll: ->
 
@@ -108,4 +114,4 @@ class window.Feed
             spaceLeft = $(document).height() - $(document).scrollTop()
             return if spaceLeft > @_loadThreshold
 
-            @loadUrls()
+            @_loadUrls()

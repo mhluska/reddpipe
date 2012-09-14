@@ -5,16 +5,21 @@ body, html {
 
 body {
 
-    padding: 20px;
+    padding: 40px;
     color: #333;
     font-family: 'Open Sans', sans-serif;
+}
+
+h1, h2 {
+
+    margin: 0;
+    padding: 0;
 }
 
 h1 {
 
     font-size: 1.5em;
-    margin: 0 0 20px 0;
-    padding: 0;
+    margin-bottom: 20px;
 }
 
 label {
@@ -39,6 +44,18 @@ input.error {
 #feed {
 
     margin-top: 40px;
+}
+
+#feed .image-wrap {
+
+    padding-bottom: 40px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 40px;
+}
+
+#feed .title {
+
+    font-size: 1.2em;
 }
 
 #feed img {
