@@ -65,6 +65,7 @@ class window.Feed
                     continue unless Utils.isImageUrl data.url
 
                     @_addImage
+                        link: "http://reddit.com/#{data.permalink}"
                         title: data.title
                         url: data.url
 
@@ -75,8 +76,6 @@ class window.Feed
 
             complete: (xhr) =>
 
-                console.log 'completing'
-                console.log xhr.status
                 @_loading = false
 
     _resetPagination: ->

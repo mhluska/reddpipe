@@ -1,3 +1,5 @@
+/* TODO: Use LESS. */
+
 body, html {
 
     margin: 0;
@@ -48,19 +50,31 @@ input.error {
 
 #feed .image-wrap {
 
-    padding-bottom: 40px;
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 40px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 30px;
+    margin-bottom: 20px;
+}
+
+#feed .image-wrap img {
+
+    margin-bottom: 10px;
+}
+
+#feed .image-wrap a {
+
+    color: #777;
+    font-size: 0.7em;
+    text-decoration: none;
+}
+
+#feed .image-wrap a:hover {
+
+    border-bottom: 1px solid #777;
 }
 
 #feed .title {
 
     font-size: 1.2em;
-}
-
-#feed img {
-
-    margin-bottom: 20px;
 }
 
 #feed .loading {
