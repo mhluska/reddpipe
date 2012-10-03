@@ -45,6 +45,7 @@ input.error {
 
 #feed {
 
+    width: 500px;
     margin-top: 40px;
 }
 
@@ -58,6 +59,7 @@ input.error {
 #feed .image-wrap img {
 
     margin-bottom: 10px;
+    width: 100%;
 }
 
 #feed .image-wrap a {

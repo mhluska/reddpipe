@@ -5,15 +5,13 @@ class window.Feed
         @_resetPagination()
 
         @_container = $(container)
-        @_containerWidth = 500
+        @_containerWidth = @_container.width()
         @_loadThreshold = 1000
 
         # A callback to execute if the feed encounters an error.
         @_error = null
 
         @_container.attr 'id', 'feed'
-        @_container.width @_containerWidth
-
         @_setupInfiniteScroll()
 
     setSubreddit: (@subreddit) ->
@@ -95,7 +93,6 @@ class window.Feed
 
             return if image.width < @_containerWidth
 
-            image.width = @_containerWidth
             node.prepend image
             node.insertBefore @_loadingNode
 
