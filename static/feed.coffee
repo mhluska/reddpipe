@@ -50,8 +50,6 @@ class window.Feed
 
     _showImage: ->
 
-        console.log "showing #{@_showIndex}"
-
         pos = @_imageYPos[@_showIndex]
 
         return unless pos?
@@ -111,7 +109,6 @@ class window.Feed
 
             error: =>
 
-                console.log 'failing'
                 @_error?()
 
             complete: (xhr) =>
