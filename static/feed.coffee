@@ -7,9 +7,10 @@ class window.Feed
         @_container = $(container)
         @_containerWidth = @_container.width()
         @_loadThreshold = 1000
+        @_imageOffset = 20
 
         # Used for navigating by images with page up/down.
-        @_imageYPos = []
+        @_imageYPos = [0]
         @_showIndex = 0
 
         # A callback to execute if the feed encounters an error.
@@ -20,21 +21,42 @@ class window.Feed
 
     showPrev: ->
 
-        return if @_showIndex <= 0
+        return if @_showIndex is 0
 
-        @_showIndex -= 1
+        if window.scrollY is (@_imageYPos[@_showIndex] - @_imageOffset)
+            @_showIndex -= 1
+        else
+            @_showIndex = @_findShowIndex()
+
         @_showImage()
 
     showNext: ->
 
         return if @_showIndex >= @_imageYPos.length - 1
 
-        @_showIndex += 1
+        if window.scrollY is (@_imageYPos[@_showIndex] - @_imageOffset)
+            @_showIndex += 1
+        else
+            @_showIndex = @_findShowIndex() + 1
+
         @_showImage()
 
+    _findShowIndex: ->
+
+        return 0 if window.scrollY is 0
+
+        for pos, index in @_imageYPos
+            return index - 1 if window.scrollY <= pos
+
     _showImage: ->
-       
-        $(window).scrollTop @_imageYPos[@_showIndex] - 20
+
+        console.log "showing #{@_showIndex}"
+
+        pos = @_imageYPos[@_showIndex]
+
+        return unless pos?
+
+        $(window).scrollTop pos - @_imageOffset
 
     setSubreddit: (@subreddit) ->
 

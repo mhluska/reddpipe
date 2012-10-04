@@ -16,6 +16,7 @@ $ ->
 
     .trigger 'submit'
 
+    # Set up image navigation using arrows and page up/down.
     $(window).keydown (event) ->
 
         if event.which in [33, 37]
@@ -27,3 +28,4 @@ $ ->
 
             event.preventDefault()
             feed.showNext()
+            
