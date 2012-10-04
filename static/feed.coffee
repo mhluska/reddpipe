@@ -113,6 +113,8 @@ class window.Feed
 
             return if image.width < @_containerWidth
 
+            image.title = data.title
+
             node.prepend image
             node.insertBefore @_loadingNode
             @_imageYPos.push $(image).position().top

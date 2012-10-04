@@ -18,9 +18,12 @@ $ ->
 
     $(window).keydown (event) ->
 
-        event.preventDefault() if event.which in [33, 34]
+        if event.which in [33, 37]
 
-        switch event.which
+            event.preventDefault()
+            feed.showPrev()
 
-            when 33 then feed.showPrev()
-            when 34 then feed.showNext()
+        else if event.which in [34, 39]
+
+            event.preventDefault()
+            feed.showNext()
