@@ -8,11 +8,33 @@ class window.Feed
         @_containerWidth = @_container.width()
         @_loadThreshold = 1000
 
+        # Used for navigating by images with page up/down.
+        @_imageYPos = []
+        @_showIndex = 0
+
         # A callback to execute if the feed encounters an error.
         @_error = null
 
         @_container.addClass 'feed'
         @_setupInfiniteScroll()
+
+    showPrev: ->
+
+        return if @_showIndex <= 0
+
+        @_showIndex -= 1
+        @_showImage()
+
+    showNext: ->
+
+        return if @_showIndex >= @_imageYPos.length - 1
+
+        @_showIndex += 1
+        @_showImage()
+
+    _showImage: ->
+       
+        $(window).scrollTop @_imageYPos[@_showIndex] - 20
 
     setSubreddit: (@subreddit) ->
 
@@ -51,8 +73,6 @@ class window.Feed
             timeout: 4000
 
             success: (data) =>
-
-                console.log data
 
                 @_after = data.data.after
 
@@ -95,6 +115,7 @@ class window.Feed
 
             node.prepend image
             node.insertBefore @_loadingNode
+            @_imageYPos.push $(image).position().top
 
         image.src = data.url
 
