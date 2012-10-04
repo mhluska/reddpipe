@@ -9,15 +9,29 @@ class window.Feed
         @_loadThreshold = 1000
         @_imageOffset = 20
 
-        # Used for navigating by images with page up/down.
-        @_imageYPos = [0]
-        @_showIndex = 0
+        @_resetImageIndices()
 
         # A callback to execute if the feed encounters an error.
         @_error = null
 
         @_container.addClass 'feed'
         @_setupInfiniteScroll()
+
+    setSubreddit: (@subreddit) ->
+
+        # Alphanumeric characters only.
+        return @_error?() unless /^[a-z0-9]+$/i.test subreddit
+
+        @_resetPagination()
+        @_container
+            .html('')
+            .append @_loadingNode
+
+        @_loadUrls()
+
+    error: (callback) ->
+        
+        @_error = callback
 
     showPrev: ->
 
@@ -56,21 +70,11 @@ class window.Feed
 
         $(window).scrollTop pos - @_imageOffset
 
-    setSubreddit: (@subreddit) ->
+    _resetImageIndices: ->
 
-        # Alphanumeric characters only.
-        return @_error?() unless /^[a-z0-9]+$/i.test subreddit
-
-        @_resetPagination()
-        @_container
-            .html('')
-            .append @_loadingNode
-
-        @_loadUrls()
-
-    error: (callback) ->
-        
-        @_error = callback
+        # Used for navigating by images with page up/down.
+        @_imageYPos = [0]
+        @_showIndex = 0
 
     _loadUrls: ->
 
@@ -94,6 +98,7 @@ class window.Feed
 
             success: (data) =>
 
+                @_resetImageIndices()
                 @_after = data.data.after
 
                 for link in data.data.children
