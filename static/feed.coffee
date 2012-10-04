@@ -11,7 +11,7 @@ class window.Feed
         # A callback to execute if the feed encounters an error.
         @_error = null
 
-        @_container.attr 'id', 'feed'
+        @_container.addClass 'feed'
         @_setupInfiniteScroll()
 
     setSubreddit: (@subreddit) ->

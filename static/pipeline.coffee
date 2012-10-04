@@ -2,12 +2,12 @@ $ ->
 
     field = $('.subreddit-field')
 
-    feed = new Feed document.getElementById 'feed'
+    feed = new Feed $('#feed-wrap .feed')
     feed.error ->
 
         field.addClass 'error'
 
-    $('.get-pictures').submit (event) ->
+    $('.settings').submit (event) ->
 
         event.preventDefault()
 
