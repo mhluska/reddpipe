@@ -61,6 +61,7 @@ label {
     width: 359px;
     padding: 10px 20px;
     color: #999;
+    border-color: #c9c9c9;
     border-right: none;
 
     border-radius: 3px 0 0 3px;
