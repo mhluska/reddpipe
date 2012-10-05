@@ -41,6 +41,12 @@ label {
     margin-bottom: 10px;
 }
 
+#feed-wrap .settings {
+
+    overflow: auto;
+    padding-bottom: 40px;
+}
+
 #feed-wrap .search-bar {
 
     overflow: hidden;
@@ -99,9 +105,9 @@ label {
     -moz-border-radius: 0 3px 3px 0;
     -o-border-radius: 0 3px 3px 0;
 
-    -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 7px 5px;
-    -moz-box-shadow: rgba(0, 0, 0, 0.2) 0 7px 5px;
-    box-shadow: rgba(0, 0, 0, 0.2) 0 7px 5px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 5px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 5px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 1px 5px;
 }
 
 #feed-wrap .load-subreddit:hover {
@@ -123,11 +129,6 @@ label {
     -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
     -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-#feed-wrap .feed {
-
-    margin-top: 40px;
 }
 
 #feed-wrap .image-wrap {
