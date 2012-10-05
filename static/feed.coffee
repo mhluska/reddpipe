@@ -2,6 +2,7 @@ class window.Feed
 
     constructor: (container, @subreddit = 'aww') ->
 
+        @_resetImageIndices()
         @_resetPagination()
 
         @_container = $(container)
@@ -9,7 +10,6 @@ class window.Feed
         @_loadThreshold = 1000
         @_imageOffset = 20
 
-        @_resetImageIndices()
 
         # A callback to execute if the feed encounters an error.
         @_error = null
@@ -17,11 +17,28 @@ class window.Feed
         @_container.addClass 'feed'
         @_setupInfiniteScroll()
 
+        $(window).scroll =>
+
+            console.log "#{window.scrollY} #{@_imageYPos[@_showIndex + 1]}"
+            console.log @_imageYPos
+            if window.scrollY > @_imageYPos[@_showIndex + 1]
+
+                console.log 'inc'
+                @_showIndex += 1
+
+            else if window.scrollY < @_imageYPos[@_showIndex]
+
+                console.log 'dec'
+                @_showIndex -= 1
+
+            console.log "showIndex is #{@_showIndex}"
+
     setSubreddit: (@subreddit) ->
 
         # Alphanumeric characters only.
         return @_error?() unless /^[a-z0-9]+$/i.test subreddit
 
+        @_resetImageIndices()
         @_resetPagination()
         @_container
             .html('')
@@ -37,30 +54,18 @@ class window.Feed
 
         return if @_showIndex is 0
 
-        if window.scrollY is (@_imageYPos[@_showIndex] - @_imageOffset)
+        if window.scrollY is @_imageYPos[@_showIndex]
             @_showIndex -= 1
-        else
-            @_showIndex = @_findShowIndex()
 
         @_showImage()
 
     showNext: ->
 
-        return if @_showIndex >= @_imageYPos.length - 1
+        return if @_showIndex is @_imageYPos.length - 1
 
-        if window.scrollY is (@_imageYPos[@_showIndex] - @_imageOffset)
-            @_showIndex += 1
-        else
-            @_showIndex = @_findShowIndex() + 1
+        @_showIndex += 1
 
         @_showImage()
-
-    _findShowIndex: ->
-
-        return 0 if window.scrollY is 0
-
-        for pos, index in @_imageYPos
-            return index - 1 if window.scrollY <= pos
 
     _showImage: ->
 
@@ -68,7 +73,7 @@ class window.Feed
 
         return unless pos?
 
-        $(window).scrollTop pos - @_imageOffset
+        $(window).scrollTop pos
 
     _resetImageIndices: ->
 
@@ -98,7 +103,6 @@ class window.Feed
 
             success: (data) =>
 
-                @_resetImageIndices()
                 @_after = data.data.after
 
                 for link in data.data.children
@@ -141,7 +145,7 @@ class window.Feed
 
             node.prepend image
             node.insertBefore @_loadingNode
-            @_imageYPos.push $(image).position().top
+            @_imageYPos.push $(image).position().top - @_imageOffset
 
         image.src = data.url
 
