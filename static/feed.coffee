@@ -16,22 +16,7 @@ class window.Feed
 
         @_container.addClass 'feed'
         @_setupInfiniteScroll()
-
-        $(window).scroll =>
-
-            console.log "#{window.scrollY} #{@_imageYPos[@_showIndex + 1]}"
-            console.log @_imageYPos
-            if window.scrollY > @_imageYPos[@_showIndex + 1]
-
-                console.log 'inc'
-                @_showIndex += 1
-
-            else if window.scrollY < @_imageYPos[@_showIndex]
-
-                console.log 'dec'
-                @_showIndex -= 1
-
-            console.log "showIndex is #{@_showIndex}"
+        @_setupIndexAutoUpdate()
 
     setSubreddit: (@subreddit) ->
 
@@ -154,7 +139,7 @@ class window.Feed
         @_loadingNode = $('<div class="loading">loading</div>')
         @_container.append @_loadingNode
 
-        $(document).scroll =>
+        $(window).scroll =>
 
             return if @_loading
 
@@ -162,3 +147,14 @@ class window.Feed
             return if spaceLeft > @_loadThreshold
 
             @_loadUrls()
+
+    _setupIndexAutoUpdate: ->
+
+        $(window).scroll =>
+
+            if window.scrollY > @_imageYPos[@_showIndex + 1]
+                @_showIndex += 1
+
+            else if window.scrollY < @_imageYPos[@_showIndex]
+                @_showIndex -= 1
+
