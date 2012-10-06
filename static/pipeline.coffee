@@ -1,7 +1,6 @@
 $ ->
 
     field = $('.subreddit-field')
-
     feed = new Feed $('#feed-wrap .feed')
     feed.error ->
 

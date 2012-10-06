@@ -10,7 +10,6 @@ class window.Feed
         @_loadThreshold = 1000
         @_imageOffset = 20
 
-
         # A callback to execute if the feed encounters an error.
         @_error = null
 
@@ -130,7 +129,7 @@ class window.Feed
 
             node.prepend image
             node.insertBefore @_loadingNode
-            @_imageYPos.push $(image).position().top - @_imageOffset
+            @_imageYPos.push Math.floor $(image).position().top - @_imageOffset
 
         image.src = data.url
 
