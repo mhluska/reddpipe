@@ -1,2 +1,4 @@
 *.js
 lib/src
+config.py
+pipeline.db
