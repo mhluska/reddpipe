@@ -20,6 +20,13 @@ def init_db():
 def connect_db():
     return sqlite3.connect(DATABASE)
 
+def most_pipelined_subreddits():
+
+    cursor = g.db.execute('select name, hits from subreddit order by hits \
+            desc limit 10')
+
+    return [dict(name=row[0], hits=row[1]) for row in cursor.fetchall()]
+
 @app.before_request
 def before_request():
     g.db = connect_db()
@@ -30,27 +37,32 @@ def teardown_request(exception):
         g.db.close()
 
 @app.route('/')
-def index():
-    return render_template('pipeline.html')
+@app.route('/r/<name>')
+def index(name=None):
 
-@app.route('/top')
-def top():
+    subreddits = most_pipelined_subreddits()
 
-    cursor = g.db.execute('select name, hits from subreddits order by hits \
-            desc limit 10')
+    if not name:
 
-    entries = [dict(name=row[0], hits=row[1]) for row in cursor.fetchall()]
+        if subreddits:
+            name = subreddits[0]['name']
+        else:
+            name = 'aww'
 
-    return jsonify(items=entries)
+    return render_template('pipeline.html', name=name, subreddits=subreddits)
 
+@app.route('/subreddit')
+def subreddit_index():
+
+    return jsonify(items = most_pipelined_subreddits())
 
 # TODO: Add some basic security to prevent curl requests spamming this route.
-@app.route('/update', methods=['PUT'])
-def add():
+@app.route('/subreddit/update', methods=['PUT'])
+def subreddit_update():
 
-    sql = """insert or replace into subreddits (name, hits) 
+    sql = """insert or replace into subreddit (name, hits) 
              values (?, coalesce(
-                        (select hits from subreddits where name = ?)
+                        (select hits from subreddit where name = ?)
                     , 0) + 1);"""
 
     g.db.execute(sql, [request.form['name']] * 2)

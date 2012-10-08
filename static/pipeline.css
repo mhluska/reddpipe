@@ -12,7 +12,7 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
-h1, h2 {
+h1, h2, p {
 
     margin: 0;
     padding: 0;
@@ -24,11 +24,22 @@ h1 {
     margin-bottom: 20px;
 }
 
-label {
+p {
 
     display: block;
     font-size: 0.8em;
     color: #999;
+    margin-bottom: 7px;
+}
+
+a {
+    color: #407acc;
+    text-decoration: none;
+    outline: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 #feed-wrap {
@@ -45,6 +56,7 @@ label {
 
     overflow: auto;
     padding-bottom: 40px;
+    margin-top: 15px;
 }
 
 #feed-wrap .search-bar {
@@ -164,4 +176,8 @@ label {
 #feed-wrap .loading {
 
     height: 100px;
+}
+
+#feed-wrap .count-tag {
+    margin-right: 5px;
 }

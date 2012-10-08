@@ -14,13 +14,23 @@
     </head>
 
     <body>
-
         <div id="feed-wrap">
             <h1>Reddit Pipeline</h1>
 
+            <p>Enter a subreddit</p>
+            <p>
+                {%- if subreddits -%}
+                    Most Pipelined —
+                {%- endif -%}
+                {% for subreddit in subreddits %}
+                    <span class="count-tag">
+                        <a href="{{ url_for('index', name=subreddit['name']) }}">{{ subreddit['name'] }}</a>
+                        {{ subreddit['hits'] }}
+                    </span>
+                {% endfor %}
+            </p>
             <form class="settings" action="">
-                <label for="subreddit">Enter a subreddit</label>
-                <input class="subreddit-field" type="text" value="aww" />
+                <input class="subreddit-field" type="text" value="{{ name }}" />
                 <input class="load-subreddit" type="submit" value="GO!" />
             </form>
 

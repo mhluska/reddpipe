@@ -87,6 +87,8 @@ class window.Feed
 
             success: (data) =>
 
+                @_updateHits()
+
                 @_after = data.data.after
 
                 for link in data.data.children
@@ -107,6 +109,13 @@ class window.Feed
             complete: (xhr) =>
 
                 @_loading = false
+
+    _updateHits: ->
+
+        $.ajax
+            type: 'PUT'
+            url: '/subreddit/update'
+            data: name: @subreddit
 
     _resetPagination: ->
 
