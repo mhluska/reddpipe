@@ -112,10 +112,22 @@ class window.Feed
 
     _updateHits: ->
 
-        $.ajax
-            type: 'PUT'
-            url: '/subreddit/update'
-            data: name: @subreddit
+        $('.count-tag a').each (index, elem) =>
+
+            if $(elem).text() is @subreddit
+
+                countElem = $(elem).next()
+                val = parseInt countElem.text()
+
+                countElem.text val + 1
+
+                $.ajax
+                    type: 'PUT'
+                    url: '/subreddit/update'
+                    data: name: @subreddit
+                    error: -> countElem.text val
+
+                return
 
     _resetPagination: ->
 

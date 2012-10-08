@@ -25,7 +25,7 @@
                 {% for subreddit in subreddits %}
                     <span class="count-tag">
                         <a href="{{ url_for('index', name=subreddit['name']) }}">{{ subreddit['name'] }}</a>
-                        {{ subreddit['hits'] }}
+                        <span>{{ subreddit['hits'] }}</span>
                     </span>
                 {% endfor %}
             </p>
