@@ -3,8 +3,10 @@ import os
 
 from contextlib import closing
 from flask import Flask, render_template, g, request, jsonify
+from reverseproxied import ReverseProxied
 
 app = Flask(__name__)
+app.wsgi_app = ReverseProxied(app.wsgi_app)
 
 DATABASE = '%s/pipeline.db' % os.path.dirname(os.path.realpath(__file__))
 

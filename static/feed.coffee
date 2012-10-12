@@ -10,6 +10,9 @@ class window.Feed
         @_loadThreshold = 1000
         @_imageOffset = 20
 
+        # Whether we are just loading the first group of images.
+        @_firstLoad = true
+
         # A callback to execute if the feed encounters an error.
         @_error = null
 
@@ -87,9 +90,9 @@ class window.Feed
 
             success: (data) =>
 
-                @_updateHits()
-
+                @_updateHits() unless @_firstLoad
                 @_after = data.data.after
+                @_firstLoad = false
 
                 for link in data.data.children
 
@@ -121,9 +124,9 @@ class window.Feed
 
         $.ajax
             type: 'PUT'
-            url: '/subreddit/update'
+            url: "#{appRoot}/subreddit/update"
             data: name: @subreddit
-            error: -> $(elem)?.text val
+            error: -> $(elem).text val
 
         return
 
