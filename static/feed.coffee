@@ -1,6 +1,6 @@
 class window.Feed
 
-    constructor: (container, @subreddit = 'aww') ->
+    constructor: (container) ->
 
         @_resetImageIndices()
         @_resetPagination()
@@ -10,9 +10,6 @@ class window.Feed
         @_loadThreshold = 1000
         @_imageOffset = 20
 
-        # Whether we are just loading the first group of images.
-        @_firstLoad = true
-
         # A callback to execute if the feed encounters an error.
         @_error = null
 
@@ -20,7 +17,7 @@ class window.Feed
         @_setupInfiniteScroll()
         @_setupIndexAutoUpdate()
 
-    setSubreddit: (@subreddit) ->
+    setSubreddit: (@subreddit, autoLoad = false) ->
 
         # Alphanumeric characters only.
         return @_error?() unless /^[a-z0-9]+$/i.test subreddit
@@ -31,7 +28,7 @@ class window.Feed
             .html('')
             .append @_loadingNode
 
-        @_loadUrls()
+        @_loadUrls autoLoad
 
     error: (callback) ->
         
@@ -68,7 +65,7 @@ class window.Feed
         @_imageYPos = [0]
         @_showIndex = 0
 
-    _loadUrls: ->
+    _loadUrls: (autoLoad) ->
 
         return if @_loading
 
@@ -90,9 +87,8 @@ class window.Feed
 
             success: (data) =>
 
-                @_updateHits() unless @_firstLoad
+                @_updateHits() unless autoLoad
                 @_after = data.data.after
-                @_firstLoad = false
 
                 for link in data.data.children
 

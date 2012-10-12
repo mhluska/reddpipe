@@ -40,16 +40,9 @@ def teardown_request(exception):
 
 @app.route('/')
 @app.route('/r/<name>')
-def index(name=None):
+def index(name=''):
 
     subreddits = most_pipelined_subreddits()
-
-    if not name:
-
-        if subreddits:
-            name = subreddits[0]['name']
-        else:
-            name = 'aww'
 
     return render_template('pipeline.html', name=name, subreddits=subreddits)
 
