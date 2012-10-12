@@ -145,7 +145,10 @@ class window.Feed
 
             image.title = data.title
 
-            node.prepend image
+            link = node.find('.fullsize')
+            link.attr 'href', data.url
+            link.append image
+
             node.insertBefore @_loadingNode
             @_imageYPos.push Math.floor $(image).position().top - @_imageOffset
 

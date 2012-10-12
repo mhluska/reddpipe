@@ -165,7 +165,13 @@ a:hover {
 
 #feed-wrap .image-wrap a:hover {
 
-    border-bottom: 1px solid #777;
+    border-bottom: 1px solid #aaa;
+}
+
+#feed-wrap .image-wrap .fullsize, 
+#feed-wrap .image-wrap .fullsize:hover {
+
+    border: none;
 }
 
 #feed-wrap .title {
