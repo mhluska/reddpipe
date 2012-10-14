@@ -11,7 +11,7 @@ class window.Feed
         @_imageOffset = 20
 
         # A callback to execute if the feed encounters an error.
-        @_error = null
+        @_error = ->
 
         @_container.addClass 'feed'
         @_setupInfiniteScroll()
@@ -19,11 +19,9 @@ class window.Feed
 
     setSubreddit: (@subreddit) ->
 
-        # Alphanumeric characters only.
-        return @_error?() unless /^[a-z0-9]+$/i.test subreddit
-
         @_resetImageIndices()
         @_resetPagination()
+        @_loadingNode.text 'loading'
         @_container
             .html('')
             .append @_loadingNode
@@ -32,7 +30,11 @@ class window.Feed
 
     error: (callback) ->
         
-        @_error = callback
+        @_error = (message) ->
+
+            @_loadingNode.text message
+            callback()
+            return
 
     showPrev: ->
 
@@ -89,20 +91,20 @@ class window.Feed
 
                 @_after = data.data.after
 
-                for link in data.data.children
+                links = (link.data for link in data.data.children when \
+                    Utils.isImageUrl link.data.url)
 
-                    data = link.data
+                @_error 'No images found.' unless links.length
 
-                    continue unless Utils.isImageUrl data.url
-
+                for link in links
                     @_addImage
-                        link: "http://reddit.com/#{data.permalink}"
-                        title: data.title
-                        url: data.url
+                        link: "http://reddit.com/#{link.permalink}"
+                        title: link.title
+                        url: link.url
 
             error: =>
 
-                @_error?()
+                @_error 'Error loading subreddit.'
 
             complete: (xhr) =>
 
@@ -138,7 +140,7 @@ class window.Feed
 
     _setupInfiniteScroll: ->
 
-        @_loadingNode = $('<div class="loading">loading</div>')
+        @_loadingNode = $('<div class="loading"></div>')
         @_container.append @_loadingNode
 
         $(window).scroll =>
