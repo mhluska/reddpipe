@@ -17,7 +17,7 @@ class window.Feed
         @_setupInfiniteScroll()
         @_setupIndexAutoUpdate()
 
-    setSubreddit: (@subreddit, autoLoad = false) ->
+    setSubreddit: (@subreddit) ->
 
         # Alphanumeric characters only.
         return @_error?() unless /^[a-z0-9]+$/i.test subreddit
@@ -28,7 +28,7 @@ class window.Feed
             .html('')
             .append @_loadingNode
 
-        @_loadUrls autoLoad
+        @_loadUrls()
 
     error: (callback) ->
         
@@ -65,7 +65,7 @@ class window.Feed
         @_imageYPos = [0]
         @_showIndex = 0
 
-    _loadUrls: (autoLoad) ->
+    _loadUrls: ->
 
         return if @_loading
 
@@ -87,7 +87,6 @@ class window.Feed
 
             success: (data) =>
 
-                @_updateHits() unless autoLoad
                 @_after = data.data.after
 
                 for link in data.data.children
@@ -108,23 +107,6 @@ class window.Feed
             complete: (xhr) =>
 
                 @_loading = false
-
-    _updateHits: ->
-
-        name = @subreddit
-        elem = ($('.count-tag span').filter -> $(@).prev().text() is name)[0]
-
-        if elem
-            val = parseInt($(elem).text()) + 1
-            $(elem).text val
-
-        $.ajax
-            type: 'PUT'
-            url: "#{appRoot}/subreddit/update"
-            data: name: @subreddit
-            error: -> $(elem).text val
-
-        return
 
     _resetPagination: ->
 
