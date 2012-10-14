@@ -9,6 +9,7 @@ body {
 
     padding: 40px;
     color: #333;
+    background: #f7f5f5 url(../images/paper.jpg) repeat;
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -147,12 +148,12 @@ a:hover {
 
     border-bottom: 1px solid #ddd;
     padding-bottom: 7px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
 #feed-wrap .image-wrap img {
 
-    margin-bottom: 10px;
+    float: left;
     width: 100%;
 }
 
@@ -171,7 +172,15 @@ a:hover {
 #feed-wrap .image-wrap .fullsize, 
 #feed-wrap .image-wrap .fullsize:hover {
 
+    padding: 2%;
     border: none;
+    display: inline-block;
+    margin-bottom: 10px;
+    background-color: #fff;
+
+    -webkit-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+    -moz-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+    box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
 }
 
 #feed-wrap .title {
