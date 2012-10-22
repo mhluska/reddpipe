@@ -55,9 +55,9 @@ class window.Feed
 
     toggleModal: do ->
 
-        showing = false
         placeholder = null
         maxedImage = null
+
         overlay = $('<div class="overlay"></div>')
     
         (image = @_pos2image[@_imageYPos[@_showIndex]]) ->
@@ -65,9 +65,8 @@ class window.Feed
             return unless image
 
             image = $(image)
-            console.log image
 
-            if showing
+            if @_showingModal
                 # Just put the image back in its spot.
                 placeholder.replaceWith maxedImage
                 overlay.remove()
@@ -84,10 +83,11 @@ class window.Feed
                 # possible.
                 overlay.appendTo document.body
                 overlay.append image
+                overlay.click => @toggleModal()
                 
                 maxedImage = image
 
-            showing = !showing
+            @_showingModal = !@_showingModal
 
     _showImage: ->
 
@@ -97,6 +97,11 @@ class window.Feed
 
         $(window).scrollTop pos
 
+        if @_showingModal
+
+            @toggleModal()
+            @toggleModal()
+
     _resetImageIndices: ->
 
         # Used for navigating by images with page up/down.
@@ -105,6 +110,7 @@ class window.Feed
 
         # Used for maximizing an image with spacebar is pressed
         @_pos2image = 0: null
+        @_showingModal = false
 
     _loadUrls: ->
 
@@ -168,8 +174,7 @@ class window.Feed
 
             image.title = data.title
 
-            link = node.find('.showFullsize')
-            link.attr 'href', data.url
+            link = node.find('.image')
             link.append image
 
             node.find('.showModal').click => @toggleModal image

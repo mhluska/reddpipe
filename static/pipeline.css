@@ -47,7 +47,7 @@ a:hover {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 0.95);
     width: 100%;
     height: 100%;
 }
@@ -174,20 +174,20 @@ a:hover {
     width: 100%;
 }
 
-#feed-wrap .image-wrap a {
+#feed-wrap .image-wrap .buttons a {
 
     color: #777;
     font-size: 0.7em;
+    margin-right: 10px;
     text-decoration: none;
 }
 
-#feed-wrap .image-wrap a:hover {
+#feed-wrap .image-wrap .buttons a:hover {
 
     border-bottom: 1px solid #aaa;
 }
 
-#feed-wrap .image-wrap .showFullsize, 
-#feed-wrap .image-wrap .showFullsize:hover {
+#feed-wrap .image-wrap .image {
 
     padding: 2%;
     border: none;
