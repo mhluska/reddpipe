@@ -60,8 +60,12 @@ class window.Feed
 
         overlay = $('<div class="overlay"></div>')
     
-        (image = @_pos2image[@_imageYPos[@_showIndex]]) ->
+        (image) ->
 
+            # If we're at the top of the page, use the first image for
+            # convenience.
+            index = @_showIndex or 1
+            image = @_pos2image[@_imageYPos[index]] unless image
             return unless image
 
             image = $(image)
