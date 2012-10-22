@@ -36,9 +36,9 @@ $ ->
         event.preventDefault()
         loadImages field, feed
     
-    # Set up image navigation using arrows and page up/down.
     $(window).keydown (event) ->
 
+        # Set up image navigation using arrows and page up/down.
         if event.which in [33, 37]
 
             event.preventDefault()
@@ -48,6 +48,12 @@ $ ->
 
             event.preventDefault()
             feed.showNext()
+
+        # Set up image modal popup.
+        else if event.which is 32
+
+            event.preventDefault()
+            feed.toggleModal()
             
     update = true
     unless field.val()

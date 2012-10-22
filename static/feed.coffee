@@ -53,6 +53,42 @@ class window.Feed
 
         @_showImage()
 
+    toggleModal: do ->
+
+        showing = false
+        placeholder = null
+        maxedImage = null
+        overlay = $('<div class="overlay"></div>')
+    
+        (image = @_pos2image[@_imageYPos[@_showIndex]]) ->
+
+            return unless image
+
+            image = $(image)
+            console.log image
+
+            if showing
+                # Just put the image back in its spot.
+                placeholder.replaceWith maxedImage
+                overlay.remove()
+
+            else
+                # Replace the image with a placeholder of the same size.
+                placeholder = $('<div></div>')
+                    .width(image.width())
+                    .height(image.height())
+
+                image.replaceWith placeholder
+
+                # Move the image to the document root and make it as big as 
+                # possible.
+                overlay.appendTo document.body
+                overlay.append image
+                
+                maxedImage = image
+
+            showing = !showing
+
     _showImage: ->
 
         pos = @_imageYPos[@_showIndex]
@@ -66,6 +102,9 @@ class window.Feed
         # Used for navigating by images with page up/down.
         @_imageYPos = [0]
         @_showIndex = 0
+
+        # Used for maximizing an image with spacebar is pressed
+        @_pos2image = 0: null
 
     _loadUrls: ->
 
@@ -129,12 +168,17 @@ class window.Feed
 
             image.title = data.title
 
-            link = node.find('.fullsize')
+            link = node.find('.showFullsize')
             link.attr 'href', data.url
             link.append image
 
+            node.find('.showModal').click => @toggleModal image
+
             node.insertBefore @_loadingNode
-            @_imageYPos.push Math.floor $(image).position().top - @_imageOffset
+
+            pos = Math.floor $(image).position().top - @_imageOffset
+            @_imageYPos.push pos
+            @_pos2image[pos] = image
 
         image.src = data.url
 
