@@ -151,12 +151,9 @@ class window.Feed
 
                 imageData = []
                 for link in data.data.children
-                    if Utils.isImageUrl link.data.url
-                        url = link.data.url
 
-                    else if Utils.isImgurUrl link.data.url
-                        url = "#{link.data.url}.jpg"
-
+                    url = @_formatUrl link.data.url
+                    continue unless url
                     imageData.push
                         link: "http://reddit.com/#{link.data.permalink}"
                         title: link.data.title
@@ -173,6 +170,14 @@ class window.Feed
             complete: (xhr) =>
 
                 @_loading = false
+
+    _formatUrl: (url) ->
+
+        if Utils.isImageUrl url
+            url
+
+        else if Utils.isImgurUrl url
+            "#{url}.jpg"
 
     _resetPagination: ->
 
