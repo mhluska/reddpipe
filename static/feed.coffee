@@ -25,7 +25,6 @@ class window.Feed
 
         @_resetImageIndices()
         @_resetPagination()
-        @_loadingNode.text 'loading'
         @_container
             .html('')
             .append @_loadingNode
@@ -51,7 +50,9 @@ class window.Feed
 
     showNext: ->
 
-        return if @_showIndex is @_imageYPos.length - 1
+        if @_showIndex is @_imageYPos.length - 1
+            $(window).scrollTop $(document).height()
+            return
 
         @_showIndex += 1
 
@@ -128,6 +129,7 @@ class window.Feed
         return if @_loading
 
         @_loading = true
+        @_loadingNode.text 'loading'
         @_count += @_resultsPerPage
 
         url = "http://www.reddit.com/r/#{@subreddit}"
