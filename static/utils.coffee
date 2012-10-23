@@ -11,6 +11,8 @@ class window.Utils
 
             false
 
+    @isImgurUrl: (url) -> /^http:\/\/imgur.com\/[A-Z0-9]+$/i.test url
+
     @endsWith: (str, end) ->
 
         str.slice(str.length - end.length) is end

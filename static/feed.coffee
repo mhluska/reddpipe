@@ -149,16 +149,22 @@ class window.Feed
 
                 @_after = data.data.after
 
-                links = (link.data for link in data.data.children when \
-                    Utils.isImageUrl link.data.url)
+                imageData = []
+                for link in data.data.children
+                    if Utils.isImageUrl link.data.url
+                        url = link.data.url
 
-                @_error 'No images found.' unless links.length
+                    else if Utils.isImgurUrl link.data.url
+                        url = "#{link.data.url}.jpg"
 
-                for link in links
-                    @_addImage
+                    imageData.push
                         link: "http://reddit.com/#{link.permalink}"
                         title: link.title
-                        url: link.url
+                        url: url
+
+                @_error 'No images found.' unless imageData.length
+
+                @_addImage image for image in imageData
 
             error: =>
 
