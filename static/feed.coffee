@@ -17,6 +17,10 @@ class window.Feed
         @_setupInfiniteScroll()
         @_setupIndexAutoUpdate()
 
+        $(window).click => @_hideModal()
+        $(window).keydown (event) =>
+            @_hideModal() if event.which in [13, 27]
+
     setSubreddit: (@subreddit) ->
 
         @_resetImageIndices()
@@ -87,11 +91,14 @@ class window.Feed
                 # possible.
                 overlay.appendTo document.body
                 overlay.append image
-                overlay.click => @toggleModal()
                 
                 maxedImage = image
 
             @_showingModal = !@_showingModal
+
+    _hideModal: ->
+
+        @toggleModal() if @_showingModal
 
     _showImage: ->
 
