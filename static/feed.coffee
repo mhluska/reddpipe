@@ -7,7 +7,7 @@ class window.Feed
 
         @_container = $(container)
         @_containerWidth = @_container.width()
-        @_loadThreshold = 1000
+        @_loadThreshold = 5
         @_imageOffset = 20
 
         # A callback to execute if the feed encounters an error.
@@ -215,8 +215,7 @@ class window.Feed
 
             return if @_loading
 
-            spaceLeft = $(document).height() - $(document).scrollTop()
-            return if spaceLeft > @_loadThreshold
+            return if (@_imageYPos.length - @_showIndex) > @_loadThreshold
 
             @_loadUrls()
 
