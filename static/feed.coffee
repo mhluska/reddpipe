@@ -69,8 +69,8 @@ class window.Feed
 
             # If we're at the top of the page, use the first image for
             # convenience.
-            index = @_showIndex or 1
-            image = @_pos2image[@_imageYPos[index]] unless image
+            @showNext() if @_showIndex is 0
+            image = @_pos2image[@_imageYPos[@_showIndex]] unless image
             return unless image
 
             image = $(image)
@@ -158,8 +158,8 @@ class window.Feed
                         url = "#{link.data.url}.jpg"
 
                     imageData.push
-                        link: "http://reddit.com/#{link.permalink}"
-                        title: link.title
+                        link: "http://reddit.com/#{link.data.permalink}"
+                        title: link.data.title
                         url: url
 
                 @_error 'No images found.' unless imageData.length
