@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
+        <meta property="og:image" content="{{ request.headers['Host'] + url_for('static', filename="images/icon.jpg") }}">
         <title>Reddit Pipeline</title>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='pipeline.css') }}" />
         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600" />
@@ -16,6 +17,7 @@
 
     <body>
         <div id="feed-wrap">
+
             <h1>Reddit Pipeline</h1>
 
             <p>Enter a subreddit</p>
