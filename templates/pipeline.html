@@ -18,10 +18,11 @@
     <body>
         <div id="feed-wrap">
             <h1>Reddit Pipeline</h1>
-            <p>Enter a subreddit</p>
+            <p>Navigate — left/right arrows</p>
+            <p>Maximize image — spacebar</p>
             <p>
                 {%- if subreddits -%}
-                    Most Pipelined —
+                    Most Pipelined subreddits —
                 {%- endif -%}
                 {% for subreddit in subreddits %}
                     <span class="count-tag">
