@@ -201,7 +201,9 @@ class window.Feed
             link = node.find('.image')
             link.append image
 
-            node.find('.showModal').click => @toggleModal image
+            node.find('.showModal').click (event) =>
+                event.stopPropagation()
+                @toggleModal image
 
             node.insertBefore @_loadingNode
 
