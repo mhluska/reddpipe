@@ -31,10 +31,18 @@ $ ->
 
     field = $('.subreddit-field')
 
-    $('.settings').submit (event) ->
+    $('.settings').submit do ->
 
-        event.preventDefault()
-        loadImages field, feed
+        ready = true
+        (event) ->
+
+            event.preventDefault()
+
+            return unless ready
+            loadImages field, feed
+
+            ready = false
+            setTimeout ( -> ready = true), 2000
     
     $(window).keydown (event) ->
 
