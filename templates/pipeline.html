@@ -4,6 +4,7 @@
         <meta charset="UTF-8" />
         <meta property="og:image" content="http://mhluska.com{{ url_for('static', filename="images/icon.jpg") }}">
         <title>Reddit Pipeline</title>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" />
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='pipeline.css') }}" />
         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600" />
         <script>var appRoot = '{{ request.headers['X-SCRIPT-NAME'] }}';</script>
