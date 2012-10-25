@@ -11,7 +11,19 @@ class window.Utils
 
             false
 
-    @isImgurUrl: (url) -> /^http:\/\/imgur.com\/[A-Z0-9]+$/i.test url
+    @urlInfo: (url) ->
+
+        hosts =
+            imgur: /^http:\/\/imgur.com\/([A-Z0-9]+)$/i
+            quickmeme: /^http:\/\/www.quickmeme.com\/meme\/([A-Z0-9]+).*$/i
+            qkme: /^http:\/\/qkme.me\/([A-Z0-9]+).*$/i
+
+        for own host, regex of hosts
+            matches = url.match regex
+            if matches?.length
+                return [host, matches[1]]
+
+        [null, null]
 
     @endsWith: (str, end) ->
 

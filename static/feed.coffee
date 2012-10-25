@@ -173,11 +173,13 @@ class window.Feed
 
     _formatUrl: (url) ->
 
-        if Utils.isImageUrl url
-            url
+        return url if Utils.isImageUrl url
 
-        else if Utils.isImgurUrl url
-            "#{url}.jpg"
+        [host, imageID] = Utils.urlInfo url
+        switch host
+            when 'imgur' then "#{url}.jpg"
+            when 'quickmeme' then "http://i.qkme.me/#{imageID}.jpg"
+            when 'qkme' then "http://i.qkme.me/#{imageID}.jpg"
 
     _resetPagination: ->
 
