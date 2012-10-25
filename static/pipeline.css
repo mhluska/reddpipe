@@ -70,6 +70,12 @@ a:hover {
     margin-bottom: 10px;
 }
 
+#feed-wrap .fb-like {
+
+    margin-bottom: 10px;
+    display: none;
+}
+
 #feed-wrap .settings {
 
     overflow: auto;
