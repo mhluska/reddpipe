@@ -50,7 +50,7 @@ $ ->
             feed.showNext()
 
         # Set up image modal popup.
-        else if event.which is 32
+        else if event.which is 67
 
             event.preventDefault()
             feed.toggleModal()

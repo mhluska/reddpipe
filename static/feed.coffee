@@ -202,6 +202,7 @@ class window.Feed
             link.append image
 
             node.find('.showModal').click (event) =>
+                event.preventDefault()
                 event.stopPropagation()
                 @toggleModal image
 
