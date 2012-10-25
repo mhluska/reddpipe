@@ -4,6 +4,7 @@ import os
 from contextlib import closing
 from flask import Flask, render_template, g, request, jsonify
 from reverseproxied import ReverseProxied
+from ratelimit import ratelimit
 
 app = Flask(__name__)
 app.wsgi_app = ReverseProxied(app.wsgi_app)
@@ -51,8 +52,8 @@ def subreddit_index():
 
     return jsonify(items = most_pipelined_subreddits())
 
-# TODO: Add some basic security to prevent curl requests spamming this route.
 @app.route('/subreddit/update', methods=['PUT'])
+@ratelimit(limit=300, per=60 * 15)
 def subreddit_update():
 
     sql = """insert or replace into subreddit (name, hits) 
