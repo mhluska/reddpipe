@@ -17,20 +17,19 @@
 
     <body>
 
-        <div id="fb-root"></div>
-        <script>(function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=510514888967929";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));</script>
 
         <div id="feed-wrap">
-            <h1>Reddit Pipeline</h1>
-            <div class="fb-like" data-href="http://reddpipe.com/" 
-                data-send="true" data-layout="button_count" data-width="450" 
-                data-show-faces="true"></div>
+
+            <div class="header">
+                <div class="like-wrap">
+                    <iframe class="fb-like" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Freddpipe.com&amp;send=false&amp;layout=box_count&amp;width=55&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=90&amp;appId=510514888967929" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:55px; height:90px;" allowTransparency="true"></iframe>
+                </div>
+
+                <div class="title">
+                    <h1>Reddit Pipeline</h1>
+                    <h2>The fast, mouse-free way to browse image subreddits.</h2>
+                </div>
+            </div>
 
             <p>Navigate — left/right arrows<br />Maximize image — press c</p>
             <p>
@@ -54,7 +53,7 @@
 
         <script id="tmpl-image-wrap" type="text/tmpl">
             <div class="image-wrap">
-                <a class="image showModal" href="javascript: void(0)" target="_blank"></a>
+                <a class="image shadow showModal" href="javascript: void(0)" target="_blank"></a>
                 <h2 class="title">{{ '{{title}}' }}</h2>
                 <div class="buttons">
                     <a href="{{ '{{link}}' }}" target="_blank">view on reddit</a>

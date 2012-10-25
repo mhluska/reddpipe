@@ -43,6 +43,14 @@ $ ->
 
             ready = false
             setTimeout ( -> ready = true), 2000
+
+    # On load of Facebook like button, show tooltip.
+    $('fb-like').on 'load', ->
+
+        @width 100
+        tooltip = $('<div class="tooltip"></div>')
+        tooltip.appendTo document.body
+        console.log 'loaded'
     
     $(window).keydown (event) ->
 
