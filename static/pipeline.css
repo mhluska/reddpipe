@@ -72,6 +72,24 @@ a:hover {
     height: 120px;
 }
 
+#feed-wrap .header .title {
+    float: left;
+    width: 300px;
+}
+
+#feed-wrap .header .title h1 {
+
+    font-size: 1.3em;
+    margin-bottom: 5px;
+}
+
+#feed-wrap .header .title h2 {
+
+    font-size: 0.9em;
+    margin-bottom: 20px;
+    font-weight: normal;
+}
+
 #feed-wrap .like-wrap {
     float: right;
     margin-top: 5px;
@@ -80,23 +98,6 @@ a:hover {
     height: 71px;
 }
 
-#feed-wrap .title {
-    float: left;
-    width: 300px;
-}
-
-#feed-wrap .title h1 {
-
-    font-size: 1.3em;
-    margin-bottom: 5px;
-}
-
-#feed-wrap .title h2 {
-
-    font-size: 0.9em;
-    margin-bottom: 20px;
-    font-weight: normal;
-}
 #feed-wrap label {
 
     margin-bottom: 10px;
