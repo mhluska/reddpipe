@@ -54,6 +54,9 @@ $ ->
 
             event.preventDefault()
             feed.toggleModal()
+
+    # Prevents hotkeys from taking effect while typing in the search box.
+    field.keydown (event) -> event.stopPropagation()
             
     update = true
     unless field.val()
