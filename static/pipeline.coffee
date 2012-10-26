@@ -26,6 +26,27 @@ loadImages = (field, feed, update = true) ->
 
 $ ->
 
+    # Load most popular subreddits.
+    $.ajax
+        type: 'GET'
+        url: "http://reddit.com/reddits.json"
+        dataType: 'jsonp'
+        jsonp: 'jsonp'
+        success: (result) ->
+
+            data = subreddits: []
+
+            for entry in result.data.children.slice 0, 10
+                url = entry.data.url.substr 0, entry.data.url.length - 1
+                name = url.split('/').pop()
+                data.subreddits.push
+                    'name': name
+                    'url': url
+
+            template = $('#tmpl-subreddit-list').text()
+            node = $(Mustache.render template, data)
+            node.insertBefore $('.most-searched')
+
     feed = new Feed $('#feed-wrap .feed')
     feed.error -> field.addClass 'error'
 

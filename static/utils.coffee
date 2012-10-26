@@ -33,3 +33,12 @@ class window.Utils
     @endsWith: (str, end) ->
 
         str.slice(str.length - end.length) is end
+
+    @truncate = (val) ->
+
+        return unless val >= 1000
+        
+        val = val / 1000
+        val = Math.round(val * 10) / 10
+        val + 'k'
+

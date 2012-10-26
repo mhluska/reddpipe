@@ -40,7 +40,7 @@ def teardown_request(exception):
         g.db.close()
 
 @app.route('/')
-@app.route('/r/<name>')
+@app.route('/r/<name>/')
 def index(name=''):
 
     subreddits = most_pipelined_subreddits()
