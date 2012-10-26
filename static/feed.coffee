@@ -149,19 +149,23 @@ class window.Feed
 
                 @_after = data.data.after
 
-                imageData = []
+                foundImage = false
                 for link in data.data.children
 
-                    url = @_formatUrl link.data.url
-                    continue unless url
-                    imageData.push
-                        link: "http://reddit.com/#{link.data.permalink}"
-                        title: link.data.title
-                        url: url
+                    deferred = @_formatUrl link.data.url
 
-                @_error 'No images found.' unless imageData.length
+                    continue unless deferred
 
-                @_addImage image for image in imageData
+                    foundImage = true
+                    deferred.done (url) =>
+
+                        return unless url
+                        @_addImage
+                            link: "http://reddit.com/#{link.data.permalink}"
+                            title: link.data.title
+                            url: url
+
+                @_error 'No images found.' unless foundImage
 
             error: =>
 
@@ -171,15 +175,27 @@ class window.Feed
 
                 @_loading = false
 
+    _wrapDeferred: (url) -> new $.Deferred().resolve url
+
     _formatUrl: (url) ->
 
-        return url if Utils.isImageUrl url
+        return @_wrapDeferred url if Utils.isImageUrl url
 
-        [host, imageID] = Utils.urlInfo url
+        [host, hash] = Utils.urlInfo url
+
         switch host
-            when 'imgur' then "#{url}.jpg"
-            when 'quickmeme' then "http://i.qkme.me/#{imageID}.jpg"
-            when 'qkme' then "http://i.qkme.me/#{imageID}.jpg"
+            when 'imgur'
+                
+                deferred = new $.Deferred()
+                $.ajax
+                    type: 'GET'
+                    url: "http://api.imgur.com/2/image/#{hash}.json"
+                    success: (data) =>
+                        deferred.resolve data.image.links.original
+
+                deferred
+
+            when 'quickmeme' then @_wrapDeferred "http://i.qkme.me/#{hash}.jpg"
 
     _resetPagination: ->
 
@@ -195,8 +211,6 @@ class window.Feed
 
         image = new Image()
         $(image).load =>
-
-            return if image.width < @_containerWidth
 
             image.title = data.title
 

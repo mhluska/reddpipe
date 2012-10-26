@@ -1,0 +1,15 @@
+{
+  "name": "Reddit Pipeline",
+  "description": "The fast, mouse-free way to browse image subreddits.",
+  "version": "0.1",
+  "manifest_version": 2,
+  "icons": {
+    "16": "static/images/favicon.ico"
+    "128": "static/images/icon-128.png"
+  },
+  "app": {
+    "launch": {
+      "web_url": "http://reddpipe.com/"
+    }
+  }
+}

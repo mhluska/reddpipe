@@ -2,9 +2,12 @@ class window.Utils
 
     @isImageUrl: do ->
 
-        types = ['jpg', 'png']
+        types = ['gif', 'jpg', 'png']
 
         (url) ->
+
+            # Remove query parameters
+            url = url.split('?').shift()
 
             for type in types
                 return true if Utils.endsWith url, type
@@ -21,6 +24,8 @@ class window.Utils
         for own host, regex of hosts
             matches = url.match regex
             if matches?.length
+
+                host = 'quickmeme' if host is 'qkme'
                 return [host, matches[1]]
 
         [null, null]

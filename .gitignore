@@ -3,3 +3,4 @@ lib/src
 config.py
 pipeline.db
 todo.txt
+imgur-api-key.txt
