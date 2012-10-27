@@ -47,6 +47,8 @@ $ ->
 
     $(window).keydown (event) ->
 
+        return if event.shiftKey or event.ctrlKey
+
         # Set up image navigation using arrows and page up/down.
         if event.which in [33, 37]
 
