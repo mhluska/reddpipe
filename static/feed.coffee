@@ -14,8 +14,8 @@ class window.Feed
         @_error = ->
 
         @_container.addClass 'feed'
+
         @_setupInfiniteScroll()
-        @_setupIndexAutoUpdate()
 
         $(window).click => @_hideModal()
         $(window).keydown (event) =>
@@ -185,7 +185,7 @@ class window.Feed
                     type: 'GET'
                     url: "http://api.imgur.com/2/image/#{hash}.json"
                     success: (data) =>
-                        deferred.resolve data.image.links.original
+                        deferred.resolve data.image?.links.original
 
                 deferred
 
@@ -203,7 +203,7 @@ class window.Feed
         deferred.done (url) =>
 
             return unless url
-            console.log "using #{data.title}"
+
             @_addImage
                 link: "http://reddit.com/#{data.permalink}"
                 title: data.title
@@ -242,15 +242,11 @@ class window.Feed
 
         $(window).scroll =>
 
-            return if @_loading
+            if window.scrollY is 0
+                @_showIndex = 0
 
-            return if (@_imageYPos.length - @_showIndex) > @_loadThreshold
-
-            @_loadUrls()
-
-    _setupIndexAutoUpdate: ->
-
-        $(window).scroll =>
+            else if window.scrollY is $(document).height() - $(window).height()
+                @_showIndex = @_imageYPos.length - 1
 
             if window.scrollY > @_imageYPos[@_showIndex + 1]
                 @_showIndex += 1
@@ -258,3 +254,7 @@ class window.Feed
             else if window.scrollY < @_imageYPos[@_showIndex]
                 @_showIndex -= 1
 
+            return if @_loading
+            return if (@_imageYPos.length - @_showIndex) > @_loadThreshold
+
+            @_loadUrls()
