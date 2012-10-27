@@ -157,13 +157,7 @@ class window.Feed
                     continue unless deferred
 
                     foundImage = true
-                    deferred.done (url) =>
-
-                        return unless url
-                        @_addImage
-                            link: "http://reddit.com/#{link.data.permalink}"
-                            title: link.data.title
-                            url: url
+                    @_addImageOnDone deferred, link.data
 
                 @_error 'No images found.' unless foundImage
 
@@ -203,6 +197,17 @@ class window.Feed
         @_count = 0
         @_after = null
         @_resultsPerPage = 25
+
+    _addImageOnDone: (deferred, data) ->
+
+        deferred.done (url) =>
+
+            return unless url
+            console.log "using #{data.title}"
+            @_addImage
+                link: "http://reddit.com/#{data.permalink}"
+                title: data.title
+                url: url
 
     _addImage: (data) ->
 
