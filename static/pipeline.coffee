@@ -26,27 +26,6 @@ loadImages = (field, feed, update = true) ->
 
 $ ->
 
-    # Load most popular subreddits.
-    $.ajax
-        type: 'GET'
-        url: "http://reddit.com/reddits.json"
-        dataType: 'jsonp'
-        jsonp: 'jsonp'
-        success: (result) ->
-
-            data = subreddits: []
-
-            for entry in result.data.children.slice 0, 10
-                url = entry.data.url.substr 0, entry.data.url.length - 1
-                name = url.split('/').pop()
-                data.subreddits.push
-                    'name': name
-                    'url': url
-
-            template = $('#tmpl-subreddit-list').text()
-            node = $(Mustache.render template, data)
-            node.insertBefore $('.most-searched')
-
     feed = new Feed $('#feed-wrap .feed')
     feed.error -> field.addClass 'error'
 
@@ -61,18 +40,11 @@ $ ->
 
             return unless ready
             loadImages field, feed
+            field.blur()
 
             ready = false
             setTimeout ( -> ready = true), 2000
 
-    # On load of Facebook like button, show tooltip.
-    $('fb-like').on 'load', ->
-
-        @width 100
-        tooltip = $('<div class="tooltip"></div>')
-        tooltip.appendTo document.body
-        console.log 'loaded'
-    
     $(window).keydown (event) ->
 
         # Set up image navigation using arrows and page up/down.

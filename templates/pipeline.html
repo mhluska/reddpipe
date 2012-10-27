@@ -67,17 +67,5 @@
                 </div>
             </div>
         </script>
-
-        <script id="tmpl-subreddit-list" type="text/tmpl">
-            <p class="most-popular">
-                Most popular subreddits —
-                {{ '{{#subreddits}}' }}
-                    <span class="count-tag">
-                        <a href="{{ request.headers['X-SCRIPT-NAME'] }}{{ '{{url}}' }}">{{ '{{name}}' }}</a>
-                    </span>
-                {{ '{{/subreddits}}' }}
-            </p>
-        </script>
-
     </body>
 </html>
