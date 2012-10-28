@@ -13,17 +13,52 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
-h1, h2, p {
+input, td, tr, h1, h2, p, ul, li {
 
     margin: 0;
     padding: 0;
 }
 
+h2, h3 {
+
+    font-weight: normal;
+}
+
+h1 {
+    font-size: 1.8em;
+}
+
+h2 {
+
+    font-size: 1.4em;
+    margin: 0 0 0.9em 0; 
+}
+
+h3 {
+
+    font-size: 1.2em;
+    margin: 0 0 0.4em 0; 
+}
+
+table {
+
+    border-collapse: collapse;
+    margin: 0 0 1.4em 0;
+}
+
+td {
+
+    padding: 0.1em 0;
+}
+
+table, p {
+
+    font-size: 1em; 
+    color: #555;
+}
+
 p {
 
-    display: block;
-    font-size: 0.8em;
-    color: #999;
     margin-bottom: 12px;
 }
 
@@ -35,6 +70,33 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+
+ul {
+
+    list-style: none;
+}
+
+kbd {
+
+	display: inline-block;
+	margin: 0 0.1em;
+	padding: 0.1em 0.6em;
+	line-height: 1.4;
+	color: #222;
+	border: 1px solid rgb(204, 204, 204);
+	background-color: rgb(247, 247, 247);
+
+	text-shadow: 0 1px 0 #fff;
+
+	box-shadow: 0px 1px 0px rgba(0,0,0,0.2), inset 0px 0px 0px 2px #fff;
+	-moz-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2), 0 0 0 2px #fff inset;
+	-webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2), 0 0 0 2px #fff inset;
+
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 }
 
 .overlay {
@@ -75,30 +137,35 @@ a:hover {
 
 #feed-wrap {
 
+    font-size: 0.8em;
     width: 500px;
 }
 
+#feed-wrap .controls .action {
+    
+    width: 200px;
+}
+
 #feed-wrap .header {
+
     overflow: auto;
     height: 120px;
 }
 
 #feed-wrap .header .title {
+
     float: left;
     width: 300px;
 }
 
-#feed-wrap .header .title h1 {
+#feed-wrap .header h1 {
 
-    font-size: 1.3em;
-    margin-bottom: 5px;
+    margin-bottom: 0.2em;
 }
 
-#feed-wrap .header .title h2 {
+#feed-wrap .header h2 {
 
-    font-size: 0.9em;
-    margin-bottom: 20px;
-    font-weight: normal;
+    font-size: 1.3em;
 }
 
 #feed-wrap .like-wrap {
@@ -237,13 +304,10 @@ a:hover {
 
 #feed-wrap .copy-link {
 
-    margin: 20px 0 10px 0;
     border: 1px solid #ccc;
     background-color: #f9f9f9;
     padding: 4px 5px;
-    color: #555;
-    font-size: 0.7em;
-    width: 130px;
+    width: 160px;
 
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
@@ -252,8 +316,9 @@ a:hover {
 
 #feed-wrap .image-wrap {
 
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 40px;
+    padding-bottom: 1em;
+    margin-bottom: 4em; 
+    border-bottom: 1px solid #ccc;
 }
 
 #feed-wrap .image-wrap img {
@@ -262,16 +327,20 @@ a:hover {
     width: 100%;
 }
 
+#feed-wrap .image-wrap .title {
+
+    font-weight: bold;
+}
+
 #feed-wrap .image-wrap .buttons input,
 #feed-wrap .image-wrap .buttons a {
 
+    color: #555;
     margin-right: 10px;
 }
 
 #feed-wrap .image-wrap .buttons a {
 
-    color: #777;
-    font-size: 0.7em;
     text-decoration: none;
 }
 
@@ -289,16 +358,19 @@ a:hover {
     background-color: #fff;
 }
 
-#feed-wrap .title {
-
-    font-size: 1.1em;
-}
-
 #feed-wrap .loading {
 
-    height: 100px;
+    font-size: 1.5em;
+    color: #aaa;
 }
 
-#feed-wrap .count-tag {
+#feed-wrap .subreddit-list .count-tag {
+
+    display: inline;
     margin-right: 5px;
+}
+
+#feed-wrap .subreddit-list .count-tag span {
+    
+    color: #999;
 }

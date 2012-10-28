@@ -31,7 +31,6 @@
 
 
         <div id="feed-wrap">
-
             <div class="header">
                 <div class="like-wrap">
                     <iframe class="fb-like" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Freddpipe.com&amp;send=false&amp;layout=box_count&amp;width=55&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=90&amp;appId=510514888967929" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:55px; height:90px;" allowTransparency="true"></iframe>
@@ -43,23 +42,53 @@
                 </div>
             </div>
 
-            <p>
-                Navigate — left/right arrows<br />
-                Maximize image — press c<br />
-                Maximize image with caption — press shift + c<br />
-                Select image URL — press v<br />
-            </p>
-            <p class="most-searched">
-                {%- if subreddits -%}
-                    Most Pipelined subreddits —
-                {%- endif -%}
+            <table class="controls">
+                <tr>
+                    <td class="action">
+                        Navigate
+                    </td>
+                    <td>
+                        <kbd>&#9668;</kbd><kbd>&#9658;</kbd>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="action">
+                        Maximize image
+                    </td>
+                    <td>
+                        <kbd>c</kbd>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="action">
+                        Maximize image with caption
+                    </td>
+                    <td>
+                        <kbd>shift</kbd> + <kbd>c</kbd>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="action">
+                        Select image URL
+                    </td>
+                    <td>
+                        <kbd>v</kbd>
+                    </td>
+                </tr>
+            </table>
+
+            {%- if subreddits -%}
+                <h3>Most Pipelined subreddits</h3>
+                <ul class="subreddit-list">
                 {% for subreddit in subreddits %}
-                    <span class="count-tag">
+                    <li class="count-tag">
                         <a href="{{ url_for('index', name=subreddit['name']) }}">{{ subreddit['name'] }}</a>
                         <span>{{ subreddit['hits'] }}</span>
-                    </span>
+                    </li>
                 {% endfor %}
-            </p>
+                </ul>
+            {%- endif -%}
+
             <form class="settings" action="">
                 <input class="subreddit-field" type="text" value="{{ name }}" />
                 <input class="load-subreddit" type="submit" value="GO!" />

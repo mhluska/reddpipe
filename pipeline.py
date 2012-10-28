@@ -26,7 +26,7 @@ def connect_db():
 def most_pipelined_subreddits():
 
     cursor = g.db.execute('select name, hits from subreddit order by hits \
-            desc limit 10')
+            desc limit 15')
 
     return [dict(name=row[0], hits=row[1]) for row in cursor.fetchall()]
 
