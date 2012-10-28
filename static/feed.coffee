@@ -66,7 +66,7 @@ class window.Feed
 
         if posBottom > $(window).scrollTop() + $(window).height()
             input.get(0).scrollIntoView false
-            $(window).scrollTop $(window).scrollTop() + 50
+            $(window).scrollTop $(window).scrollTop() + 30
             @_showIndex += 1
 
         input.select()
