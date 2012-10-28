@@ -68,7 +68,7 @@ $ ->
 
             event.preventDefault()
 
-            feed.overlayCaption = if event.shiftKey then false else true
+            feed.overlayCaption = if event.shiftKey then true else false
             feed.toggleOverlay()
 
     field.focus -> @select()

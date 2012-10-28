@@ -258,7 +258,7 @@ class window.Feed
             node.find('.showModal').click (event) =>
                 event.preventDefault()
                 event.stopPropagation()
-                @overlayCaption = if event.shiftKey then false else true
+                @overlayCaption = if event.shiftKey then true else false
                 @toggleOverlay image
 
             node.insertBefore @_loadingNode
