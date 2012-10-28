@@ -253,7 +253,6 @@ a:hover {
 #feed-wrap .image-wrap {
 
     border-bottom: 1px solid #ddd;
-    padding-bottom: 7px;
     margin-bottom: 40px;
 }
 
@@ -292,7 +291,7 @@ a:hover {
 
 #feed-wrap .title {
 
-    font-size: 1.2em;
+    font-size: 1.1em;
 }
 
 #feed-wrap .loading {
