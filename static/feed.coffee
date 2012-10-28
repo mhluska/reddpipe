@@ -16,10 +16,7 @@ class window.Feed
         @_container.addClass 'feed'
 
         @_setupInfiniteScroll()
-
-        $(window).click => @_hideModal()
-        $(window).keydown (event) =>
-            @_hideModal() if event.which in [13, 27]
+        @_setupOverlay()
 
     setSubreddit: (@subreddit) ->
 
@@ -58,27 +55,33 @@ class window.Feed
 
         @_showImage()
 
-    toggleModal: do ->
+    toggleOverlay: do ->
 
         placeholder = null
         maxedImage = null
 
-        overlay = $('<div class="overlay"></div>')
-    
         (image) ->
 
             # If we're at the top of the page, use the first image for
             # convenience.
             @showNext() if @_showIndex is 0
-            image = @_pos2image[@_imageYPos[@_showIndex]] unless image
+
+            if image
+                # We only do this lame DOM read if the user clicks on an
+                # arbitrary image.
+                imageData = @_pos2image[@_makePos $(image).position().top]
+            else
+                imageData = @_pos2image[@_imageYPos[@_showIndex]]
+
+            image = imageData.image
             return unless image
 
             image = $(image)
 
-            if @_showingModal
+            if @_showingOverlay
                 # Just put the image back in its spot.
                 placeholder.replaceWith maxedImage
-                overlay.remove()
+                @_overlay.remove()
 
             else
                 # Replace the image with a placeholder of the same size.
@@ -90,16 +93,46 @@ class window.Feed
 
                 # Move the image to the document root and make it as big as 
                 # possible.
-                overlay.appendTo document.body
-                overlay.append image
-                
+                @_overlay.appendTo document.body
+                @_populateOverlay imageData
+
                 maxedImage = image
 
-            @_showingModal = !@_showingModal
+            @_showingOverlay = !@_showingOverlay
 
-    _hideModal: ->
+    _makePos: (val) -> Math.floor(val) - @_imageOffset
 
-        @toggleModal() if @_showingModal
+    _setupOverlay: ->
+
+        @_overlay = $(Mustache.render $('#tmpl-overlay').text())
+
+        title = @_overlay.find('.title')
+        image = @_overlay.find('.image-wrap')
+
+        $(window).click => @_hideOverlay()
+        $(window).keydown (event) =>
+
+            @_hideOverlay() if event.which in [13, 27]
+
+            return unless @_showingOverlay
+
+            title.fadeToggle 100 if event.which is 86
+
+    _populateOverlay: (imageData) ->
+
+        imageWrap = @_overlay.find('.image-wrap')
+        imageWrap.append imageData.image
+
+        captionNode = @_overlay.find('.caption')
+        if @overlayCaption
+            captionNode.text imageData.title
+            captionNode.show()
+        else
+            captionNode.hide()
+
+    _hideOverlay: ->
+
+        @toggleOverlay() if @_showingOverlay
 
     _showImage: ->
 
@@ -109,10 +142,10 @@ class window.Feed
 
         $(window).scrollTop pos
 
-        if @_showingModal
+        if @_showingOverlay
 
-            @toggleModal()
-            @toggleModal()
+            @toggleOverlay()
+            @toggleOverlay()
 
     _resetImageIndices: ->
 
@@ -121,8 +154,8 @@ class window.Feed
         @_showIndex = 0
 
         # Used for maximizing an image with spacebar is pressed
-        @_pos2image = 0: null
-        @_showingModal = false
+        @_pos2image = 0: image: null
+        @_showingOverlay = false
 
     _loadUrls: ->
 
@@ -225,13 +258,14 @@ class window.Feed
             node.find('.showModal').click (event) =>
                 event.preventDefault()
                 event.stopPropagation()
-                @toggleModal image
+                @overlayCaption = if event.shiftKey then false else true
+                @toggleOverlay image
 
             node.insertBefore @_loadingNode
 
-            pos = Math.floor $(image).position().top - @_imageOffset
+            pos = @_makePos $(image).position().top
             @_imageYPos.push pos
-            @_pos2image[pos] = image
+            @_pos2image[pos] = image: image, title: data.title
 
         image.src = data.url
 

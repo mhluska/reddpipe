@@ -36,7 +36,11 @@
                 </div>
             </div>
 
-            <p>Navigate — left/right arrows<br />Maximize image — press c</p>
+            <p>
+                Navigate — left/right arrows<br />
+                Maximize image — press c<br />
+                Maximize image without caption — press shift + c<br />
+            </p>
             <p class="most-searched">
                 {%- if subreddits -%}
                     Most Pipelined subreddits —
@@ -64,6 +68,14 @@
                     <a href="{{ '{{link}}' }}" target="_blank">view on reddit</a>
                     <a class="showModal" href="javascript: void(0)">maximize (press c)</a>
                     <a href="{{ '{{url}}' }}" target="_blank">raw image</a>
+                </div>
+            </div>
+        </script>
+
+        <script id="tmpl-overlay" type="text/tmpl">
+            <div class="overlay">
+                <div class="image-wrap">
+                    <h1 class="caption"></h1>
                 </div>
             </div>
         </script>

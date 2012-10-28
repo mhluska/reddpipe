@@ -47,7 +47,10 @@ $ ->
 
     $(window).keydown (event) ->
 
-        return if event.shiftKey or event.ctrlKey
+        # Don't mess with events when shift/ctrl and arrows/paging are
+        # involved (overrides browser functionality).
+        if event.which in [33, 34, 37, 39]
+            return if event.shiftKey or event.ctrlKey
 
         # Set up image navigation using arrows and page up/down.
         if event.which in [33, 37]
@@ -64,9 +67,11 @@ $ ->
         else if event.which is 67
 
             event.preventDefault()
-            feed.toggleModal()
 
-    field.click -> @select()
+            feed.overlayCaption = if event.shiftKey then false else true
+            feed.toggleOverlay()
+
+    field.focus -> @select()
 
     # Prevents hotkeys from taking effect while typing in the search box.
     field.keydown (event) -> event.stopPropagation()
