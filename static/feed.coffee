@@ -55,6 +55,22 @@ class window.Feed
 
         @_showImage()
 
+    selectURL: ->
+
+        # If we're at the top of the page, use the first image for
+        # convenience.
+        @_showIndex += 1 if @_showIndex is 0
+
+        input = @_pos2image[@_imageYPos[@_showIndex]].urlBox
+        posBottom = input.position().top + input.height()
+
+        if posBottom > $(window).scrollTop() + $(window).height()
+            input.get(0).scrollIntoView false
+            $(window).scrollTop $(window).scrollTop() + 50
+            @_showIndex += 1
+
+        input.select()
+
     toggleOverlay: do ->
 
         placeholder = null
@@ -261,11 +277,16 @@ class window.Feed
                 @overlayCaption = if event.shiftKey then true else false
                 @toggleOverlay image
 
+            node.find('.copy-link').mouseup (event) -> @select()
+
             node.insertBefore @_loadingNode
 
             pos = @_makePos $(image).position().top
             @_imageYPos.push pos
-            @_pos2image[pos] = image: image, title: data.title
+            @_pos2image[pos] =
+                image: image
+                title: data.title
+                urlBox: node.find('.copy-link')
 
         image.src = data.url
 

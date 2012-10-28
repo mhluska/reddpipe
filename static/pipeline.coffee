@@ -66,10 +66,18 @@ $ ->
         # Set up image modal popup.
         else if event.which is 67
 
+            return if event.ctrlKey
+
             event.preventDefault()
 
             feed.overlayCaption = if event.shiftKey then true else false
             feed.toggleOverlay()
+
+        # Select image URL.
+        else if event.which is 86
+
+            event.preventDefault()
+            feed.selectURL()
 
     field.focus -> @select()
 

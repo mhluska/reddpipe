@@ -40,6 +40,7 @@
                 Navigate — left/right arrows<br />
                 Maximize image — press c<br />
                 Maximize image with caption — press shift + c<br />
+                Select image URL — press v<br />
             </p>
             <p class="most-searched">
                 {%- if subreddits -%}
@@ -64,6 +65,7 @@
             <div class="image-wrap">
                 <a class="image shadow showModal" href="javascript: void(0)" target="_blank"></a>
                 <h2 class="title">{{ '{{title}}' }}</h2>
+                <input class="copy-link" type="text" value="{{ '{{url}}' }}" />
                 <div class="buttons">
                     <a href="{{ '{{link}}' }}" target="_blank">view on reddit</a>
                     <a class="showModal" href="javascript: void(0)">maximize (press c)</a>

@@ -242,6 +242,19 @@ a:hover {
     margin-bottom: 40px;
 }
 
+#feed-wrap .copy-link {
+
+    margin: 20px 0 10px 0;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 5px;
+    color: #555;
+
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
 #feed-wrap .image-wrap img {
 
     float: left;
