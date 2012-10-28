@@ -31,7 +31,7 @@ h1 {
 h2 {
 
     font-size: 1.4em;
-    margin: 0 0 0.9em 0; 
+    margin: 0 0 0.5em 0; 
 }
 
 h3 {
@@ -307,7 +307,7 @@ kbd {
     border: 1px solid #ccc;
     background-color: #f9f9f9;
     padding: 4px 5px;
-    width: 160px;
+    width: 130px;
 
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
@@ -329,7 +329,14 @@ kbd {
 
 #feed-wrap .image-wrap .title {
 
+    font-size: 1.2em;
     font-weight: bold;
+}
+
+#feed-wrap .copy-link,
+#feed-wrap .image-wrap .buttons {
+
+    font-size: 0.9em;
 }
 
 #feed-wrap .image-wrap .buttons input,
@@ -354,7 +361,7 @@ kbd {
     padding: 1%;
     border: none;
     display: inline-block;
-    margin-bottom: 10px;
+    margin-bottom: 1.5em;
     background-color: #fff;
 }
 
