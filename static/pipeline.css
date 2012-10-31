@@ -48,7 +48,7 @@ table {
 
 td {
 
-    padding: 0.3em 0;
+    padding: 0.2em 0;
 }
 
 table, p {
@@ -141,6 +141,11 @@ kbd {
     width: 500px;
 }
 
+#feed-wrap .arrow.keys kbd {
+
+    float: left;
+}
+
 #feed-wrap .controls .action {
     
     width: 200px;
@@ -148,7 +153,28 @@ kbd {
 
 #feed-wrap .controls .keys {
     
+    font-size: 0.9em;
     width: 200px;
+}
+
+#feed-wrap .controls .arrow-left,
+#feed-wrap .controls .arrow-right {
+
+    width: 0; 
+    height: 0; 
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    margin: 4px 0;
+}
+
+#feed-wrap .controls .arrow-left {
+
+    border-right: 6px solid #777;
+}
+
+#feed-wrap .controls .arrow-right {
+
+    border-left: 6px solid #777;
 }
 
 #feed-wrap .header {
