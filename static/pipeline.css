@@ -48,7 +48,7 @@ table {
 
 td {
 
-    padding: 0.1em 0;
+    padding: 0.3em 0;
 }
 
 table, p {
@@ -84,10 +84,9 @@ kbd {
 	margin: 0 0.1em;
 	padding: 0.1em 0.6em;
 	line-height: 1.4;
-	color: #222;
 	border: 1px solid rgb(204, 204, 204);
 	background-color: rgb(247, 247, 247);
-    font-size: 1.1em;
+    font-family: inherit;
 
 	text-shadow: 0 1px 0 #fff;
 
