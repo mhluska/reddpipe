@@ -5,6 +5,8 @@ class window.Feed
         @_resetImageIndices()
         @_resetPagination()
 
+        @feedOffset = 0
+
         @_container = $(container)
         @_containerWidth = @_container.width()
         @_loadThreshold = 5
@@ -41,7 +43,7 @@ class window.Feed
 
         return if @_showIndex is 0
 
-        if window.scrollY is @_imageYPos[@_showIndex]
+        if window.scrollY is @_imageYPos[@_showIndex] + @feedOffset
             @_showIndex -= 1
 
         @_showImage()
@@ -157,7 +159,7 @@ class window.Feed
 
         return unless pos?
 
-        $(window).scrollTop pos
+        $(window).scrollTop if pos is 0 then pos else pos + @feedOffset
 
         if @_showingOverlay
 

@@ -90,8 +90,10 @@ $ ->
         showing = false
 
         ->
-            elem.css 'height', if showing then 0 else maxHeight
+            height = if showing then 0 else maxHeight
+            elem.css 'height', height
             showing = !showing
+            feed.feedOffset = height
 
     # Prevents hotkeys from taking effect while typing in the search box.
     field.keydown (event) -> event.stopPropagation()
