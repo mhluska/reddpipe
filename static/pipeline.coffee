@@ -66,7 +66,7 @@ $ ->
         # Set up image modal popup.
         else if event.which is 67
 
-            return if event.ctrlKey
+            return if event.ctrlKey or event.metaKey
 
             event.preventDefault()
 
