@@ -50,7 +50,7 @@ $ ->
         # Don't mess with events when shift/ctrl and arrows/paging are
         # involved (overrides browser functionality).
         if event.which in [33, 34, 37, 39]
-            return if event.shiftKey or event.ctrlKey
+            return if event.shiftKey or event.ctrlKey or event.metaKey
 
         # Set up image navigation using arrows and page up/down.
         if event.which in [33, 37, 65]
@@ -92,8 +92,9 @@ $ ->
         ->
             height = if showing then 0 else maxHeight
             elem.css 'height', height
-            showing = !showing
             feed.feedOffset = height
+
+            showing = !showing
 
     # Prevents hotkeys from taking effect while typing in the search box.
     field.keydown (event) -> event.stopPropagation()

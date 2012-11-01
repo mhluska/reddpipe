@@ -2,16 +2,15 @@ class window.Feed
 
     constructor: (container) ->
 
+        @feedOffset = 0
+
         @_resetImageIndices()
         @_resetPagination()
-
-        @feedOffset = 0
 
         @_container = $(container)
         @_containerWidth = @_container.width()
         @_loadThreshold = 5
         @_imageOffset = 20
-        @_noImages = false
 
         # A callback to execute if the feed encounters an error.
         @_error = ->
@@ -44,6 +43,7 @@ class window.Feed
         return if @_showIndex is 0
 
         if window.scrollY is @_imageYPos[@_showIndex] + @feedOffset
+
             @_showIndex -= 1
 
         @_showImage()
@@ -159,7 +159,7 @@ class window.Feed
 
         return unless pos?
 
-        $(window).scrollTop if pos is 0 then pos else pos + @feedOffset
+        $(window).scrollTop if pos is 0 then 0 else pos + @feedOffset
 
         if @_showingOverlay
 
@@ -175,6 +175,8 @@ class window.Feed
         # Used for maximizing an image with spacebar is pressed
         @_pos2image = 0: image: null
         @_showingOverlay = false
+
+        @_noImages = false
 
     _loadUrls: ->
 
@@ -288,7 +290,7 @@ class window.Feed
 
             node.insertBefore @_loadingNode
 
-            pos = @_makePos $(image).position().top
+            pos = @_makePos $(image).position().top - @feedOffset
             @_imageYPos.push pos
             @_pos2image[pos] =
                 image: image
