@@ -145,7 +145,6 @@ kbd {
 #feed-wrap .hidden {
 
     overflow: hidden;
-    margin-bottom: 0.5em;
 
 	-webkit-transition: all 0.2s ease-out;
 	-moz-transition: all 0.2s ease-out;
@@ -157,14 +156,15 @@ kbd {
 	margin-bottom: 1.5em;
 }
 
-#feed-wrap .help {
-    
-	margin-bottom: 0.2em;
-}
-
-#feed-wrap .arrow.keys kbd {
+#feed-wrap .arrow.keys kbd,
+#feed-wrap .arrow.keys span {
 
     float: left;
+}
+
+#feed-wrap .arrow.keys span {
+
+	padding: 2px 5px 0 5px;
 }
 
 #feed-wrap .controls .action {

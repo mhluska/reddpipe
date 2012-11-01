@@ -53,12 +53,12 @@ $ ->
             return if event.shiftKey or event.ctrlKey
 
         # Set up image navigation using arrows and page up/down.
-        if event.which in [33, 37]
+        if event.which in [33, 37, 65]
 
             event.preventDefault()
             feed.showPrev()
 
-        else if event.which in [34, 39]
+        else if event.which in [34, 39, 68]
 
             event.preventDefault()
             feed.showNext()
