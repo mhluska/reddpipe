@@ -192,8 +192,6 @@ class window.Feed
         params = "limit=#{@_resultsPerPage}&count=#{@_count}"
         params += "&after=#{@_after}" if @_after
 
-        console.log params
-
         # TODO: Fix error from jQuery when data type doesn't come back as json.
         $.ajax
             type: 'GET'
