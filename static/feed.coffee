@@ -9,6 +9,7 @@ class window.Feed
         @_containerWidth = @_container.width()
         @_loadThreshold = 5
         @_imageOffset = 20
+        @_noImages = false
 
         # A callback to execute if the feed encounters an error.
         @_error = ->
@@ -177,6 +178,9 @@ class window.Feed
 
         return if @_loading
 
+        # TODO: Suggest random subreddit.
+        return @_error 'Congratulations, you reached the end!' if @_noImages
+
         @_loading = true
         @_loadingNode.text 'loading'
         @_count += @_resultsPerPage
@@ -185,6 +189,8 @@ class window.Feed
 
         params = "limit=#{@_resultsPerPage}&count=#{@_count}"
         params += "&after=#{@_after}" if @_after
+
+        console.log params
 
         # TODO: Fix error from jQuery when data type doesn't come back as json.
         $.ajax
@@ -197,6 +203,7 @@ class window.Feed
             success: (data) =>
 
                 @_after = data.data.after
+                @_noImages = true unless @_after?
 
                 foundImage = false
                 for link in data.data.children
