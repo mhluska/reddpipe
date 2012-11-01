@@ -7,7 +7,7 @@ body, html {
 
 body {
 
-    padding: 40px;
+    padding: 40px 0;
     color: #333;
     background: #f7f5f5 url(images/paper.jpg) repeat;
     font-family: 'Open Sans', sans-serif;
@@ -137,8 +137,29 @@ kbd {
 
 #feed-wrap {
 
+	margin: 0 auto;
     font-size: 0.8em;
     width: 500px;
+}
+
+#feed-wrap .hidden {
+
+    overflow: hidden;
+    margin-bottom: 0.5em;
+
+	-webkit-transition: all 0.2s ease-out;
+	-moz-transition: all 0.2s ease-out;
+	transition: all 0.2s ease-out;
+}
+
+#feed-wrap .hidden p {
+
+	margin-bottom: 1.5em;
+}
+
+#feed-wrap .help {
+    
+	margin-bottom: 0.2em;
 }
 
 #feed-wrap .arrow.keys kbd {
@@ -169,18 +190,17 @@ kbd {
 
 #feed-wrap .controls .arrow-left {
 
-    border-right: 6px solid #777;
+    border-right: 6px solid #555;
 }
 
 #feed-wrap .controls .arrow-right {
 
-    border-left: 6px solid #777;
+    border-left: 6px solid #555;
 }
 
 #feed-wrap .header {
 
-    overflow: auto;
-    height: 120px;
+    height: 130px;
 }
 
 #feed-wrap .header .title {
@@ -247,6 +267,7 @@ kbd {
     overflow: auto;
     padding-bottom: 40px;
     margin-top: 15px;
+	font-size: 1.2em;
 }
 
 #feed-wrap .search-bar {

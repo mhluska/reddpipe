@@ -81,6 +81,18 @@ $ ->
 
     field.focus -> @select()
 
+    # Animates the instructions area.
+    $('.help').click do ->
+
+        elem = $('.help').next()
+        maxHeight = elem.height()
+        elem.height(0)
+        showing = false
+
+        ->
+            elem.css 'height', if showing then 0 else maxHeight
+            showing = !showing
+
     # Prevents hotkeys from taking effect while typing in the search box.
     field.keydown (event) -> event.stopPropagation()
             
