@@ -43,7 +43,6 @@ h3 {
 table {
 
     border-collapse: collapse;
-    margin: 0 0 1.4em 0;
 }
 
 td {
@@ -145,6 +144,7 @@ kbd {
 #feed-wrap .hidden {
 
     overflow: hidden;
+	margin-bottom: 3em;
 
 	-webkit-transition: all 0.2s ease-out;
 	-moz-transition: all 0.2s ease-out;
@@ -200,7 +200,7 @@ kbd {
 
 #feed-wrap .header {
 
-    height: 130px;
+    height: 95px;
 }
 
 #feed-wrap .header .title {
