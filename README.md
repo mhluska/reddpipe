@@ -1,10 +1,13 @@
-Pipeline
-========
+Reddit Pipeline
+===============
 
-#### Reddit image feed ####
-Ever wanted to endlessly scroll through pictures of cute animals? Now you can!
+#### The fast, mouse-free way to browse image subreddits. ####
+
+Reddit Pipeline takes away all the noise of Reddit, putting the focus on its 
+big, beautiful images. You can control everything with the keyboard, freeing 
+your other hand for whatever.
 
 #### Usage ####
     git clone https://github.com/mhluska/Pipeline.git && cd Pipeline
-    ./build.sh
-    python pipeline.py
+    bin/build
+    node server/pipeline.js

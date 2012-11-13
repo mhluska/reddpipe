@@ -1,0 +1,1 @@
+ln -fs ../../../node_modules/grunt-requirejs/node_modules/requirejs/require.js src/js/lib/
