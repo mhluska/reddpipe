@@ -10,4 +10,4 @@ your other hand for whatever.
 #### Usage ####
     git clone https://github.com/mhluska/Pipeline.git pipeline && cd pipeline
     bin/build
-    node server/pipeline.js
+    npm start
