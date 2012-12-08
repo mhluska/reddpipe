@@ -3,8 +3,15 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks 'grunt-coffeelint'
     grunt.loadNpmTasks 'grunt-requirejs'
     grunt.loadNpmTasks 'grunt-shell'
+    grunt.loadNpmTasks 'grunt-jade'
 
     grunt.initConfig
+
+        shell:
+            setup:   command: 'grunt/task/setup'
+            link:    command: 'grunt/task/link'
+            compile: command: 'grunt/task/compile'
+
         coffeelint:
             app:
                 files: [
@@ -15,10 +22,11 @@ module.exports = (grunt) ->
                 ]
                 options: grunt.file.readJSON 'coffeelint.json'
 
-        shell:
-            setup:   command: 'grunt/task/setup'
-            link:    command: 'grunt/task/link'
-            compile: command: 'grunt/task/compile'
+        jade:
+            html:
+                src: ['server/views/templates/*.jade']
+                dest: 'src/templates'
+                options: client: false
 
         requirejs:
             almond: true
@@ -33,4 +41,4 @@ module.exports = (grunt) ->
             preserveLicenseComments: false
             logLevel: 0
 
-    grunt.registerTask 'default', 'shell coffeelint requirejs'
+    grunt.registerTask 'default', 'shell coffeelint jade requirejs'

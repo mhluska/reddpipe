@@ -1,15 +1,18 @@
 define [
 
     'lib/backbone'
-    'models/pipeline'
+    'models/image'
+    'views/image'
     
-], (Backbone, Pipeline) ->
+], (Backbone, ImageModel, ImageView) ->
 
     View = Backbone.View.extend
 
-        model: new Pipeline()
+        el: $('#pipeline')
 
         initialize: ->
+
+            imageView = new ImageView model: new ImageModel()
 
         render: ->
 

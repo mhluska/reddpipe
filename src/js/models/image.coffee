@@ -6,4 +6,6 @@ define [
 
     Backbone.Model.extend
 
+        tagName: 'div'
+
         initialize: ->

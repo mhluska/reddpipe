@@ -3,6 +3,7 @@
 # TODO: Can we build AMD module versions of these libraries to prevent having
 # to shim?
 require.config
+    paths: 'templates': 'templates'
     shim:
         'lib/zepto':      exports: '$'
         'lib/underscore': exports: '_'

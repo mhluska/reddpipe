@@ -4,13 +4,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-coffeelint');
   grunt.loadNpmTasks('grunt-requirejs');
   grunt.loadNpmTasks('grunt-shell');
+  grunt.loadNpmTasks('grunt-jade');
   grunt.initConfig({
-    coffeelint: {
-      app: {
-        files: ['src/js/*.coffee', 'server/*.coffee', 'server/routes/*.coffee', 'server/public/js/*.coffee'],
-        options: grunt.file.readJSON('coffeelint.json')
-      }
-    },
     shell: {
       setup: {
         command: 'grunt/task/setup'
@@ -20,6 +15,21 @@ module.exports = function(grunt) {
       },
       compile: {
         command: 'grunt/task/compile'
+      }
+    },
+    coffeelint: {
+      app: {
+        files: ['src/js/*.coffee', 'server/*.coffee', 'server/routes/*.coffee', 'server/public/js/*.coffee'],
+        options: grunt.file.readJSON('coffeelint.json')
+      }
+    },
+    jade: {
+      html: {
+        src: ['server/views/templates/*.jade'],
+        dest: 'src/templates',
+        options: {
+          client: false
+        }
       }
     },
     requirejs: {
@@ -40,5 +50,5 @@ module.exports = function(grunt) {
       logLevel: 0
     }
   });
-  return grunt.registerTask('default', 'shell coffeelint requirejs');
+  return grunt.registerTask('default', 'shell coffeelint jade requirejs');
 };
