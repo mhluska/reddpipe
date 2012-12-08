@@ -18,7 +18,11 @@ html
         link(rel='stylesheet', type='text/css', href='/css/pipeline.css')
         block stylesheets
 
-        script(src='js/pipeline.js')
+        if production
+            script(src='/js/pipeline.js')
+        else
+            script(data-main='/js/src/pipeline.js', src='/js/require.js')
+
         block scripts
     body
         block body

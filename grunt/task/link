@@ -1,1 +1,5 @@
 #!/bin/bash
+
+ln -fs ../../../sub/zepto/dist/zepto.js src/js/lib/
+ln -fs ../../../sub/underscore/underscore.js src/js/lib/
+ln -fs ../../../sub/backbone/backbone.js src/js/lib/

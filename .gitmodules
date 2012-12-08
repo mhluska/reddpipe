@@ -1,0 +1,9 @@
+[submodule "sub/backbone"]
+	path = sub/backbone
+	url = https://github.com/documentcloud/backbone
+[submodule "sub/underscore"]
+	path = sub/underscore
+	url = https://github.com/documentcloud/underscore.git
+[submodule "sub/zepto"]
+	path = sub/zepto
+	url = https://github.com/madrobby/zepto.git
