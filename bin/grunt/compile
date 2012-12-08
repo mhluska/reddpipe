@@ -1,2 +1,0 @@
-coffee -c $(find src/js -type f -name '*.coffee')
-coffee -c $(find server -type f -name '*.coffee')

@@ -9,25 +9,24 @@ module.exports = (grunt) ->
             app:
                 files: [
                     'src/js/*.coffee'
-                    'app/*.coffee'
+                    'server/*.coffee'
+                    'server/routes/*.coffee'
+                    'server/public/js/*.coffee'
                 ]
                 options: grunt.file.readJSON 'coffeelint.json'
 
         shell:
-            setup:   command: 'bin/grunt/setup'
-            link:    command: 'bin/grunt/link'
-            compile: command: 'bin/grunt/compile'
+            setup:   command: 'grunt/task/setup'
+            link:    command: 'grunt/task/link'
+            compile: command: 'grunt/task/compile'
 
         requirejs:
             almond: true
-
-            modules: [name: 'feed']
+            modules: [name: 'pipeline']
             dir: 'build'
             appDir: 'src'
             baseUrl: 'js'
-
             paths: {}
-
             skipModuleInsertion: false
             optimizeAllPluginResources: true
             findNestedDependencies: true
