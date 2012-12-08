@@ -1,3 +1,0 @@
-DEBUG = False
-SECRET_KEY = '0d59f9500b5f2ffb9d413e2854af3e23ed6a7306e4e9b05f8caa421aa90d68da'
-
