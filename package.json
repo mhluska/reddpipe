@@ -4,7 +4,7 @@
     "version": "0.2.0",
     "private": true,
     "scripts": {
-        "start": "node server/pipeline"
+        "start": "node -- server/pipeline 'production'"
     },
     "dependencies": {
         "express": "3.0.2",

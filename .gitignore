@@ -4,3 +4,4 @@ node_modules
 *.js
 todo.txt
 dump.rb
+npm-debug.log
