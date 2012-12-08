@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="Reddit Pipeline is the fast, mouse-free way to browse image subreddits." />
+
+        <meta property="fb:admins" content="1471184996" />
+        <meta property="fb:app_id" content="510514888967929" />
+        <meta property="og:url" content="http://reddpipe.com/" />
+        <meta property="og:title" content="Reddit Pipeline" />
+        <meta property="og:image" content="http://reddpipe.com{{ url_for('static', filename="images/icon.jpg") }}" />
+        <meta property="og:type" content="website" />
+        <meta property="og:description" content="The fast, mouse-free way to browse image subreddits." />
+
+        <title>Reddit Pipeline</title>
+
+        <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='pipeline.css') }}" />
+        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600" />
+
+        <script>var appRoot = '{{ request.headers['X-SCRIPT-NAME'] }}';</script>
+        <script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
+        <script src="{{ url_for('static', filename='lib/mustache.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='utils.js') }}"></script>
+        <script src="{{ url_for('static', filename='feed.js') }}"></script>
+        <script src="{{ url_for('static', filename='pipeline.js') }}"></script>
+        <script src="{{ url_for('static', filename='analytics.js') }}"></script>
+    </head>
+
+    <body>
+
+
+        <div id="feed-wrap">
+            <div class="header">
+                <div class="like-wrap">
+                    <iframe class="fb-like" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Freddpipe.com&amp;send=false&amp;layout=box_count&amp;width=55&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=90&amp;appId=510514888967929" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:55px; height:90px;" allowTransparency="true"></iframe>
+                </div>
+
+                <div class="title">
+                    <h1>Reddit Pipeline</h1>
+                    <h2>The fast, mouse-free way to browse image subreddits.</h2>
+                </div>
+            </div>
+
+            <h3 class="help"><a href="javascript: void(0)">How do I use this?</a></h3>
+            <div class="hidden">
+                <p>Reddit Pipeline takes away all the noise of Reddit, putting
+                the focus on its big, beautiful images. You can control everything
+                with the keyboard, freeing your other hand for whatever. Here's
+                how:</p>
+                <table class="controls">
+                    <tr>
+                        <td class="action">
+                            Navigate
+                        </td>
+                        <td class="arrow keys">
+                            <kbd>a</kbd><kbd>d</kbd><span>or</span>
+                            <kbd><div class="arrow-left"></div></kbd><kbd><div class="arrow-right"></div></kbd>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="action">
+                            Maximize image
+                        </td>
+                        <td class="keys">
+                            <kbd>c</kbd>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="action">
+                            Maximize image with caption
+                        </td>
+                        <td class="keys">
+                            <kbd>Shift</kbd> + <kbd>c</kbd>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="action">
+                            Select image URL
+                        </td>
+                        <td class="keys">
+                            <kbd>v</kbd>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            {%- if subreddits -%}
+                <h3>Most Pipelined subreddits</h3>
+                <ul class="subreddit-list">
+                {% for subreddit in subreddits %}
+                    <li class="count-tag">
+                        <a href="{{ url_for('index', name=subreddit['name']) }}">{{ subreddit['name'] }}</a>
+                        <span>{{ subreddit['hits'] }}</span>
+                    </li>
+                {% endfor %}
+                </ul>
+            {%- endif -%}
+
+            <form class="settings" action="">
+                <input class="subreddit-field" type="text" value="{{ name }}" />
+                <input class="load-subreddit" type="submit" value="GO!" />
+            </form>
+
+            <div class="feed"></div>
+        </div>
+
+        <script id="tmpl-image-wrap" type="text/tmpl">
+            <div class="image-wrap">
+                <a class="image shadow showModal" href="javascript: void(0)" target="_blank"></a>
+                <h2 class="title">{{ '{{title}}' }}</h2>
+                <div class="buttons">
+                    <input class="copy-link" type="text" value="{{ '{{url}}' }}" />
+                    <a href="{{ '{{link}}' }}" target="_blank">view on reddit</a>
+                    <a class="showModal" href="javascript: void(0)">maximize (press c)</a>
+                    <a href="{{ '{{url}}' }}" target="_blank">raw image</a>
+                </div>
+            </div>
+        </script>
+
+        <script id="tmpl-overlay" type="text/tmpl">
+            <div class="overlay">
+                <div class="image-wrap">
+                    <h1 class="caption"></h1>
+                </div>
+            </div>
+        </script>
+    </body>
+</html>
