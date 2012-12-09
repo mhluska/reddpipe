@@ -1,14 +1,25 @@
+'use strict'
+
 define [
     
+    'lib/underscore'
     'lib/backbone'
     'text!templates/image.html'
 
-], (Backbone, imageTemplate) ->
+], (_, Backbone, imageTemplate) ->
 
     Backbone.View.extend
 
+        tagName: 'div'
+        className: 'image'
+
+        template: _.template imageTemplate
+
         initialize: ->
 
-            console.log imageTemplate
+            # @model.bind 'change', @render, @
 
-        template: imageTemplate
+        render: ->
+
+            @$el.html @template @model.toJSON()
+            @

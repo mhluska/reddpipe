@@ -3,10 +3,9 @@
 # TODO: Can we build AMD module versions of these libraries to prevent having
 # to shim?
 require.config
-    paths: 'templates': 'templates'
     shim:
-        'lib/zepto':      exports: '$'
-        'lib/underscore': exports: '_'
+        'lib/zepto': exports: '$'
+        'lib/underscore-lib': exports: '_'
         'lib/backbone':
             exports: 'Backbone'
             deps: [
@@ -16,11 +15,11 @@ require.config
 
 define [
 
+    'lib/underscore'
     'lib/backbone'
     'router'
     
-], (Backbone, Router) ->
+], (_, Backbone, Router) ->
 
     console.log 'From pipeline.coffee: Hello World!'
-
     router = new Router()
