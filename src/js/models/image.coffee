@@ -12,9 +12,7 @@ define [
 
         initialize: ->
 
-            @bind 'remove', ->
-                console.log 'destroying!'
-                @destroy()
+            @bind 'remove', -> @destroy()
 
         parse: (response) ->
 
