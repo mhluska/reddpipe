@@ -22,4 +22,9 @@ define [
         render: ->
 
             @$el.html @template @model.toJSON()
+
+            image = @$el.find 'img'
+            image.bind 'load', =>
+                @model.set 'position', image.position().top
+
             @

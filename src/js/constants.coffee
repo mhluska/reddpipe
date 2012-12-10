@@ -3,4 +3,5 @@ define ->
     class Const
 
         @baseURL: 'http://www.reddit.com'
-        @maxChunk: 50
+        @maxChunk: 25
+        @loadThreshold: 5

@@ -16,3 +16,7 @@ define [
         parse: (response) ->
 
             response.data.children
+
+        positions: ->
+
+            [0].concat @map (model) -> model.get 'position'

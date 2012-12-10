@@ -14,9 +14,10 @@ define [
 
         defaults:
             
-            subreddit: 'aww'
+            loading: false
             after: null
             count: Const.maxChunk
+            viewingIndex: 0
 
         initialize: ->
 
@@ -27,8 +28,13 @@ define [
                 @get('images').url =
                     "#{Const.baseURL}/r/#{@get 'subreddit'}.json?jsonp=?"
 
+            @set 'subreddit', 'aww'
+
             @get('images').bind 'sync', (images, response) =>
                 @set 'after', response.data.after
+
+        # TODO: Cache this result if it becomes a performance issue.
+        positions: -> @get('images').positions()
 
         getNextImages: ->
 
@@ -37,11 +43,14 @@ define [
         getImages: (after) ->
 
             return if @get('count') < 1
+            return if @get('images').length >= @get('count')
 
             remaining = @get('count') - @get('images').length
             limit = Math.min Const.maxChunk, remaining
 
             @get('images').reset() unless after
+
+            @set 'loading', true
             @get('images').fetch
                 add: true
                 type: 'GET'
@@ -52,9 +61,7 @@ define [
 
                 success: (collection) =>
 
-                    if collection.models.length < @get 'count'
+                    @set 'loading', false
 
-                        # Limit to one request every 2 seconds per API rules.
-                        setTimeout ( => @getNextImages()), 2000
-
-
+                    # Limit to one request every 2 seconds per API rules.
+                    setTimeout ( => @getNextImages()), 2000

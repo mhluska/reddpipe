@@ -50,14 +50,16 @@ define [
                             @set 'largeThumbURL', url
                             callback()
 
-                        error: =>
+                        error: (error) =>
                             
                             # TODO: This most often happens when we run out of
                             # API tokens. In that case, guess the image
                             # extension as JPG and do an Image.load. If it
                             # works, great, use the image. If not drop the
                             # image.
-                            console.warn 'Imgur API call failed.'
+                            if error.status is 403
+                                console.warn 'Imgur API call failed.'
+
                             return @destroy()
 
                 when 'quickmeme'
