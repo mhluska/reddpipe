@@ -10,3 +10,6 @@
 [submodule "sub/text"]
 	path = sub/text
 	url = https://github.com/requirejs/text.git
+[submodule "sub/skeleton"]
+	path = sub/skeleton
+	url = https://github.com/dhgamache/Skeleton.git

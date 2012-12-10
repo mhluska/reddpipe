@@ -3,6 +3,7 @@ html
     head
         meta(charset='UTF-8')
         meta(name='description', content='Reddit Pipeline is the fast, mouse-free way to browse image subreddits.')
+        meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
 
         meta(property='fb:admins', content='1471184996')
         meta(property='fb:app_id', content='510514888967929')
@@ -15,7 +16,9 @@ html
         title Reddit Pipeline
 
         link(rel='shortcut icon', href='/images/favicon.ico')
-        link(rel='stylesheet', type='text/css', href='/css/pipeline.css')
+        link(rel='stylesheet', href='/css/base.css')
+        link(rel='stylesheet', href='/css/skeleton.css')
+        link(rel='stylesheet', href='/css/layout.css')
         block stylesheets
 
         if production
