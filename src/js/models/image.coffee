@@ -4,9 +4,10 @@ define [
     
     'lib/zepto'
     'lib/backbone'
+    'utils'
     'constants'
 
-], ($, Backbone, Const) ->
+], ($, Backbone, Utils, Const) ->
 
     Backbone.Model.extend
 
@@ -26,6 +27,8 @@ define [
             redditURL:     "#{Const.baseURL}/data.permalink"
 
         parseURL: (callback) ->
+
+            return callback() if @hasImageURL()
 
             [host, id] = @parseImageHostID()
 
@@ -63,6 +66,21 @@ define [
 
             # Synchronous cases such as quickmeme reach this.
             callback()
+
+        hasImageURL: do ->
+
+            types = ['gif', 'jpg', 'jpeg', 'png']
+
+            ->
+                url = @get 'url'
+
+                # Remove query parameters
+                url = url.split('?').shift()
+
+                for type in types
+                    return true if Utils.endsWith url, type
+
+                false
 
         parseImageHostID: ->
 
