@@ -3,29 +3,22 @@ define [
     'lib/zepto'
     'lib/backbone'
     'views/image'
-    'collections/image-list'
+    'models/feed'
     
-], ($, Backbone, ImageView, ImageList) ->
+], ($, Backbone, ImageView, Feed) ->
 
     View = Backbone.View.extend
 
         el: $('#pipeline')
 
+        model: new Feed()
+
         initialize: ->
 
             # TODO: Don't do this on pageload but bootstrap the initial models
             # on page load? According to the Backbone docs.
-            @imageList = new ImageList()
-            @imageList.bind 'add', @addImageView, @
-
-            @imageList.fetch
-                add: true
-                type: 'GET'
-                dataType: 'jsonp'
-                data:
-                    $.param
-                        limit: 25
-                        count: 25
+            @model.get('images').bind 'add', @addImageView, @
+            @model.getImages()
 
         addImageView: (model) ->
 

@@ -11,10 +11,11 @@ define [
         url: "#{Const.baseURL}/r/aww.json?jsonp=?"
         model: Image
 
-        initialize: ->
+        initialize: (@feed) ->
 
             @bind 'remove', (model) -> @remove model
 
         parse: (response) ->
 
+            @feed.set 'after', response.data.after
             response.data.children
