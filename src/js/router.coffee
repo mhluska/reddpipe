@@ -13,12 +13,15 @@ define [
             Backbone.history.start()
 
         routes:
-            'r/:subreddit': 'feed'
+            'r/:subreddit':               'feed'
+            'r/:subreddit/images/:count': 'feed'
+
             '*default': 'feed'
 
-        feed: (subreddit) ->
+        feed: (subreddit, count) ->
 
             feedView = new FeedView
                 subreddit: subreddit
+                count: count
 
             feedView.render()

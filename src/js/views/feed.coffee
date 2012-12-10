@@ -16,7 +16,9 @@ define [
         initialize: ->
 
             @model = new Feed()
-            @model.set 'subreddit', @options.subreddit if @options.subreddit
+
+            for own option, value of @options
+                @model.set option, value if value
 
             # TODO: Don't do this on pageload but bootstrap the initial models
             # on page load? According to the Backbone docs.
