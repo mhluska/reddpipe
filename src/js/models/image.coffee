@@ -55,7 +55,7 @@ define [
                             # works, great, use the image. If not drop the
                             # image.
                             console.warn 'Imgur API call failed.'
-                            @destroy()
+                            return @destroy()
 
                 when 'quickmeme'
 

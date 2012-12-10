@@ -29,8 +29,15 @@ define [
 
         addImageView: (model) ->
 
+            # We append a placeholder div. If the model configures properly, we
+            # replace it with the model view. Otherwise, we delete the
+            # placeholder.
+            empty = $(document.createElement 'div').appendTo @$el
+            model.bind 'remove', -> empty.remove()
+
             model.parseURL =>
-                view = new ImageView model: model
-                @$el.append view.render().el
+
+                view = new ImageView(model: model).render().el
+                empty.replaceWith view
 
     new View
