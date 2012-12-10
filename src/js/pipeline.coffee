@@ -21,5 +21,4 @@ define [
     
 ], (_, Backbone, Router) ->
 
-    console.log 'From pipeline.coffee: Hello World!'
     router = new Router()

@@ -59,7 +59,7 @@ define [
 
                 when 'quickmeme'
 
-                    model.set 'url', "http://i.qkme.me/#{id}.jpg"
+                    @set 'url', "http://i.qkme.me/#{id}.jpg"
 
             # Synchronous cases such as quickmeme reach this.
             callback()

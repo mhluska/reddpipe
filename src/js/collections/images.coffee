@@ -8,8 +8,9 @@ define [
 
     Backbone.Collection.extend
 
-        url: "#{Const.baseURL}/r/aww.json?jsonp=?"
         model: Image
+
+        url: -> "#{Const.baseURL}/r/#{@feed.get 'subreddit'}.json?jsonp=?"
 
         initialize: (@feed) ->
 

@@ -1,3 +1,5 @@
+'use strict'
+
 define [
 
     'lib/backbone'
@@ -11,14 +13,20 @@ define [
 
         defaults:
             
+            subreddit: 'aww'
             after: null
 
         initialize: ->
 
             @set 'images', new Images @
 
-        getImages: ->
+        getNextImages: ->
 
+            @getImages @get 'after'
+
+        getImages: (after) ->
+
+            @get('images').reset() unless after
             @get('images').fetch
                 add: true
                 type: 'GET'
@@ -26,4 +34,4 @@ define [
                 data: $.param
                     limit: 25
                     count: 25
-                    after: @get 'after'
+                    after: after

@@ -3,18 +3,22 @@
 define [
 
     'lib/backbone'
-    'views/pipeline'
+    'views/feed'
     
-], (Backbone, pipeline) ->
+], (Backbone, FeedView) ->
 
     Backbone.Router.extend
 
         initialize: ->
-            @pipeline = pipeline
             Backbone.history.start()
 
         routes:
-            '': 'pipeline'
+            'r/:subreddit': 'feed'
+            '*default': 'feed'
 
-        pipeline: ->
-            @pipeline.render()
+        feed: (subreddit) ->
+
+            feedView = new FeedView
+                subreddit: subreddit
+
+            feedView.render()

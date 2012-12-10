@@ -1,3 +1,5 @@
+'use strict'
+
 define [
 
     'lib/zepto'
@@ -7,17 +9,22 @@ define [
     
 ], ($, Backbone, ImageView, Feed) ->
 
-    View = Backbone.View.extend
+    Backbone.View.extend
 
         el: $('#pipeline')
 
-        model: new Feed()
-
         initialize: ->
+
+            @model = new Feed()
+            @model.set 'subreddit', @options.subreddit if @options.subreddit
 
             # TODO: Don't do this on pageload but bootstrap the initial models
             # on page load? According to the Backbone docs.
             @model.get('images').bind 'add', @addImageView, @
+            @model.get('images').bind 'reset', => @$el.html ''
+
+        render: ->
+
             @model.getImages()
 
         addImageView: (model) ->
@@ -32,5 +39,3 @@ define [
 
                 view = new ImageView(model: model).render().el
                 empty.replaceWith view
-
-    new View
