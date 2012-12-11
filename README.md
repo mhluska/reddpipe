@@ -9,5 +9,5 @@ your other hand for whatever.
 
 #### Usage ####
     git clone https://github.com/mhluska/Pipeline.git pipeline && cd pipeline
-    bin/build
+    coffee -c grunt.coffee && grunt
     npm start

@@ -7,12 +7,15 @@ module.exports = function(grunt) {
   grunt.initConfig({
     shell: {
       setup: {
+        stdout: true,
         command: 'grunt/task/setup'
       },
       link: {
+        stdout: true,
         command: 'grunt/task/link'
       },
       compile: {
+        stdout: true,
         command: 'grunt/task/compile'
       }
     },

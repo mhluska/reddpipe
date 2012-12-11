@@ -7,9 +7,15 @@ module.exports = (grunt) ->
     grunt.initConfig
 
         shell:
-            setup:   command: 'grunt/task/setup'
-            link:    command: 'grunt/task/link'
-            compile: command: 'grunt/task/compile'
+            setup:
+                stdout: true
+                command: 'grunt/task/setup'
+            link:
+                stdout: true
+                command: 'grunt/task/link'
+            compile:
+                stdout: true
+                command: 'grunt/task/compile'
 
         coffeelint:
             app:
