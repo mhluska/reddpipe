@@ -28,16 +28,18 @@ module.exports = (grunt) ->
                 options: grunt.file.readJSON 'coffeelint.json'
 
         requirejs:
-            almond: true
-            modules: [name: 'pipeline']
-            dir: 'build'
-            appDir: 'src'
-            baseUrl: 'js'
-            paths: {}
-            skipModuleInsertion: false
-            optimizeAllPluginResources: true
-            findNestedDependencies: true
-            preserveLicenseComments: false
-            logLevel: 0
+            compile:
+                options:
+                    almond: true
+                    modules: [name: 'pipeline']
+                    dir: 'build'
+                    appDir: 'src'
+                    baseUrl: 'js'
+                    paths: {}
+                    skipModuleInsertion: false
+                    optimizeAllPluginResources: true
+                    findNestedDependencies: true
+                    preserveLicenseComments: false
+                    logLevel: 0
 
     grunt.registerTask 'default', 'shell coffeelint requirejs'

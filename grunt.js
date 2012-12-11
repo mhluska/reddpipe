@@ -26,21 +26,25 @@ module.exports = function(grunt) {
       }
     },
     requirejs: {
-      almond: true,
-      modules: [
-        {
-          name: 'pipeline'
+      compile: {
+        options: {
+          almond: true,
+          modules: [
+            {
+              name: 'pipeline'
+            }
+          ],
+          dir: 'build',
+          appDir: 'src',
+          baseUrl: 'js',
+          paths: {},
+          skipModuleInsertion: false,
+          optimizeAllPluginResources: true,
+          findNestedDependencies: true,
+          preserveLicenseComments: false,
+          logLevel: 0
         }
-      ],
-      dir: 'build',
-      appDir: 'src',
-      baseUrl: 'js',
-      paths: {},
-      skipModuleInsertion: false,
-      optimizeAllPluginResources: true,
-      findNestedDependencies: true,
-      preserveLicenseComments: false,
-      logLevel: 0
+      }
     }
   });
   return grunt.registerTask('default', 'shell coffeelint requirejs');
