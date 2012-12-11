@@ -9,5 +9,6 @@ your other hand for whatever.
 
 #### Usage ####
     git clone https://github.com/mhluska/Pipeline.git pipeline && cd pipeline
-    coffee -c grunt.coffee && grunt
+    npm install
+    grunt
     npm start

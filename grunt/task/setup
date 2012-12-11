@@ -8,5 +8,3 @@ cd sub/zepto
 bundle
 rake
 cd -
-
-npm install

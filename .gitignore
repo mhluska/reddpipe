@@ -2,6 +2,7 @@ build/
 node_modules/
 
 *.js
+!grunt.js
 todo.txt
 dump.rb
 npm-debug.log
