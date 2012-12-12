@@ -15,7 +15,6 @@ define [
 
         routes:
 
-            '':                           'feed'
             'r/:subreddit':               'feed'
             'r/:subreddit/images/:count': 'feed'
 

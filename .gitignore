@@ -6,5 +6,5 @@ node_modules/
 *.js
 !grunt.js
 todo.txt
-dump.rb
+dump.rdb
 npm-debug.log

@@ -36,6 +36,7 @@ define [
 
         getNextImages: ->
 
+            return unless @get 'after'
             @getImages @get 'after'
 
         getImages: (after) ->
