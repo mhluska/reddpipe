@@ -10,7 +10,6 @@ define [
 
     Backbone.View.extend
 
-        tagName: 'div'
         className: 'image'
 
         template: _.template imageTemplate
@@ -26,5 +25,6 @@ define [
             image = @$el.find 'img'
             image.bind 'load', =>
                 @model.set 'position', image.position().top
+                @$el.show()
 
             @

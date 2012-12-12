@@ -18,11 +18,9 @@ define [
 
             @model = new Feed()
 
-            for own option, value of @options
-                @model.set option, value if value
+            @model.set 'subreddit', @options.subreddit if @options.subreddit
+            @model.set 'count', parseInt @options.count if @options.count
 
-            # TODO: Don't do this on pageload but bootstrap the initial models
-            # on page load? According to the Backbone docs.
             @model.get('images').bind 'add', @addImageView, @
             @model.get('images').bind 'reset', => @$el.html ''
 
@@ -40,10 +38,9 @@ define [
             empty = $(document.createElement 'div').appendTo @$el
             model.bind 'remove', -> empty.remove()
 
-            model.parseURL =>
+            model.parseURL ->
 
-                view = new ImageView(model: model).render().el
-                empty.replaceWith view
+                view = new ImageView(model: model, el: empty).render().el
 
         scroll: ->
 

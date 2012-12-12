@@ -23,13 +23,11 @@ define [
 
             @set 'images', new Images()
 
-            @bind 'change:count', => @set 'count', parseInt @get 'count'
             @bind 'change:subreddit', =>
                 @get('images').url =
                     "#{Const.baseURL}/r/#{@get 'subreddit'}.json?jsonp=?"
 
             @set 'subreddit', 'aww'
-
             @get('images').bind 'sync', (images, response) =>
                 @set 'after', response.data.after
 
@@ -51,6 +49,9 @@ define [
             @get('images').reset() unless after
 
             @set 'loading', true
+
+            # TODO: Don't do this on pageload but bootstrap the initial models
+            # on page load? According to the Backbone docs.
             @get('images').fetch
                 update: true
                 type: 'GET'

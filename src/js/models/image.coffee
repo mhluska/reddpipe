@@ -40,9 +40,9 @@ define [
             if host is 'imgur'
 
                 @getThumb "http://api.imgur.com/2/image/#{id}.json", (data) =>
-
                     @set 'largeThumbURL',
                         data.image?.links.large_thumbnail
+
                     callback()
 
                 return
@@ -53,9 +53,9 @@ define [
             if host is 'imgurAlbum'
 
                 @getThumb "http://api.imgur.com/2/album/#{id}.json", (data) =>
-
                     @set 'largeThumbURL',
                         data.album.images[0].links.large_thumbnail
+
                     callback()
 
                 return
@@ -85,7 +85,7 @@ define [
         parseImageHostID: ->
 
             host2regex =
-                imgur: /^http:\/\/imgur.com\/([A-Z0-9]+).*$/i
+                imgur: /^http:\/\/imgur.com\/([A-Z0-9]{2,}).*$/i
                 imgurAlbum: /^http:\/\/imgur.com\/a\/([A-Z0-9]+).*$/i
                 quickmeme: /^http:\/\/www.quickmeme.com\/meme\/([A-Z0-9]+).*$/i
                 qkme: /^http:\/\/qkme.me\/([A-Z0-9]+).*$/i

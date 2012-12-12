@@ -1,8 +1,8 @@
 module.exports = (grunt) ->
 
+    grunt.loadNpmTasks 'grunt-shell'
     grunt.loadNpmTasks 'grunt-coffeelint'
     grunt.loadNpmTasks 'grunt-requirejs'
-    grunt.loadNpmTasks 'grunt-shell'
 
     grunt.initConfig
 

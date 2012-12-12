@@ -1,5 +1,5 @@
 fs = require 'fs'
-utils = require '../utils'
+Utils = require '../utils'
 
 module.exports = (app) ->
 
@@ -12,7 +12,7 @@ module.exports = (app) ->
     # Load all other routes in the directory.
     fs.readdirSync(__dirname).forEach (file) ->
 
-        return unless utils.endsWith file, '.js'
+        return unless Utils.endsWith file, '.js'
         return if file is 'index.js'
 
         name = file.substr 0, file.indexOf '.'
