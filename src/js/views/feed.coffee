@@ -32,15 +32,10 @@ define [
 
         addImageView: (model) ->
 
-            # We append a placeholder div. If the model configures properly, we
-            # replace it with the model view. Otherwise, we delete the
-            # placeholder.
-            empty = $(document.createElement 'div').appendTo @$el
-            model.bind 'remove', -> empty.remove()
+            model.load (thumb) =>
 
-            model.parseURL ->
-
-                view = new ImageView(model: model, el: empty).render().el
+                view = new ImageView(model: model, thumb: thumb).render().el
+                @$el.append view
 
         scroll: ->
 

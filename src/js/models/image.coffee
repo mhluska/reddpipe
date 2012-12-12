@@ -26,6 +26,14 @@ define [
             largeThumbURL: data.url
             redditURL:     "#{Const.baseURL}/data.permalink"
 
+        load: (callback) ->
+
+            @parseURL =>
+
+                image = new Image()
+                image.onload = -> callback image
+                image.src = @get 'largeThumbURL'
+
         parseURL: (callback) ->
 
             return callback() if @hasImageURL()

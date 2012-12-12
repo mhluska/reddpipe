@@ -10,6 +10,8 @@ define [
 
     Backbone.View.extend
 
+        tagName: 'div'
+
         className: 'image'
 
         template: _.template imageTemplate
@@ -20,11 +22,12 @@ define [
 
         render: ->
 
-            @$el.html @template @model.toJSON()
+            elem = $(@template @model.toJSON())
 
-            image = @$el.find 'img'
-            image.bind 'load', =>
-                @model.set 'position', image.position().top
-                @$el.show()
+            @options.thumb.className = 'scale-with-grid'
+            elem.find('img').replaceWith @options.thumb
+
+            @model.set 'position', $(@options.thumb).position().top
+            @$el.html elem
 
             @

@@ -1,0 +1,6 @@
+@import 'image';
+
+#pipeline {
+
+    @include image;
+}
