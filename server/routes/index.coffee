@@ -3,8 +3,11 @@ utils = require '../utils'
 
 module.exports = (app) ->
 
-    app.get '/', (req, res) ->
-        res.render 'pipeline'
+    render = (req, res) -> res.render 'pipeline'
+
+    app.get '/', render
+    app.get '/r/:subreddit', render
+    app.get '/r/:subreddit/images/:count', render
 
     # Load all other routes in the directory.
     fs.readdirSync(__dirname).forEach (file) ->

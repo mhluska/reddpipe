@@ -10,13 +10,12 @@ define [
     Backbone.Router.extend
 
         initialize: ->
-            Backbone.history.start()
+            Backbone.history.start pushState: true
 
         routes:
+            '':                           'feed'
             'r/:subreddit':               'feed'
             'r/:subreddit/images/:count': 'feed'
-
-            '*default': 'feed'
 
         feed: (subreddit, count) ->
 
