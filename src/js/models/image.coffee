@@ -37,34 +37,32 @@ define [
                 console.warn "Couldn't parse #{@get 'url'}!"
                 return @destroy()
 
-            switch host
+            if host is 'imgur'
 
-                when 'imgur'
-                    
-                    return $.ajax
-                        type: 'GET'
-                        url: "http://api.imgur.com/2/image/#{id}.json"
-                        success: (data) =>
+                @getThumb "http://api.imgur.com/2/image/#{id}.json", (data) =>
 
-                            url = data.image?.links.large_thumbnail
-                            @set 'largeThumbURL', url
-                            callback()
+                    @set 'largeThumbURL',
+                        data.image?.links.large_thumbnail
+                    callback()
 
-                        error: (error) =>
-                            
-                            # TODO: This most often happens when we run out of
-                            # API tokens. In that case, guess the image
-                            # extension as JPG and do an Image.load. If it
-                            # works, great, use the image. If not drop the
-                            # image.
-                            if error.status is 403
-                                console.warn 'Imgur API call failed.'
+                return
 
-                            return @destroy()
+            # TODO: This is temporary. We should be showing the entire album.
+            # The problem stems from the fact that albums and images are being
+            # fetched into an image collection.
+            if host is 'imgurAlbum'
 
-                when 'quickmeme'
+                @getThumb "http://api.imgur.com/2/album/#{id}.json", (data) =>
 
-                    @set 'url', "http://i.qkme.me/#{id}.jpg"
+                    @set 'largeThumbURL',
+                        data.album.images[0].links.large_thumbnail
+                    callback()
+
+                return
+
+            if host is 'quickmeme'
+
+                @set 'url', "http://i.qkme.me/#{id}.jpg"
 
             # Synchronous cases such as quickmeme reach this.
             callback()
@@ -87,7 +85,8 @@ define [
         parseImageHostID: ->
 
             host2regex =
-                imgur: /^http:\/\/imgur.com\/([A-Z0-9]+)$/i
+                imgur: /^http:\/\/imgur.com\/([A-Z0-9]+).*$/i
+                imgurAlbum: /^http:\/\/imgur.com\/a\/([A-Z0-9]+).*$/i
                 quickmeme: /^http:\/\/www.quickmeme.com\/meme\/([A-Z0-9]+).*$/i
                 qkme: /^http:\/\/qkme.me\/([A-Z0-9]+).*$/i
 
@@ -100,3 +99,21 @@ define [
 
             [null, null]
 
+        getThumb: (url, callback) ->
+
+            $.ajax
+                type: 'GET'
+                url: url
+                success: callback
+
+                error: (error) =>
+                    
+                    # TODO: This most often happens when we run out of
+                    # API tokens. In that case, guess the image
+                    # extension as JPG and do an Image.load. If it
+                    # works, great, use the image. If not drop the
+                    # image.
+                    if error.status is 403
+                        console.warn 'Imgur API call failed.'
+
+                    return @destroy()

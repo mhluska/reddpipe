@@ -52,7 +52,7 @@ define [
 
             @set 'loading', true
             @get('images').fetch
-                add: true
+                update: true
                 type: 'GET'
                 dataType: 'jsonp'
                 data: $.param
