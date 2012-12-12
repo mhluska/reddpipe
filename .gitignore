@@ -2,6 +2,7 @@ build/
 node_modules/
 .sass-cache/
 
+*.css
 *.js
 !grunt.js
 todo.txt
