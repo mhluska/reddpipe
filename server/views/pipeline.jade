@@ -1,17 +1,22 @@
 extends layout
 
-block body
-    .container
-        h1 Reddit Pipeline
-        h2 The fast, mouse-free way to browse image subreddits.
-        h3 Most Pipelined
-        ul
-            -each pair in hits
-                - subreddit = pair[0]
-                - count = pair[1]
-                li 
-                    a(href="/r/#{subreddit}") #{subreddit}
-                    span 
-                        | #{count}
+block scripts
+    if production
+        script(src='/js/pipeline.js')
+    else
+        script(data-main='/js/src/pipeline.js', src='/js/require.js')
 
-        #pipeline
+block content
+    h1 Reddit Pipeline
+    h2 The fast, mouse-free way to browse image subreddits.
+    h3 Most Pipelined
+    ul
+        -each pair in hits
+            - subreddit = pair[0]
+            - count = pair[1]
+            li 
+                a(href="/r/#{subreddit}") #{subreddit}
+                span 
+                    | #{count}
+
+    #pipeline

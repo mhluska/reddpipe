@@ -7,9 +7,6 @@ Const = require '../constants'
 
 module.exports = (app) ->
 
-    # TODO: Get rid of this by implementing a 'Subreddit not found page.'
-    redirected = false
-
     sortHits = (hits) ->
 
         # TODO: Do this in Redis using a list.
@@ -33,8 +30,8 @@ module.exports = (app) ->
         request.head options, (error, response, body) ->
 
             if error or response.statusCode isnt 200
-                redirected = true
-                return res.redirect '/r/aww'
+                res.status 400
+                return res.render '400', subreddit: subreddit
 
             client.hgetall 'hits', (error, hits) ->
 
@@ -45,27 +42,20 @@ module.exports = (app) ->
                 client.ttl hash, (error, time) ->
 
                     if time > 0
-                        redirected = false
                         return res.render 'pipeline', hits: sortHits hits
                     else
                         client.set hash, 'ratelimit'
                         client.expire hash, timeout
 
-                    unless redirected
-                        client.hincrby 'hits', subreddit, 1
-                        client.save()
-                        hits[subreddit] ?= 0
-                        hits[subreddit] = parseInt(hits[subreddit]) + 1
-
+                    client.hincrby 'hits', subreddit, 1
+                    client.save()
                     client.end()
+                    hits[subreddit] ?= 0
+                    hits[subreddit] = parseInt(hits[subreddit]) + 1
 
-                    redirected = false
                     res.render 'pipeline', hits: sortHits hits
 
-    app.get '/', (req, res) ->
-        redirected = true
-        res.redirect '/r/aww'
-
+    app.get '/', (req, res) -> res.redirect '/r/aww'
     app.get '/r/:subreddit', render
     app.get '/r/:subreddit/images/:count', render
 

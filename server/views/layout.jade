@@ -20,13 +20,10 @@ html
         link(rel='stylesheet', href='/css/skeleton.css')
         link(rel='stylesheet', href='/css/layout.css')
         link(rel='stylesheet', href='/css/pipeline.css')
+
         block stylesheets
-
-        if production
-            script(src='/js/pipeline.js')
-        else
-            script(data-main='/js/src/pipeline.js', src='/js/require.js')
-
         block scripts
+
     body
-        block body
+        .container
+            block content
