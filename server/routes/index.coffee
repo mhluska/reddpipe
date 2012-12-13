@@ -7,14 +7,20 @@ Const = require '../constants'
 
 module.exports = (app) ->
 
-    # TODO: Is there a way to avoid this redirect flag? Does req or req store
-    # that information?
-    # TODO: Move all this logic to a controller and model.
-    redirect = false
-    client = redis.createClient()
+    # TODO: Get rid of this by implementing a 'Subreddit not found page.'
+    redirected = false
+
+    sortHits = (hits) ->
+
+        # TODO: Do this in Redis using a list.
+        hits = ([key, parseInt value] for own  key, value of hits)
+        hits.sort (a, b) -> if a[1] > b[1] then -1 else 1
+        hits.splice(10)
+        hits
 
     render = (req, res) ->
-        
+
+        client = redis.createClient()
         subreddit = req.params.subreddit
 
         # Validate subreddit. If valid, increment count in Redis otherwise
@@ -27,22 +33,37 @@ module.exports = (app) ->
         request.head options, (error, response, body) ->
 
             if error or response.statusCode isnt 200
-                redirect = true
+                redirected = true
                 return res.redirect '/r/aww'
 
-            client.hincrby 'hits', subreddit, 1 unless redirect
             client.hgetall 'hits', (error, hits) ->
 
-                # TODO: Do this in Redis using a list.
-                hits = ([key, parseInt value] for own  key, value of hits)
-                hits.sort (a, b) -> if a[1] > b[1] then -1 else 1
-                hits.splice(10)
+                # Only allow a counter increment for the client's IP for a
+                # subreddit every timeout seconds.
+                timeout = 10
+                hash = req.connection.remoteAddress + req.params.subreddit
+                client.ttl hash, (error, time) ->
 
-                redirect = false
-                res.render 'pipeline', hits: hits
+                    if time > 0
+                        redirected = false
+                        return res.render 'pipeline', hits: sortHits hits
+                    else
+                        client.set hash, 'ratelimit'
+                        client.expire hash, timeout
+
+                    unless redirected
+                        client.hincrby 'hits', subreddit, 1
+                        client.save()
+                        hits[subreddit] ?= 0
+                        hits[subreddit] = parseInt(hits[subreddit]) + 1
+
+                    client.end()
+
+                    redirected = false
+                    res.render 'pipeline', hits: sortHits hits
 
     app.get '/', (req, res) ->
-        redirect = true
+        redirected = true
         res.redirect '/r/aww'
 
     app.get '/r/:subreddit', render
