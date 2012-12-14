@@ -12,6 +12,7 @@
         "jade": "*",
         "redis": "*",
         "hiredis": "*",
+        "csso": "*",
         "grunt-requirejs": "*",
         "grunt-shell": "*",
         "grunt-coffeelint": "*",

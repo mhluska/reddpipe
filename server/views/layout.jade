@@ -16,10 +16,14 @@ html
         title Reddit Pipeline
 
         link(rel='shortcut icon', href='/images/favicon.ico')
-        link(rel='stylesheet', href='/css/base.css')
-        link(rel='stylesheet', href='/css/skeleton.css')
-        link(rel='stylesheet', href='/css/layout.css')
-        link(rel='stylesheet', href='/css/pipeline.css')
+
+        if production
+            link(rel='stylesheet', href='/css/compiled.css')
+        else
+            link(rel='stylesheet', href='/css/base.css')
+            link(rel='stylesheet', href='/css/skeleton.css')
+            link(rel='stylesheet', href='/css/layout.css')
+            link(rel='stylesheet', href='/css/pipeline.css')
 
         block stylesheets
         block scripts
