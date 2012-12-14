@@ -24,10 +24,9 @@ define [
 
             elem = $(@template @model.toJSON())
 
-            @options.thumb.className = 'scale-with-grid'
-            elem.find('img').replaceWith @options.thumb
+            elem.find('img').bind 'load', =>
+                @model.set 'position', @$el.position().top
 
-            @model.set 'position', $(@options.thumb).position().top
             @$el.html elem
 
             @

@@ -32,10 +32,10 @@ define [
 
         addImageView: (model) ->
 
-            model.load (thumb) =>
+            model.parseURL =>
 
-                view = new ImageView(model: model, thumb: thumb).render().el
-                @$el.append view
+                view = new ImageView(model: model).render().el
+                $(view).find('img').bind 'load', => @$el.append view
 
         scroll: ->
 

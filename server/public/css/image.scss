@@ -2,5 +2,39 @@
 
     .image {
 
+        img {
+
+            float: right;
+        }
+
+        .omega {
+
+            .title {
+
+                margin-bottom: 0.5em;
+            }
+
+            .votes-wrap {
+
+                float: left;
+                text-align: center;
+
+                .votes {
+
+                    font-size: 1.5em;
+                    font-weight: bold;
+                }
+            }
+
+            .footer {
+
+                margin-top: 2em;
+
+                li {
+
+                    margin-bottom: 0.4em;
+                }
+            }
+        }
     }
 }

@@ -20,19 +20,11 @@ define [
             data = response.data
 
             url:           data.url
-            score:         data.score
+            votes:         data.score
             title:         data.title
             thumbURL:      data.thumbnail
             largeThumbURL: data.url
-            redditURL:     "#{Const.baseURL}/data.permalink"
-
-        load: (callback) ->
-
-            @parseURL =>
-
-                image = new Image()
-                image.onload = -> callback image
-                image.src = @get 'largeThumbURL'
+            redditURL:     Const.baseURL + data.permalink
 
         parseURL: (callback) ->
 

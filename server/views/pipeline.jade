@@ -7,10 +7,12 @@ block scripts
         script(data-main='/js/src/pipeline.js', src='/js/require.js')
 
 block content
-    h1 Reddit Pipeline
-    h2 The fast, mouse-free way to browse image subreddits.
-    h3 Most Pipelined
-    ul
+    h1.title Reddit 
+        strong Pipeline
+    h2.description The fast, mouse-free way to browse image subreddits.
+    h4 Most Pipelined
+
+    ul.most-pipelined
         -each pair in hits
             - subreddit = pair[0]
             - count = pair[1]
