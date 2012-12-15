@@ -2,37 +2,59 @@
 
     .image {
 
-        img {
+        background-color: #fff;
 
-            float: right;
-        }
+        .row {
 
-        .omega {
+            box-shadow: 1px 1px 1px #aaa;
 
-            .title {
-
-                margin-bottom: 0.5em;
-            }
-
-            .votes-wrap {
+            img {
 
                 float: left;
-                text-align: center;
 
-                .votes {
-
-                    font-size: 1.5em;
-                    font-weight: bold;
-                }
             }
 
-            .footer {
+            .info {
 
-                margin-top: 2em;
+                @media only screen and (max-width: 767px) {
 
-                li {
+                    & {
 
-                    margin-bottom: 0.4em;
+                        padding: 0 1em;
+                    }
+                }
+
+                .title {
+
+                    line-height: 1.3em;
+                    margin: 1em 0;
+
+                    &, a {
+
+                        color: #222;
+                    }
+                }
+
+                .votes-wrap {
+
+                    float: left;
+                    text-align: center;
+
+                    .votes {
+
+                        font-size: 1.5em;
+                        font-weight: bold;
+                    }
+                }
+
+                .footer {
+
+                    margin-top: 2em;
+
+                    li {
+
+                        margin-bottom: 0.4em;
+                    }
                 }
             }
         }
