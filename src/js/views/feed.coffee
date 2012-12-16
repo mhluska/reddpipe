@@ -19,12 +19,13 @@ define [
             @model = new Feed()
 
             @model.set 'subreddit', @options.subreddit if @options.subreddit
-            @model.set 'count', parseInt @options.count if @options.count
+            @model.set 'imageLimit', parseInt @options.count if @options.count
 
             @model.get('images').bind 'add', @addImageView, @
             @model.get('images').bind 'reset', => @$el.html ''
 
-            $(window).scroll @scroll.bind @
+            $(window).scroll @model.scroll.bind @model
+            $(window).keydown @keydown.bind @
 
         render: ->
 
@@ -35,29 +36,28 @@ define [
             model.parseURL =>
 
                 view = new ImageView(model: model).render().el
-                $(view).find('img').bind 'load', => @$el.append view
 
-        scroll: ->
+                image = $(view).find 'img'
+                image.bind 'load', =>
 
-            positions = @model.positions()
-            viewingIndex = @model.get 'viewingIndex'
+                    @$el.append view
+                    model.set
+                        'position': $(view).offset().top
+                        'height':   $(view).height()
 
-            if window.scrollY is 0
-                viewingIndex = 0
+                    @model.get('images').sort()
 
-            else if window.scrollY is $(document).height() - $(window).height()
-                viewingIndex = positions.length - 1
+        keydown: (event) ->
 
-            if window.scrollY > positions[viewingIndex + 1]
-                viewingIndex += 1
+            # Set up image navigation using arrows and page up/down.
+            if event.which in
+                    [Const.key.pageUp, Const.key.left, Const.key.a]
 
-            else if window.scrollY < positions[viewingIndex]
-                viewingIndex -= 1
+                event.preventDefault()
+                @model.showPrev()
 
-            @model.set 'viewingIndex', viewingIndex
+            else if event.which in
+                    [Const.key.pageDown, Const.key.right, Const.key.d]
 
-            return if @model.get 'loading'
-            return if (positions.length - viewingIndex) > Const.loadThreshold
-
-            @model.set 'count', @model.get('count') + Const.maxChunk
-            @model.getNextImages()
+                event.preventDefault()
+                @model.showNext()

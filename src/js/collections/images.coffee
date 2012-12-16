@@ -19,4 +19,8 @@ define [
 
         positions: ->
 
-            [0].concat @map (model) -> model.get 'position'
+            @map (model) -> model.scrollY()
+
+        comparator: (model) ->
+
+            model.get 'position'

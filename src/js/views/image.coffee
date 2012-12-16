@@ -24,9 +24,6 @@ define [
 
             elem = $(@template @model.toJSON())
 
-            elem.find('img').bind 'load', =>
-                @model.set 'position', @$el.position().top
-
             @$el.html elem
 
             @

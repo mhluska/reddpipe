@@ -16,8 +16,8 @@ define [
             
             loading: false
             after: null
-            count: Const.maxChunk
-            viewingIndex: 0
+            imageLimit: Const.maxChunk
+            viewingIndex: -1
 
         initialize: ->
 
@@ -36,15 +36,17 @@ define [
 
         getNextImages: ->
 
+            return if @get 'loading'
             return unless @get 'after'
             @getImages @get 'after'
 
         getImages: (after) ->
 
-            return if @get('count') < 1
-            return if @get('images').length >= @get('count')
+            return if @get 'loading'
+            return if @get('imageLimit') < 1
+            return if @get('images').length >= @get 'imageLimit'
 
-            remaining = @get('count') - @get('images').length
+            remaining = @get('imageLimit') - @get('images').length
             limit = Math.min Const.maxChunk, remaining
 
             @get('images').reset() unless after
@@ -63,7 +65,66 @@ define [
 
                 success: (collection) =>
 
-                    @set 'loading', false
-
                     # Limit to one request every 2 seconds per API rules.
-                    setTimeout ( => @getNextImages()), 2000
+                    setTimeout =>
+
+                        @set 'loading', false
+                        @scroll()
+                        @getNextImages()
+
+                    , 2000
+
+        scroll: ->
+
+            positions = @positions()
+            viewingIndex = @get 'viewingIndex'
+
+            if window.scrollY is 0
+                viewingIndex = -1
+
+            else if window.scrollY is $(document).height() - $(window).height()
+                viewingIndex = positions.length - 1
+
+            if window.scrollY > positions[viewingIndex + 1]
+                viewingIndex += 1
+
+            else if window.scrollY < positions[viewingIndex]
+                viewingIndex -= 1 unless viewingIndex is positions.length - 1
+
+            @set 'viewingIndex', viewingIndex
+
+            return if (positions.length - viewingIndex) > Const.loadThreshold
+            return if @get 'loading'
+
+            @set 'imageLimit', @get('imageLimit') + Const.maxChunk
+            @getNextImages()
+
+        showPrev: ->
+
+            index = @get 'viewingIndex'
+
+            return if index < 0
+
+            @set 'viewingIndex', index - 1
+            @focusActiveImage()
+
+        showNext: ->
+
+            index = @get 'viewingIndex'
+
+            if index is @get('images').length - 1
+
+                $(window).scrollTop $(document).height()
+                return
+
+            @set 'viewingIndex', index + 1
+            @focusActiveImage()
+
+        focusActiveImage: ->
+
+            if @get('viewingIndex') is -1
+                window.scroll 0, 0
+                return
+
+            activeModel = @get('images').at @get 'viewingIndex'
+            window.scroll 0, activeModel.scrollY()

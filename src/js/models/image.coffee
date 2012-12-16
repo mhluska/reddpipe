@@ -11,6 +11,11 @@ define [
 
     Backbone.Model.extend
 
+        defaults:
+
+            position: 0
+            height: 0
+
         initialize: ->
 
             @bind 'remove', -> @destroy()
@@ -25,6 +30,13 @@ define [
             thumbURL:      data.thumbnail
             largeThumbURL: data.url
             redditURL:     Const.baseURL + data.permalink
+
+        scrollY: ->
+
+            scrollY = @get 'position'
+            padding = ($(window).height() - @get 'height')
+            scrollY -= if padding > 0 then padding / 2 else 15
+            Math.round scrollY
 
         parseURL: (callback) ->
 
