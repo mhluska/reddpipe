@@ -18,16 +18,12 @@ define [
 
         events:
 
-            'keydown input[type="text"]': (event) -> event.stopPropagation()
-
-        initialize: ->
-
-            # @model.bind 'change', @render, @
+            'click   .urlBox': (event) -> event.target.select()
+            'keydown .urlBox': (event) -> event.stopPropagation()
 
         render: ->
 
             elem = $(@template @model.toJSON())
 
             @$el.html elem
-
             @

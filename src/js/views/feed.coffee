@@ -47,17 +47,34 @@ define [
 
                     @model.get('images').sort()
 
+        keyPressed: (pressedCode, keys...) ->
+
+            for keyAttr in keys
+
+                return true if Const.key[keyAttr] is pressedCode
+
+            false
+
         keydown: (event) ->
 
+            # Don't mess with events when shift/ctrl and arrows/paging are
+            # involved (overrides browser functionality).
+            if @keyPressed event.which, 'pageUp', 'pageDown', 'left', 'right'
+
+                return if event.shiftKey or event.ctrlKey or event.metaKey
+
             # Set up image navigation using arrows and page up/down.
-            if event.which in
-                    [Const.key.pageUp, Const.key.left, Const.key.a]
+            if @keyPressed event.which, 'pageUp', 'left', 'a'
 
                 event.preventDefault()
                 @model.showPrev()
 
-            else if event.which in
-                    [Const.key.pageDown, Const.key.right, Const.key.d]
+            else if @keyPressed event.which, 'pageDown', 'right', 'd'
 
                 event.preventDefault()
                 @model.showNext()
+
+            else if @keyPressed event.which, 'v'
+
+                event.preventDefault()
+                @$('.urlBox').get(@model.get 'viewingIndex')?.select()
