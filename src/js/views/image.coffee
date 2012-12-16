@@ -16,6 +16,10 @@ define [
 
         template: _.template imageTemplate
 
+        events:
+
+            'keydown input[type="text"]': (event) -> event.stopPropagation()
+
         initialize: ->
 
             # @model.bind 'change', @render, @

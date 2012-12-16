@@ -52,8 +52,9 @@ define [
             if host is 'imgur'
 
                 @getThumb "http://api.imgur.com/2/image/#{id}.json", (data) =>
-                    @set 'largeThumbURL',
-                        data.image?.links.large_thumbnail
+
+                    @set 'url', data.image.links.original
+                    @set 'largeThumbURL', data.image.links.large_thumbnail
 
                     callback()
 
@@ -65,8 +66,10 @@ define [
             if host is 'imgurAlbum'
 
                 @getThumb "http://api.imgur.com/2/album/#{id}.json", (data) =>
-                    @set 'largeThumbURL',
-                        data.album.images[0].links.large_thumbnail
+
+                    firstImage = data.album.images[0]
+                    @set 'url', firstImage.links.original
+                    @set 'largeThumbURL', firstImage.links.large_thumbnail
 
                     callback()
 
