@@ -4,7 +4,7 @@ root_dir=$(git rev-parse --show-toplevel)
 cslint="${root_dir}/node_modules/grunt-coffeelint/node_modules/coffeelint/bin/coffeelint -f ${root_dir}/coffeelint.json"
 files=$(git diff-index --name-only --diff-filter=ACM --cached HEAD -- | grep -P '\.(coffee)$')
 
-test -z ${files} && exit
+test -z "${files}" && exit
 
 ${cslint} ${files}
 if [ $? -ne 0 ] ; then
