@@ -8,6 +8,3 @@ node_modules/
 todo.txt
 dump.rdb
 npm-debug.log
-
-# Commercial fonts.
-helvetica-neue.*
