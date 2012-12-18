@@ -36,6 +36,16 @@ module.exports = (grunt) ->
                     appDir: 'src'
                     baseUrl: 'js'
                     paths: {}
+                    shim:
+                        'lib/zepto': exports: '$'
+                        'lib/underscore-lib': exports: '_'
+                        'lib/backbone':
+                            exports: 'Backbone'
+                            deps: [
+                                'lib/zepto'
+                                'lib/underscore'
+                            ]
+                    optimize: 'none'
                     skipModuleInsertion: false
                     optimizeAllPluginResources: true
                     findNestedDependencies: true

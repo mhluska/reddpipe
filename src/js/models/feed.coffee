@@ -15,68 +15,61 @@ define [
         defaults:
             
             loading: false
-            after: null
-            imageLimit: Const.maxChunk
+            loadedAll: false
+            foundNone: false
             viewingIndex: -1
+            after: null
 
-        initialize: ->
+        initialize: (subreddit) ->
 
+            _.extend @, Backbone.Events
+
+            @set 'subreddit', subreddit or Const.defaultSub
             @set 'images', new Images()
+            
+            pending = new Images()
+            pending.url = "#{Const.baseURL}/r/#{@get 'subreddit'}.json?jsonp=?"
+            pending.on 'ready', (model) => @get('images').push model
+            @set 'pending', pending
 
-            @bind 'change:subreddit', =>
-                @get('images').url =
-                    "#{Const.baseURL}/r/#{@get 'subreddit'}.json?jsonp=?"
+        loadItems: ->
 
-            @set 'subreddit', 'aww'
-            @get('images').bind 'sync', (images, response) =>
-                @set 'after', response.data.after
-
-        # TODO: Cache this result if it becomes a performance issue.
-        positions: -> @get('images').positions()
-
-        getNextImages: ->
-
-            return if @get 'loading'
-            return unless @get 'after'
-            @getImages @get 'after'
-
-        getImages: (after) ->
-
-            return if @get 'loading'
-            return if @get('imageLimit') < 1
-            return if @get('images').length >= @get 'imageLimit'
-
-            remaining = @get('imageLimit') - @get('images').length
-            limit = Math.min Const.maxChunk, remaining
-
-            @get('images').reset() unless after
+            return if @get('loading') or @get 'loadedAll'
 
             @set 'loading', true
 
             # TODO: Don't do this on pageload but bootstrap the initial models
             # on page load? According to the Backbone docs.
-            @get('images').fetch
+            @get('pending').fetch
                 update: true
                 type: 'GET'
                 dataType: 'jsonp'
                 data: $.param
-                    limit: limit
-                    after: after
+                    limit: Const.maxChunk
+                    after: @get 'after'
 
-                success: (collection) =>
+                success: (collection, data) =>
 
-                    # Limit to one request every 2 seconds per API rules.
+                    unless data.data.after
+                        if collection.length
+                            @set 'loadedAll', true
+                        else
+                            @set 'foundNone', true
+                        return
+
+                    @set 'after', data.data.after
                     setTimeout =>
 
-                        @set 'loading', false
+                        # Trigger scroll in case we reached the bottom before
+                        # reallowing loads.
                         @scroll()
-                        @getNextImages()
+                        @set 'loading', false
 
-                    , 2000
+                    , Const.APIRateLimit
 
         scroll: ->
 
-            positions = @positions()
+            positions = @get('images').positions()
             viewingIndex = @get 'viewingIndex'
 
             if window.scrollY is 0
@@ -94,10 +87,9 @@ define [
             @set 'viewingIndex', viewingIndex
 
             return if (positions.length - viewingIndex) > Const.loadThreshold
-            return if @get 'loading'
+            return if @get('loading') or @get('loadedAll')
 
-            @set 'imageLimit', @get('imageLimit') + Const.maxChunk
-            @getNextImages()
+            @loadItems()
 
         showPrev: ->
 

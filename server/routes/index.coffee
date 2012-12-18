@@ -57,7 +57,6 @@ module.exports = (app) ->
 
     app.get '/', (req, res) -> res.redirect '/r/aww'
     app.get '/r/:subreddit', render
-    app.get '/r/:subreddit/images/:count', render
 
     # Load all other routes in the directory.
     fs.readdirSync(__dirname).forEach (file) ->

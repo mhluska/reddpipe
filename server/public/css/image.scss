@@ -1,62 +1,61 @@
+@import 'mixins';
+
 @mixin image {
 
     .image {
 
-        background-color: #fff;
+        @include offset;
 
-        .row {
+        img {
 
-            box-shadow: 1px 1px 1px #aaa;
-            -webkit-box-shadow: 1px 1px 1px #aaa;
-            -moz-box-shadow: 1px 1px 1px #aaa;
+            float: right;
 
-            img {
+        }
 
-                float: left;
+        .info {
 
+            @media only screen and (max-width: 767px) {
+
+                & {
+
+                    padding: 0 1em;
+                }
             }
 
-            .info {
+            .title {
 
-                @media only screen and (max-width: 767px) {
+                line-height: 1.3em;
+                margin: 1em 0;
 
-                    & {
+                &, a {
 
-                        padding: 0 1em;
-                    }
+                    color: #222;
+                }
+            }
+
+            .votes-wrap {
+
+                float: left;
+                text-align: center;
+
+                .votes {
+
+                    font-size: 1.4em;
+                }
+            }
+
+            .footer {
+
+                margin-top: 2em;
+
+                .urlBox {
+
+                    width: 160px;
                 }
 
-                .title {
+                li {
 
-                    line-height: 1.3em;
-                    margin: 1em 0;
-
-                    &, a {
-
-                        color: #222;
-                    }
-                }
-
-                .votes-wrap {
-
-                    float: left;
-                    text-align: center;
-
-                    .votes {
-
-                        font-size: 1.5em;
-                        font-weight: bold;
-                    }
-                }
-
-                .footer {
-
-                    margin-top: 2em;
-
-                    li {
-
-                        margin-bottom: 0.4em;
-                    }
+                    margin-bottom: 0.3em;
                 }
             }
         }

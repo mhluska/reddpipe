@@ -6,9 +6,11 @@ define [
     'lib/backbone'
     'views/image'
     'models/feed'
+    'utils'
     'constants'
+    'text!templates/message.html'
     
-], ($, Backbone, ImageView, Feed, Const) ->
+], ($, Backbone, ImageView, Feed, Utils, Const, messageTemplate) ->
 
     Backbone.View.extend
 
@@ -16,36 +18,44 @@ define [
 
         initialize: ->
 
-            @model = new Feed()
+            noneHTML = _.template messageTemplate,
+                message: "There's nothing here!"
+            endHTML = _.template messageTemplate,
+                message: "Congrats! You've reached the end."
 
-            @model.set 'subreddit', @options.subreddit if @options.subreddit
-            @model.set 'imageLimit', parseInt @options.count if @options.count
-
-            @model.get('images').bind 'add', @addImageView, @
-            @model.get('images').bind 'reset', => @$el.html ''
+            @endNode = $(endHTML)
+            @model = new Feed @options.subreddit
+            @model.get('images').on 'add', @addImageView, @
+            @model.on 'change:foundNone', => @$el.append noneHTML
 
             $(window).scroll @model.scroll.bind @model
             $(window).keydown @keydown.bind @
 
         render: ->
 
-            @model.getImages()
+            @$el.html ''
+            @model.loadItems()
+
+            @
 
         addImageView: (model) ->
 
-            model.parseURL =>
+            view = new ImageView(model: model).render().el
 
-                view = new ImageView(model: model).render().el
+            # Replace the temporary img node with the model's in-memory
+            # image.
+            image = $(view).find 'img'
+            attributes = Utils.DOMAttributes image
+            newImage = $(model.get('image'))
+            newImage.attr attributes
+            image.replaceWith newImage
 
-                image = $(view).find 'img'
-                image.bind 'load', =>
+            @$el.append view
+            model.set
+                'position': $(view).offset().top
+                'height':   $(view).height()
 
-                    @$el.append view
-                    model.set
-                        'position': $(view).offset().top
-                        'height':   $(view).height()
-
-                    @model.get('images').sort()
+            @$el.append @endNode if @model.get 'loadedAll'
 
         keyPressed: (pressedCode, keys...) ->
 

@@ -1,11 +1,30 @@
+@import 'mixins';
+@import 'message';
 @import 'image';
 
+// TODO: Add the commented-out font formats.
 @font-face {
+
     font-family: 'Helvetica Neue';
-    src: url('../fonts/helvetica-neue.ttf');
-    src: url('../fonts/helvetica-neue.ttf') format('truetype');
+    src: url('../fonts/helvetica-neue.eot');
+    src: url('../fonts/helvetica-neue.eot?iefix') format('eot'),
+         url('../fonts/helvetica-neue.woff') format('woff'),
+         url('../fonts/helvetica-neue.ttf') format('truetype');
+         // url('../fonts/helvetica-neue.svg') format('svg');
     font-weight: normal;
-    font-style: normal;
+    font-style: normal; 
+}
+
+@font-face {
+
+    font-family: 'Helvetica Neue Light';
+    src: url('../fonts/helvetica-neue-light.eot');
+    src: url('../fonts/helvetica-neue-light.eot?iefix') format('eot'),
+         // url('../fonts/helvetica-neue-light.woff') format('woff'),
+         url('../fonts/helvetica-neue-light.ttf') format('truetype');
+         // url('../fonts/helvetica-neue-light.svg') format('svg');
+    font-weight: normal;
+    font-style: normal; 
 }
 
 h1, h2, h3, h4 {
@@ -15,13 +34,14 @@ h1, h2, h3, h4 {
     margin: 0;
 }
 
-body, h1, h2, h3 {
+h1, h2, h3 {
 
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue Light', sans-serif;
 }
 
 body {
 
+    font-family: 'Helvetica Neue', sans-serif;
     background-color: #f0eee9;
     color: #555;
 }
@@ -43,8 +63,8 @@ h3 {
 
 h4 {
 
-    font-size: 1.4em;
-    font-family: 'MuseoSlabRegular', serif;
+    font-size: 1.3em;
+    font-family: 'Droid Serif', serif;
 }
 
 a {
@@ -65,7 +85,7 @@ body {
 
     .title {
 
-        margin: 0 0 0.05em 0;
+        margin: 0;
         padding: 0;
     }
 
@@ -78,10 +98,11 @@ body {
 
     .most-pipelined {
 
-        margin-bottom: 2em;
+        margin-bottom: 3em;
 
         li {
 
+            font-family: 'Helvetica Neue Light', sans-serif;
             display: inline;
             margin-right: 0.5em;
             font-size: 1.2em;
@@ -90,6 +111,7 @@ body {
 
     #pipeline {
 
+        @include message;
         @include image;
     }
 }

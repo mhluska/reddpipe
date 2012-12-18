@@ -1,0 +1,7 @@
+@mixin offset {
+
+    background-color: #fff;
+    box-shadow: 1px 1px 1px #aaa;
+    -webkit-box-shadow: 1px 1px 1px #aaa;
+    -moz-box-shadow: 1px 1px 1px #aaa;
+}

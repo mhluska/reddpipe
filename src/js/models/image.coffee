@@ -2,23 +2,34 @@
 
 define [
     
-    'lib/zepto'
     'lib/backbone'
-    'utils'
     'constants'
+    'utils'
 
-], ($, Backbone, Utils, Const) ->
+], (Backbone, Const, Utils) ->
+
+    types = ['gif', 'jpg', 'jpeg', 'png']
 
     Backbone.Model.extend
 
         defaults:
 
-            position: 0
+            image: null
             height: 0
+            position: 0
 
         initialize: ->
 
-            @bind 'remove', -> @destroy()
+            _.extend @, Backbone.Events
+
+            # Does some parsing and extra API calls to get image info out of
+            # this item. It modifies its own attributes and emits a 'ready'
+            # event when that is done.
+            @on 'add', =>
+                @parseURL =>
+                    @loadImage (image) =>
+                        @set 'image', image
+                        @trigger 'ready', @
 
         parse: (response) ->
 
@@ -31,16 +42,9 @@ define [
             largeThumbURL: data.url
             redditURL:     Const.baseURL + data.permalink
 
-        scrollY: ->
+        parseURL: (success) ->
 
-            scrollY = @get 'position'
-            padding = ($(window).height() - @get 'height')
-            scrollY -= if padding > 0 then padding / 2 else 15
-            Math.round scrollY
-
-        parseURL: (callback) ->
-
-            return callback() if @hasImageURL()
+            return success() if @hasImageURL()
 
             [host, id] = @parseImageHostID()
 
@@ -56,7 +60,7 @@ define [
                     @set 'url', data.image.links.original
                     @set 'largeThumbURL', data.image.links.large_thumbnail
 
-                    callback()
+                    success()
 
                 return
 
@@ -71,31 +75,19 @@ define [
                     @set 'url', firstImage.links.original
                     @set 'largeThumbURL', firstImage.links.large_thumbnail
 
-                    callback()
+                    success()
 
                 return
 
             if host is 'quickmeme'
 
-                @set 'url', "http://i.qkme.me/#{id}.jpg"
+                url = "http://i.qkme.me/#{id}.jpg"
+                @set
+                    url: url
+                    largeThumbURL: url
 
             # Synchronous cases such as quickmeme reach this.
-            callback()
-
-        hasImageURL: do ->
-
-            types = ['gif', 'jpg', 'jpeg', 'png']
-
-            ->
-                url = @get 'url'
-
-                # Remove query parameters
-                url = url.split('?').shift()
-
-                for type in types
-                    return true if Utils.endsWith url, type
-
-                false
+            success()
 
         parseImageHostID: ->
 
@@ -132,3 +124,27 @@ define [
                         console.warn 'Imgur API call failed.'
 
                     return @destroy()
+
+        loadImage: (success) ->
+
+            image = new Image()
+            $(image).bind 'error', => @destroy()
+            $(image).bind 'load',  -> success image
+            image.src = @get 'largeThumbURL'
+
+        hasImageURL: ->
+
+            # Remove query parameters
+            url = @get('url').split('?').shift()
+
+            for type in types
+                return true if Utils.endsWith url, type
+
+            false
+
+        scrollY: ->
+
+            scrollY = @get 'position'
+            padding = ($(window).height() - @get 'height')
+            scrollY -= if padding > 0 then padding / 2 else 15
+            Math.round scrollY

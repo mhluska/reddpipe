@@ -1,0 +1,30 @@
+@import 'mixins';
+
+@mixin message {
+
+    .last.row {
+
+        height: 50px;
+
+        .columns {
+
+            margin: 0;
+
+            .message, img {
+
+                float: left;
+                display: inline-block;
+                vertical-align: middle;
+                height: 50px;
+                @include offset;
+            }
+
+            .message {
+
+                padding: 10px 1em 0 1em;
+                height: 40px;
+                background-color: #fff;
+            }
+        }
+    }
+}

@@ -1,3 +1,5 @@
+'use strict'
+
 define [
 
     'lib/backbone'
@@ -9,18 +11,11 @@ define [
 
         model: Image
 
-        initialize: ->
-
-            @bind 'remove', (model) -> @remove model
-
         parse: (response) ->
 
             response.data.children
 
+        # TODO: Cache this result if it becomes a performance issue.
         positions: ->
 
             @map (model) -> model.scrollY()
-
-        comparator: (model) ->
-
-            model.get 'position'

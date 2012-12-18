@@ -15,13 +15,9 @@ define [
 
         routes:
 
-            'r/:subreddit':               'feed'
-            'r/:subreddit/images/:count': 'feed'
+            'r/:subreddit': 'feed'
 
-        feed: (subreddit, count) ->
+        feed: (subreddit) ->
 
-            feedView = new FeedView
-                subreddit: subreddit
-                count: count
-
+            feedView = new FeedView subreddit: subreddit
             feedView.render()

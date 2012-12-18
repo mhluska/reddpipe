@@ -6,5 +6,7 @@ define [
     
 ], (_) ->
 
-    _.templateSettings = interpolate: /\{\{(.+?)\}\}/g
+    _.templateSettings =
+        interpolate: /\{\{(.+?)\}\}/g
+        escape:      /\{\{&(.+?)\}\}/g
     _

@@ -3,8 +3,10 @@ define ->
     class Const
 
         @baseURL: 'http://www.reddit.com'
-        @maxChunk: 10
-        @loadThreshold: 3
+        @defaultSub: 'aww'
+        @loadThreshold: 4
+        @maxChunk: 15
+        @APIRateLimit: 2000
 
         @key:
             pageUp:   33
