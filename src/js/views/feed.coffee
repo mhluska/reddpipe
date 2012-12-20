@@ -47,7 +47,6 @@ define [
             image = $(view).find 'img'
             attributes = Utils.DOMAttributes image
             newImage = $(model.get('image'))
-            console.log attributes
             newImage.attr attributes
             image.replaceWith newImage
 
