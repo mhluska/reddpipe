@@ -1,7 +1,11 @@
 # TODO: Merge this with the server's CommonJS version of Utils. Possibly by
 # switching to RequireJS on the backend?
 
-define ->
+define [
+
+    'lib/underscore'
+    
+], (_) ->
 
     class Utils
 

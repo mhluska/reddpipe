@@ -37,7 +37,7 @@ define [
 
             url:           data.url
             votes:         data.score
-            title:         data.title
+            title:         data.title.replace(/"/g, '&quot;')
             thumbURL:      data.thumbnail
             largeThumbURL: data.url
             redditURL:     Const.baseURL + data.permalink
