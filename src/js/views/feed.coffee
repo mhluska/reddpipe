@@ -21,7 +21,7 @@ define [
             noneHTML = _.template messageTemplate,
                 message: "There's nothing here!"
             endHTML = _.template messageTemplate,
-                message: "Congrats! You've reached the end."
+                message: "We've hit the end!"
 
             @endNode = $(endHTML)
             @model = new Feed @options.subreddit
