@@ -8,7 +8,7 @@ big, beautiful images. You can control everything with the keyboard, freeing
 your other hand for whatever.
 
 #### Usage ####
-    git clone https://github.com/mhluska/Pipeline.git pipeline && cd pipeline
+    git clone https://github.com/mhluska/pipeline.git && cd pipeline
     npm install
     grunt
     npm start
