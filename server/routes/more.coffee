@@ -29,10 +29,12 @@ module.exports = (app) ->
 
                 $ = window.$
 
-                console.log $('#topstuff a').last().text()
-
-                $('#iur img').parent().each (index, elem) ->
+                guess = $('#topstuff a').last().text()
+                similarUrls = $.map $('#iur img').parent(), (elem) ->
 
                     href = $(elem).attr 'href'
-                    url = href.split('?')[1].split('&')[0].split('=')[1]
-                    console.log url
+                    href.split('?')[1].split('&')[0].split('=')[1]
+
+                return res.json
+                    guess: guess
+                    similar: similarUrls
