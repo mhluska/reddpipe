@@ -29,12 +29,17 @@ module.exports = (app) ->
 
                 $ = window.$
 
-                guess = $('#topstuff a').last().text()
-                similarUrls = $.map $('#iur img').parent(), (elem) ->
+                guess = null
+                if ~$('#topstuff > div').last().text().indexOf 'Best guess'
+                    guess = $('#topstuff a').last().text()
+
+                similarThumbs = $.map $('#iur img').parent(), (elem) ->
 
                     href = $(elem).attr 'href'
-                    href.split('?')[1].split('&')[0].split('=')[1]
+
+                    url: href.split('?')[1].split('&')[0].split('=')[1]
+                    thumbURL: $(elem).find('img').attr 'src'
 
                 return res.json
                     guess: guess
-                    similar: similarUrls
+                    similar: similarThumbs

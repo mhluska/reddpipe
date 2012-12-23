@@ -1,24 +1,26 @@
-<div class="row">
-    <div class="twelve columns alpha">
-        <a href="{{ url }}" target="_blank">
-            <img class="scale-with-grid" title="{{ title }}" />
-        </a>
-    </div>
-    <div class="four columns omega">
-        <div class="info">
-            <h4 class="title">
-                <a href="{{ url }}" target="_blank">{{ title }}</a>
-            </h4>
-            <div class="votes-wrap"><div class="votes">{{ votes }}</div>votes</div>
+<div class="twelve columns alpha">
+    <a href="{{ url }}" target="_blank">
+        <img class="feature scale-with-grid" title="{{ title }}" />
+    </a>
+    <div class="thumbs"></div>
+</div>
+<div class="four columns omega">
+    <div class="info">
+        <h4 class="title">
+            <a href="{{ url }}" target="_blank">{{ title }}</a>
+        </h4>
+        <div class="votes-wrap"><div class="votes">{{ votes }}</div>votes</div>
 
-            <div class="clearfix"></div>
-            <ul class="footer">
-                <input class="urlBox" type="text" value="{{ url }}" />
-                <li><a href="javascript: void(0)">maximize image</a></li>
-                <li><a href="/more?url={{ url }}">similar images</a></li>
-                <li><a href="{{ redditURL }}" 
-                       target="_blank">view on reddit</a></li>
-            </ul>
-        </div>
+        <div class="clearfix"></div>
+        <ul class="footer">
+            <input class="urlBox" type="text" value="{{ url }}" />
+            <li><a href="javascript: void(0)">maximize image</a></li>
+            <li><a href="{{ redditURL }}" 
+                   target="_blank">view on reddit</a></li>
+            <li class="more">
+                <a href="/more?url={{ url }}">show similar images</a>
+                <img class="loading" src="/images/loading.gif" alt="loading" />
+            </li>
+        </ul>
     </div>
 </div>

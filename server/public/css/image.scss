@@ -2,14 +2,20 @@
 
 @mixin image {
 
-    .image {
+    .image.row {
 
         @include offset;
 
-        img {
+        .feature {
 
             float: right;
+        }
 
+        .loading {
+
+            vertical-align: middle;
+            margin-left: 5px;
+            display: none;
         }
 
         .info {

@@ -22,11 +22,13 @@ define [
                 message: "There's nothing here!"
             endHTML = _.template messageTemplate,
                 message: "We've hit the end!"
-
             @endNode = $(endHTML)
+
             @model = new Feed @options.subreddit
             @model.get('images').on 'add', @addImageView, @
             @model.on 'change:foundNone', => @$el.append noneHTML
+
+            @imageViews = []
 
             $(window).scroll @model.scroll.bind @model
             $(window).keydown @keydown.bind @
@@ -40,20 +42,25 @@ define [
 
         addImageView: (model) ->
 
-            view = new ImageView(model: model).render().el
+            view = new ImageView
+                imageViews: @imageViews
+                model: model
+
+            @imageViews.push view
+            elem = view.render().el
 
             # Replace the temporary img node with the model's in-memory
             # image.
-            image = $(view).find 'img'
+            image = $(elem).find '.feature'
             attributes = Utils.DOMAttributes image
             newImage = $(model.get('image'))
             newImage.attr attributes
             image.replaceWith newImage
 
-            @$el.append view
+            @$el.append elem
             model.set
-                'position': $(view).offset().top
-                'height':   $(view).height()
+                position: $(elem).offset().top
+                height:   $(elem).height()
 
             @$el.append @endNode if @model.get 'loadedAll'
 

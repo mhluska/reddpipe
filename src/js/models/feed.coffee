@@ -42,7 +42,6 @@ define [
             # on page load? According to the Backbone docs.
             @get('pending').fetch
                 update: true
-                type: 'GET'
                 dataType: 'jsonp'
                 data: $.param
                     limit: Const.maxChunk

@@ -1,63 +1,70 @@
-'use strict'
+    'use strict'
 
-define [
-    
-    'lib/backbone'
-    'constants'
-    'utils'
+    define [
+        
+        'lib/backbone'
+        'collections/thumbs'
+        'constants'
+        'utils'
 
-], (Backbone, Const, Utils) ->
+    ], (Backbone, Thumbs, Const, Utils) ->
 
-    types = ['gif', 'jpg', 'jpeg', 'png']
+        types = ['gif', 'jpg', 'jpeg', 'png']
 
-    Backbone.Model.extend
+        Backbone.Model.extend
 
-        defaults:
+            defaults:
 
-            image: null
-            height: 0
-            position: 0
+                thumbsProcessed: false # Used to run code when all thumbs load.
+                thumbs: null # Collection of related images.
+                image: null # In-memory image data.
+                position: 0 # Used in keyboard navigation algorithm.
+                height: 0 # Also used in keyboard navigation algorithm.
 
-        initialize: ->
+            initialize: ->
 
-            _.extend @, Backbone.Events
+                _.extend @, Backbone.Events
 
-            # Does some parsing and extra API calls to get image info out of
-            # this item. It modifies its own attributes and emits a 'ready'
-            # event when that is done.
-            @on 'add', =>
-                @parseURL =>
-                    @loadImage (image) =>
-                        @set 'image', image
-                        @trigger 'ready', @
+                # Does some parsing and extra API calls to get image info out of
+                # this item. It modifies its own attributes and emits a 'ready'
+                # event when that is done.
+                @on 'add', =>
+                    @parseURL =>
+                        @loadImage (image) =>
+                            @set 'image', image
+                            @trigger 'ready', @
 
-        parse: (response) ->
+                @set 'thumbs', new Thumbs()
 
-            data = response.data
+            parse: (response) ->
 
-            url:           data.url
-            votes:         data.score
-            title:         data.title.replace(/"/g, '&quot;')
-            thumbURL:      data.thumbnail
-            largeThumbURL: data.url
-            redditURL:     Const.baseURL + data.permalink
+                data = response.data
 
-        parseURL: (success) ->
+                url:           data.url
+                votes:         data.score
+                title:         data.title.replace(/"/g, '&quot;')
+                thumbURL:      data.thumbnail
+                largeThumbURL: data.url
+                redditURL:     Const.baseURL + data.permalink
 
-            return success() if @hasImageURL()
+            parseURL: (success) ->
 
-            [host, id] = @parseImageHostID()
+                return success() if @hasImageURL()
 
-            # TODO: This is debug info. It should go away in the final release.
-            unless host and id
-                console.warn "Couldn't parse #{@get 'url'}!"
-                return @destroy()
+                [host, id] = @parseImageHostID()
 
-            if host is 'imgur'
+                # TODO: This is debug info. It should go away in the final
+                # release.
+                unless host and id
+                    console.warn "Couldn't parse #{@get 'url'}!"
+                    return @destroy()
 
-                @getThumb "http://api.imgur.com/2/image/#{id}.json", (data) =>
+                if host is 'imgur'
 
-                    @set 'url', data.image.links.original
+                    imgurUrl = "http://api.imgur.com/2/image/#{id}.json"
+                    @getThumb imgurUrl, (data) =>
+
+                        @set 'url', data.image.links.original
                     @set 'largeThumbURL', data.image.links.large_thumbnail
 
                     success()
