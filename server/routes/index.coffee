@@ -1,6 +1,7 @@
 fs = require 'fs'
 redis = require 'redis'
 request = require 'request'
+config = require '../config'
 
 Utils = require '../utils'
 Const = require '../constants'
@@ -55,14 +56,16 @@ render = (req, res) ->
 
 module.exports = (app) ->
 
-    app.get '/', (req, res) -> res.redirect '/r/aww'
-    app.get '/r/:subreddit', render
+    app.namespace config.namespace, ->
 
-    # Load all other routes in the directory.
-    fs.readdirSync(__dirname).forEach (file) ->
+        app.get '/', (req, res) -> res.redirect '/r/aww'
+        app.get '/r/:subreddit', render
 
-        return unless Utils.endsWith file, '.js'
-        return if file is 'index.js'
+        # Load all other routes in the directory.
+        fs.readdirSync(__dirname).forEach (file) ->
 
-        name = file.substr 0, file.indexOf '.'
-        require("./#{name}")(app)
+            return unless Utils.endsWith file, '.js'
+            return if file is 'index.js'
+
+            name = file.substr 0, file.indexOf '.'
+            require("./#{name}")(app)

@@ -1,7 +1,7 @@
 extends layout
 
 block scripts
-    if production
+    if process.env.NODE_ENV === 'production'
         script(src='/js/pipeline.js')
     else
         script(data-main='/js/src/pipeline.js', src='/js/require.js')

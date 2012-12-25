@@ -1,7 +1,7 @@
+require 'express-namespace'
 express = require 'express'
 
 app = express()
-app.locals.production = process.argv[2] is 'production'
 require('./routes') app
 
 app.set 'view engine', 'jade'
