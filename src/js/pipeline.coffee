@@ -22,3 +22,9 @@ define [
 ], (_, Backbone, Router) ->
 
     router = new Router()
+
+# TODO: This has to be here because Almond doesn't call require. Get the
+# Gruntfile's insertRequire option working so this doesn't have to be
+# explicitly called.
+$ ->
+    require 'pipeline'

@@ -18,6 +18,8 @@ define [
 
         initialize: ->
 
+            console.log messageTemplate
+
             noneHTML = _.template messageTemplate,
                 message: "There's nothing here!"
             endHTML = _.template messageTemplate,
