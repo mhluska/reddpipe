@@ -9,13 +9,13 @@ html
         meta(property='fb:app_id', content='510514888967929')
         meta(property='og:url', content='http://reddpipe.com/')
         meta(property='og:title', content='Reddit Pipeline')
-        meta(property='og:image', content='/images/icon.jpg')
+        meta(property='og:image', content="#{basePath}/images/icon.jpg")
         meta(property='og:type', content='website')
         meta(property='og:description', content='The fast, mouse-free way to browse image subreddits.')
 
         title Reddit Pipeline
 
-        link(rel='shortcut icon', href='/images/favicon.ico')
+        link(rel='shortcut icon', href="#{basePath}/images/favicon.ico")
         link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Droid+Serif')
 
         if process.env.NODE_ENV === 'production'
