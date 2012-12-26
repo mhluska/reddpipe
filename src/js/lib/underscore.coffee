@@ -7,6 +7,7 @@ define [
 ], (_) ->
 
     _.templateSettings =
+        basePath: basePath
         interpolate: /\{\{(.+?)\}\}/g
         escape:      /\{\{&(.+?)\}\}/g
     _

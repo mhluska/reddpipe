@@ -1,10 +1,11 @@
 extends layout
 
 block scripts
+    script var basePath='#{basePath}';
     if process.env.NODE_ENV === 'production'
-        script(src='/js/pipeline.js')
+        script(src="#{basePath}/js/pipeline.js")
     else
-        script(data-main='/js/src/pipeline.js', src='/js/require.js')
+        script(data-main="#{basePath}/js/src/pipeline.js", src="#{basePath}/js/require.js")
 
 block content
     h1.title Reddit 

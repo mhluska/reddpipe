@@ -1,75 +1,75 @@
-    'use strict'
+'use strict'
 
-    define [
-        
-        'lib/backbone'
-        'collections/thumbs'
-        'constants'
-        'utils'
+define [
+    
+    'lib/backbone'
+    'collections/thumbs'
+    'constants'
+    'utils'
 
-    ], (Backbone, Thumbs, Const, Utils) ->
+], (Backbone, Thumbs, Const, Utils) ->
 
-        types = ['gif', 'jpg', 'jpeg', 'png']
+    types = ['gif', 'jpg', 'jpeg', 'png']
 
-        Backbone.Model.extend
+    Backbone.Model.extend
 
-            defaults:
+        defaults:
 
-                thumbsProcessed: false # Used to run code when all thumbs load.
-                thumbs: null # Collection of related images.
-                image: null # In-memory image data.
-                position: 0 # Used in keyboard navigation algorithm.
-                height: 0 # Also used in keyboard navigation algorithm.
+            thumbsProcessed: false # Used to run code when all thumbs load.
+            thumbs: null # Collection of related images.
+            image: null # In-memory image data.
+            position: 0 # Used in keyboard navigation algorithm.
+            height: 0 # Also used in keyboard navigation algorithm.
 
-            initialize: ->
+        initialize: ->
 
-                _.extend @, Backbone.Events
+            _.extend @, Backbone.Events
 
-                # Does some parsing and extra API calls to get image info out of
-                # this item. It modifies its own attributes and emits a 'ready'
-                # event when that is done.
-                @on 'add', =>
-                    @parseURL =>
-                        @loadImage (image) =>
-                            @set 'image', image
-                            @trigger 'ready', @
+            # Does some parsing and extra API calls to get image info out of
+            # this item. It modifies its own attributes and emits a 'ready'
+            # event when that is done.
+            @on 'add', =>
+                @parseURL =>
+                    @loadImage (image) =>
+                        @set 'image', image
+                        @trigger 'ready', @
 
-                @set 'thumbs', new Thumbs()
+            @set 'thumbs', new Thumbs()
 
-            parse: (response) ->
+        parse: (response) ->
 
-                data = response.data
+            data = response.data
 
-                url:           data.url
-                votes:         data.score
-                title:         data.title.replace(/"/g, '&quot;')
-                thumbURL:      data.thumbnail
-                largeThumbURL: data.url
-                redditURL:     Const.baseURL + data.permalink
+            url:           data.url
+            votes:         data.score
+            title:         data.title.replace /"/g, '&quot;'
+            thumbURL:      data.thumbnail
+            largeThumbURL: data.url
+            redditURL:     Const.baseURL + data.permalink
 
-            parseURL: (success) ->
+        parseURL: (success) ->
 
-                return success() if @hasImageURL()
+            return success() if @hasImageURL()
 
-                [host, id] = @parseImageHostID()
+            [host, id] = @parseImageHostID()
 
-                # TODO: This is debug info. It should go away in the final
-                # release.
-                unless host and id
-                    console.warn "Couldn't parse #{@get 'url'}!"
-                    return @destroy()
+            # TODO: This is debug info. It should go away in the final
+            # release.
+            unless host and id
+                console.warn "Couldn't parse #{@get 'url'}!"
+                return @destroy()
 
-                if host is 'imgur'
+            if host is 'imgur'
 
-                    imgurUrl = "http://api.imgur.com/2/image/#{id}.json"
-                    @getThumb imgurUrl, (data) =>
+                imgurUrl = "http://api.imgur.com/2/image/#{id}.json"
+                @getThumb imgurUrl, (data) =>
 
-                        @set 'url', data.image.links.original
+                    @set 'url', data.image.links.original
                     @set 'largeThumbURL', data.image.links.large_thumbnail
 
-                    success()
+                success()
 
-                return
+            return
 
             # TODO: This is temporary. We should be showing the entire album.
             # The problem stems from the fact that albums and images are being

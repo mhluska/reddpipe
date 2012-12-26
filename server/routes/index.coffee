@@ -56,16 +56,16 @@ render = (req, res) ->
 
 module.exports = (app) ->
 
-    app.namespace config.namespace, ->
+    app.get '/', (req, res) ->
+        res.redirect res.locals.basePath + '/r/aww'
 
-        app.get '/', (req, res) -> res.redirect '/r/aww'
-        app.get '/r/:subreddit', render
+    app.get '/r/:subreddit', render
 
-        # Load all other routes in the directory.
-        fs.readdirSync(__dirname).forEach (file) ->
+    # Load all other routes in the directory.
+    fs.readdirSync(__dirname).forEach (file) ->
 
-            return unless Utils.endsWith file, '.js'
-            return if file is 'index.js'
+        return unless Utils.endsWith file, '.js'
+        return if file is 'index.js'
 
-            name = file.substr 0, file.indexOf '.'
-            require("./#{name}")(app)
+        name = file.substr 0, file.indexOf '.'
+        require("./#{name}")(app)

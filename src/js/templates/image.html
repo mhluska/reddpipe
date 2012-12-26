@@ -18,8 +18,8 @@
             <li><a href="{{ redditURL }}" 
                    target="_blank">view on reddit</a></li>
             <li class="more">
-                <a href="/more?url={{ url }}">show similar images</a>
-                <img class="loading" src="/images/loading.gif" alt="loading" />
+                <a href="{{ basePath }}more?url={{ url }}">show similar images</a>
+                <img class="loading" src="{{ basePath }}/images/loading.gif" alt="loading" />
             </li>
         </ul>
     </div>

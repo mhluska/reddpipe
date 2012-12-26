@@ -1,7 +1,12 @@
-require 'express-namespace'
 express = require 'express'
 
 app = express()
+
+app.use (req, res, next) ->
+
+    res.locals.basePath = req.headers['x-script-name'] or ''
+    next()
+
 require('./routes') app
 
 app.set 'view engine', 'jade'

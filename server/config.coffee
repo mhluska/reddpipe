@@ -4,8 +4,8 @@ module.exports = switch env
 
     when 'development'
 
-        namespace: ''
+        'pass'
 
     when 'production'
 
-        namespace: '/demo/pipeline-new'
+        'pass'

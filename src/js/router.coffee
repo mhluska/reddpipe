@@ -11,7 +11,9 @@ define [
 
         initialize: ->
 
-            Backbone.history.start pushState: true
+            Backbone.history.start
+                pushState: true
+                root: basePath
 
         routes:
 
