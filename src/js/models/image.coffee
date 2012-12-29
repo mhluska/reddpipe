@@ -67,7 +67,7 @@ define [
                     @set 'url', data.image.links.original
                     @set 'largeThumbURL', data.image.links.large_thumbnail
 
-                success()
+                    success()
 
             return
 
