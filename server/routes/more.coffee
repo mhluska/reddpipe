@@ -35,7 +35,11 @@ module.exports = (app) ->
 
                     guess = null
                     if ~$('#topstuff > div').last().text().indexOf 'Best guess'
-                        guess = $('#topstuff a').last().text()
+                        elem = $('#topstuff a').last()
+                        guess =
+                            text: elem.text()
+                            href: window.location.protocol + '/' +
+                                  window.location.hostname + elem.attr 'href'
 
                     similarThumbs = $.map $('#iur img').parent(), (elem) ->
 

@@ -57,11 +57,16 @@ define [
                 update: true
                 success: (collection, data) =>
 
+                    button.addClass 'disabled'
+
+                    data = data.guess
+                    return unless data
+
                     # TODO: Temporary hack. data.guess should be stored in a
                     # Thumbs model.
-                    @thumbsView.prepend "<h3>#{data.guess}</h3>" if data.guess
-
-                    button.addClass 'disabled'
+                    @thumbsView.prepend \
+                        "<h3><a href='#{data.href}' target='_blank'> \
+                        #{data.text}</a></h3>"
 
                 complete: -> loader.hide()
 
