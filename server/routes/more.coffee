@@ -1,5 +1,6 @@
 jsdom = require 'jsdom'
 redis = require 'redis'
+config = require '../config'
 
 module.exports = (app) ->
 
@@ -10,7 +11,7 @@ module.exports = (app) ->
 
         # Check if Redis has a url -> (best guess, similar urls) mapping. If
         # yes, return that JSON, otherwise scrape the info from Google.
-        client = redis.createClient()
+        client = redis.createClient config.redisPort
         client.hget 'more', imageUrl, (error, result) ->
 
             if result

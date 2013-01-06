@@ -16,7 +16,7 @@ sortHits = (hits) ->
 
 render = (req, res) ->
 
-    client = redis.createClient()
+    client = redis.createClient config.redisPort
     subreddit = req.params.subreddit
 
     # Validate subreddit. If valid, increment count in Redis otherwise redirect

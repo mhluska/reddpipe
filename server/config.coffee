@@ -4,8 +4,8 @@ module.exports = switch env
 
     when 'development'
 
-        'pass'
+        redisPort: 6379
 
     when 'production'
 
-        'pass'
+        redisPort: 6380
