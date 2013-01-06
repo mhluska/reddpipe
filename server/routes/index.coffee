@@ -49,6 +49,7 @@ render = (req, res) ->
                 client.hincrby 'hits', subreddit, 1
                 client.save()
                 client.end()
+                hits ?= {}
                 hits[subreddit] ?= 0
                 hits[subreddit] = parseInt(hits[subreddit]) + 1
 
