@@ -18,7 +18,7 @@ block content
             - subreddit = pair[0]
             - count = pair[1]
             li 
-                a(href="/r/#{subreddit}") #{subreddit}
+                a(href="#{basePath}/r/#{subreddit}") #{subreddit}
                 span 
                     | #{count}
 
