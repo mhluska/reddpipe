@@ -72,9 +72,17 @@ h4 {
 a {
 
     text-decoration: none;
+    color: #3987cb;
+
     &:hover {
 
+        color: #3987cb;
         text-decoration: underline;
+    }
+
+    &:visited {
+
+        color: #3987cb;
     }
 }
 
@@ -115,14 +123,16 @@ a.disabled {
 
     .most-pipelined {
 
-        margin-bottom: 3em;
+        margin-bottom: 1.3em;
+        overflow: auto;
 
         li {
 
             font-family: 'Helvetica Neue Light', sans-serif;
             display: inline;
-            margin-right: 0.5em;
-            font-size: 1.2em;
+            margin: 0 0.5em 0 0;
+            font-size: 1em;
+            float: left;
         }
     }
 
