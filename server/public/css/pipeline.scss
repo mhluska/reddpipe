@@ -49,7 +49,7 @@ body {
 
 h1 {
 
-    font-size: 2.5em;
+    font-size: 1.8em;
 }
 
 h2 {
@@ -89,100 +89,101 @@ a.disabled {
     }
 }
 
-body {
+#header {
 
-    padding-top: 2em;
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ccc;
+
+    .title {
+
+        margin: 0;
+        padding: 0;
+    }
+
+    .description {
+
+        font-size: 1em;
+        margin: -0.2em 0;
+        padding: 0;
+    }
 }
+
 
 .container {
 
-    #header {
+    .most-pipelined {
 
-        .title {
+        margin-bottom: 3em;
 
+        li {
+
+            font-family: 'Helvetica Neue Light', sans-serif;
+            display: inline;
+            margin-right: 0.5em;
+            font-size: 1.2em;
+        }
+    }
+
+    .search {
+
+        float: left;
+        position: relative;
+
+        .subreddit {
+
+            display: inline;
             margin: 0;
-            padding: 0;
+
         }
 
-        .description {
+        input[type="submit"] {
 
-            font-size: 1.3em;
-            margin: -0.2em 0 2em 0;
-            padding: 0;
-        }
+            background: url("../images/search-sprite.png") no-repeat 0 9px;
+            width: 20px;
+            height: 100%;
+            border: none;
+            margin: 0;
 
-        .most-pipelined {
+            color: transparent;
+            font-size: 0;
 
-            margin-bottom: 3em;
+            position: absolute;
+            right: 0;
+            top: 0;
 
-            li {
+            &:hover {
 
-                font-family: 'Helvetica Neue Light', sans-serif;
-                display: inline;
-                margin-right: 0.5em;
-                font-size: 1.2em;
+                background-position: -20px 9px;
             }
         }
+    }
+    
+    @media only screen and (max-width: 767px) {
 
         .search {
 
-            float: left;
-            position: relative;
+            width: 100%;
 
-            .subreddit {
+            .subreddit-wrap {
 
-                display: inline;
-                margin: 0;
+                margin-right: 10px;
 
-            }
+                .subreddit {
 
-            input[type="submit"] {
-
-                background: url("../images/search-sprite.png") no-repeat 0 9px;
-                width: 20px;
-                height: 100%;
-                border: none;
-                margin: 0;
-
-                color: transparent;
-                font-size: 0;
-
-                position: absolute;
-                right: 0;
-                top: 0;
-
-                &:hover {
-
-                    background-position: -20px 9px;
-                }
-            }
-        }
-        
-        @media only screen and (max-width: 767px) {
-
-            .search {
-
-                width: 100%;
-
-                .subreddit-wrap {
-
-                    margin-right: 10px;
-
-                    .subreddit {
-
-                        width: 100%;
-                    }
+                    width: 100%;
                 }
             }
         }
     }
+}
 
-    #pipeline {
+#pipeline {
 
-        clear: left;
+    clear: left;
 
-        @include message;
-        @include thumbs;
-        @include image;
-    }
+    @include message;
+    @include thumbs;
+    @include image;
 }

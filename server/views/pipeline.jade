@@ -8,13 +8,14 @@ block scripts
         script(data-main="#{basePath}/js/src/pipeline.js", src="#{basePath}/js/require.js")
 
 block content
-
     #header
-        h1.title Reddit 
-            strong Pipeline
-        h2.description The fast, mouse-free way to browse image subreddits.
-        h3 Most Pipelined
+        .container
+            h1.title Reddit 
+                strong Pipeline
+            h2.description The fast, mouse-free way to browse image subreddits.
 
+    .container
+        h3 Most Pipelined
         ul.most-pipelined
             -each pair in hits
                 - subreddit = pair[0]
@@ -29,4 +30,4 @@ block content
                 input.subreddit(type='text', placeholder='Search subreddits')
             input(type='submit', value='Search')
 
-    #pipeline
+        #pipeline
