@@ -8,8 +8,8 @@ define [
     
 ], (Backbone, Images, Const) ->
 
-    # This model is a wrapper for the images collection. It holds meta
-    # information about images.
+    # This model is a wrapper for the images collection. It holds meta data
+    # about images.
     Backbone.Model.extend
 
         defaults:

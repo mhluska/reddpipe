@@ -10,7 +10,7 @@ define [
     'constants'
     'text!templates/message.html'
     
-], ($, Backbone, ImageView, Feed, Utils, Const, messageTemplate) ->
+], ($, Backbone, ImageView, FeedModel, Utils, Const, messageTemplate) ->
 
     Backbone.View.extend
 
@@ -24,19 +24,19 @@ define [
                 message: "We've hit the end!"
             @endNode = $(endHTML)
 
-            @model = new Feed @options.subreddit
-            @model.get('images').on 'add', @addImageView, @
-            @model.on 'change:foundNone', => @$el.append noneHTML
+            @feedModel = new FeedModel @options.subreddit
+            @feedModel.get('images').on 'add', @addImageView, @
+            @feedModel.on 'change:foundNone', => @$el.append noneHTML
 
             @imageViews = []
 
-            $(window).scroll @model.scroll.bind @model
+            $(window).scroll @feedModel.scroll.bind @feedModel
             $(window).keydown @keydown.bind @
 
         render: ->
 
             @$el.html ''
-            @model.loadItems()
+            @feedModel.loadItems()
 
             @
 
@@ -62,7 +62,7 @@ define [
                 position: $(elem).offset().top
                 height:   $(elem).height()
 
-            @$el.append @endNode if @model.get 'loadedAll'
+            @$el.append @endNode if @feedModel.get 'loadedAll'
 
         keyPressed: (pressedCode, keys...) ->
 
@@ -84,14 +84,14 @@ define [
             if @keyPressed event.which, 'pageUp', 'left', 'a'
 
                 event.preventDefault()
-                @model.showPrev()
+                @feedModel.showPrev()
 
             else if @keyPressed event.which, 'pageDown', 'right', 'd'
 
                 event.preventDefault()
-                @model.showNext()
+                @feedModel.showNext()
 
             else if @keyPressed event.which, 'v'
 
                 event.preventDefault()
-                @$('.urlBox').get(@model.get 'viewingIndex')?.select()
+                @$('.urlBox').get(@feedModel.get 'viewingIndex')?.select()
