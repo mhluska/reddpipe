@@ -11,7 +11,7 @@ sortHits = (hits) ->
     # TODO: Do this in Redis using a list.
     hits = ([key, parseInt value] for own  key, value of hits)
     hits.sort (a, b) -> if a[1] > b[1] then -1 else 1
-    hits.splice(10)
+    hits.splice(20)
     hits
 
 render = (req, res) ->
