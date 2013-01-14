@@ -133,6 +133,7 @@ body {
 
                 display: inline;
                 margin: 0;
+
             }
 
             input[type="submit"] {
@@ -153,6 +154,24 @@ body {
                 &:hover {
 
                     background-position: -20px 9px;
+                }
+            }
+        }
+        
+        @media only screen and (max-width: 767px) {
+
+            .search {
+
+                width: 100%;
+
+                .subreddit-wrap {
+
+                    margin-right: 10px;
+
+                    .subreddit {
+
+                        width: 100%;
+                    }
                 }
             }
         }

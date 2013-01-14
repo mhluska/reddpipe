@@ -23,4 +23,6 @@ define [
             form = $(event.target.form)
             subreddit = form.find('.subreddit').val()
 
+            return unless subreddit
+
             window.location = "#{basePath}/r/#{subreddit}"
