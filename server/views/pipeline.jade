@@ -13,21 +13,26 @@ block content
             h1.title Reddit 
                 strong Pipeline
             h2.description The fast, mouse-free way to browse image subreddits.
-
+    
     .container
-        h3 Most Pipelined
-        ul.most-pipelined
-            -each pair in hits
-                - subreddit = pair[0]
-                - count = pair[1]
-                li 
-                    a(href="#{basePath}/r/#{subreddit}") #{subreddit}
-                    span 
-                        | #{count}
+        .top.row
+            .eleven.columns.alpha
+                img(class="scale-with-grid", src="http://placekitten.com/700/400")
+            .five.columns.omega
+                .info
+                    h3 Most Pipelined
+                    ul.most-pipelined
+                        -each pair in hits
+                            - subreddit = pair[0]
+                            - count = pair[1]
+                            li 
+                                a(href="#{basePath}/r/#{subreddit}") #{subreddit}
+                                span 
+                                    | #{count}
 
-        form.search
-            .subreddit-wrap
-                input.subreddit(type='text', placeholder='Search subreddits')
-            input(type='submit', value='Search')
+                    form.search
+                        .subreddit-wrap
+                            input.subreddit(type='text', placeholder='Search subreddits')
+                        input(type='submit', value='Search')
 
         #pipeline

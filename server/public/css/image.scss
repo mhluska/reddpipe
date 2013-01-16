@@ -1,73 +1,54 @@
 @import 'mixins';
 
 @mixin image {
+    .loading {
+        vertical-align: middle;
+        margin-left: 5px;
+        display: none;
+    }
 
-    .image.row {
+    .feature {
+        float: right;
+    }
 
-        @include offset;
-
-        .feature {
-
-            float: right;
+    .info {
+        .title {
+            line-height: 1.3em;
+            margin-bottom: 1em;
+            &, a {
+                color: #222;
+            }
         }
 
-        .loading {
-
-            vertical-align: middle;
-            margin-left: 5px;
-            display: none;
+        .votes-wrap {
+            float: left;
+            text-align: center;
+            .votes {
+                font-size: 1.4em;
+            }
         }
 
-        .info {
-
-            @media only screen and (max-width: 767px) {
-
-                & {
-
-                    padding: 0 1em;
-                }
+        .footer {
+            margin-top: 2em;
+            .urlBox {
+                width: 165px;
             }
 
-            .title {
-
-                line-height: 1.3em;
-                margin: 1em 0;
-
-                &, a {
-
+            li {
+                margin-bottom: 0.3em;
+                a {
                     color: #222;
                 }
             }
+        }
+    }
 
-            .votes-wrap {
+    @media only screen and (max-width: 767px) {
 
-                float: left;
-                text-align: center;
-
-                .votes {
-
-                    font-size: 1.4em;
-                }
-            }
-
-            .footer {
-
-                margin-top: 2em;
-
-                .urlBox {
-
-                    width: 160px;
-                }
-
-                li {
-
-                    margin-bottom: 0.3em;
-
-                    a {
-
-                        color: #222;
-                    }
-                }
+        .image.row {
+            @include offset;
+            .title {
+                margin-top: 20px;
             }
         }
     }

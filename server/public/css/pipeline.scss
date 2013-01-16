@@ -121,6 +121,15 @@ a.disabled {
 
 .container {
 
+    .omega {
+        margin-left: 0;
+
+        .info {
+            padding: 20px;
+            padding-top: 0;
+        }
+    }
+
     .most-pipelined {
 
         margin-bottom: 1.3em;
@@ -138,6 +147,7 @@ a.disabled {
 
     .search {
 
+        width: 190px;
         float: left;
         position: relative;
 
@@ -171,18 +181,22 @@ a.disabled {
     }
     
     @media only screen and (max-width: 767px) {
+        .top.row {
+            .alpha {
+                display: none;
+            }
 
-        .search {
+            .info {
+                padding: 0;
+            }
 
-            width: 100%;
-
-            .subreddit-wrap {
-
-                margin-right: 10px;
-
-                .subreddit {
-
-                    width: 100%;
+            .search {
+                width: 100%;
+                .subreddit-wrap {
+                    margin-right: 10px;
+                    .subreddit {
+                        width: 100%;
+                    }
                 }
             }
         }
