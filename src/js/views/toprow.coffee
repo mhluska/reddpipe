@@ -9,7 +9,7 @@ define [
 
     Backbone.View.extend
 
-        el: $('#header')
+        el: $('.top.row')
 
         events:
 

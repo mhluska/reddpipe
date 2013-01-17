@@ -3,10 +3,10 @@
 define [
 
     'lib/backbone'
-    'views/header'
+    'views/toprow'
     'views/feed'
     
-], (Backbone, HeaderView, FeedView) ->
+], (Backbone, TopRowView, FeedView) ->
 
     Backbone.Router.extend
 
@@ -22,6 +22,6 @@ define [
 
         feed: (subreddit) ->
 
-            new HeaderView()
+            new TopRowView()
             feedView = new FeedView subreddit: subreddit
             feedView.render()
