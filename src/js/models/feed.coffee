@@ -34,6 +34,7 @@ define [
             # for collecting statistics about top images while I finish this
             # feature. There's also a race condition here between loading the
             # image data and finding a new image as the feed loads.
+            ###
             $.ajax
                 type: 'GET'
                 url: '/topimage'
@@ -48,6 +49,7 @@ define [
                             $('.top.row .top-image-title').show()
                     else
                         topImage.attr 'src', 'http://placekitten.com/700/400'
+            ###
 
             pending = new Images()
             pending.url = "#{Const.baseURL}/r/#{@get 'subreddit'}.json?jsonp=?"
