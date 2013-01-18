@@ -38,7 +38,6 @@ h1, h2, h3 {
 
 body {
     font-family: 'Helvetica Neue', sans-serif;
-    background-color: #f0eee9;
     color: #555;
 }
 
@@ -84,23 +83,23 @@ a.disabled {
 }
 
 #header {
-    background-color: #fff;
-    padding: 10px 0 20px 0;
+    background-color: #f8f8f8;
+    padding: 8px 0;
     margin-bottom: 20px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ddd;
 
     .title {
+        font-size: 1.3em;
         margin: 0;
         padding: 0;
     }
 
     .description {
-        font-size: 1em;
+        font-size: 0.9em;
         margin: -0.2em 0;
         padding: 0;
     }
 }
-
 
 .container {
     .feature {
@@ -131,13 +130,17 @@ a.disabled {
     }
 
     .search {
-        width: 190px;
+        width: 100%;
         float: left;
         position: relative;
 
-        .subreddit {
-            display: inline;
-            margin: 0;
+        .subreddit-wrap {
+            margin-right: 10px;
+            .subreddit {
+                display: inline;
+                margin: 0;
+                width: 100%;
+            }
         }
 
         input[type="submit"] {
@@ -165,19 +168,8 @@ a.disabled {
             .alpha {
                 display: none;
             }
-
             .info {
                 padding: 0;
-            }
-
-            .search {
-                width: 100%;
-                .subreddit-wrap {
-                    margin-right: 10px;
-                    .subreddit {
-                        width: 100%;
-                    }
-                }
             }
         }
     }
