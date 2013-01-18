@@ -40,11 +40,11 @@ define [
 
             @
 
-        addImageView: (model) ->
+        addImageView: (imageModel) ->
 
             view = new ImageView
                 imageViews: @imageViews
-                model: model
+                model: imageModel
 
             @imageViews.push view
             elem = view.render().el
@@ -53,21 +53,38 @@ define [
             # image.
             image = $(elem).find '.feature'
             attributes = Utils.DOMAttributes image
-            newImage = $(model.get('image'))
+            newImage = $(imageModel.get('image'))
             newImage.attr attributes
             image.replaceWith newImage
 
             @$el.append elem
-            model.set
+            imageModel.set
                 position: $(elem).offset().top
                 height:   $(elem).height()
+
+            # TODO: This is a huge hack. Move this to ImageModel and avoid
+            # restructuring the model on the fly. We really only want to save
+            # the JSON data that came from Reddit, so maybe create a
+            # RedditImageModel and wrap it in ImageModel which contains
+            # additional app-specific data.
+            votes = imageModel.get 'votes'
+            wrapper = newImage.closest '.alpha'
+
+            if newImage.width() is wrapper.width()
+                if votes > @feedModel.get 'topImageVotes'
+                    @feedModel.set 'topImageVotes', votes
+                    copiedImageModel = imageModel.clone()
+                    copiedImageModel.unset 'image'
+                    copiedImageModel.set 'subreddit', @options.subreddit
+                    copiedImageModel.set 'url', newImage.attr 'src'
+                    copiedImageModel.url = '/topimage'
+                    copiedImageModel.save()
 
             @$el.append @endNode if @feedModel.get 'loadedAll'
 
         keyPressed: (pressedCode, keys...) ->
 
             for keyAttr in keys
-
                 return true if Const.key[keyAttr] is pressedCode
 
             false

@@ -2,8 +2,8 @@ express = require 'express'
 
 app = express()
 
+app.use express.bodyParser()
 app.use (req, res, next) ->
-
     res.locals.basePath = req.headers['x-script-name'] or ''
     next()
 

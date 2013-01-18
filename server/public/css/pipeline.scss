@@ -111,6 +111,26 @@ a.disabled {
 }
 
 .container {
+    .alpha {
+        position: relative;
+        .top-image-title {
+            display: none;
+            color: #111;
+            position: absolute;
+            padding: 0 6px;
+            line-height: 1.6em;
+            right: 0;
+            top: 0;
+            font-size: 0.9em;
+            background-color: #ccc;
+            opacity: 0.8;
+            pointer-events: none;
+            border-radius: 0 0 0 3px;
+            -moz-border-radius: 0 0 0 3px;
+            -webkit-border-radius: 0 0 0 3px;
+        }
+    }
+
     .feature {
         float: right;
     }

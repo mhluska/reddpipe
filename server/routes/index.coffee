@@ -36,6 +36,8 @@ render = (req, res) ->
 
             # Only allow a counter increment for the client's IP for a
             # subreddit every timeout seconds.
+            # TODO: Factor this out so the /image/save route can use it as
+            # well.
             timeout = 10
             hash = req.connection.remoteAddress + req.params.subreddit
             client.ttl hash, (error, time) ->

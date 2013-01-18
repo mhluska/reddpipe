@@ -14,11 +14,14 @@ define [
 
         defaults:
             
+            after: null
             loading: false
             loadedAll: false
             foundNone: false
             viewingIndex: -1
-            after: null
+
+            topImageVotes: 0
+            topImageData: null
 
         initialize: (subreddit) ->
 
@@ -26,7 +29,26 @@ define [
 
             @set 'subreddit', subreddit or Const.defaultSub
             @set 'images', new Images()
-            
+
+            # TODO: Temporary hack to bootstrap the topImageVotes number. Used
+            # for collecting statistics about top images while I finish this
+            # feature. There's also a race condition here between loading the
+            # image data and finding a new image as the feed loads.
+            $.ajax
+                type: 'GET'
+                url: '/topimage'
+                data: subreddit: @get 'subreddit'
+                success: (data) =>
+                    topImage = $('.top.row img')
+                    if data
+                        @set 'topImageData', data
+                        @set 'topImageVotes', data.votes
+                        topImage.attr 'src', data.url
+                        topImage.bind 'load', ->
+                            $('.top.row .top-image-title').show()
+                    else
+                        topImage.attr 'src', 'http://placekitten.com/700/400'
+
             pending = new Images()
             pending.url = "#{Const.baseURL}/r/#{@get 'subreddit'}.json?jsonp=?"
             pending.on 'ready', (model) => @get('images').push model
