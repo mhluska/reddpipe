@@ -1,5 +1,3 @@
-@import 'mixins';
-
 @mixin image {
     .loading {
         vertical-align: middle;
@@ -42,9 +40,11 @@
     @media only screen and (max-width: 767px) {
 
         .image.row {
-            @include offset;
-            .title {
-                margin-top: 20px;
+            .info {
+                padding: 0;
+                .title {
+                    margin-top: 20px;
+                }
             }
         }
     }
