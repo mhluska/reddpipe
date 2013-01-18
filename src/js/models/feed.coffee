@@ -101,10 +101,13 @@ define [
             else if window.scrollY is $(document).height() - $(window).height()
                 viewingIndex = positions.length - 1
 
-            if window.scrollY > positions[viewingIndex + 1]
+            # TODO: Get rid of this extra +/-1. It is there to work around a 1
+            # pixel discrepancy between window.scrollY and positions[..] and
+            # dev and production.
+            if window.scrollY > positions[viewingIndex + 1] + 1
                 viewingIndex += 1
 
-            else if window.scrollY < positions[viewingIndex]
+            else if window.scrollY < positions[viewingIndex] - 1
                 viewingIndex -= 1 unless viewingIndex is positions.length - 1
 
             @set 'viewingIndex', viewingIndex
