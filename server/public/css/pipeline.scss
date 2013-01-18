@@ -5,7 +5,6 @@
 
 // TODO: Add the commented-out font formats.
 @font-face {
-
     font-family: 'Helvetica Neue';
     src: url('../fonts/helvetica-neue.eot');
     src: url('../fonts/helvetica-neue.eot?iefix') format('eot'),
@@ -17,7 +16,6 @@
 }
 
 @font-face {
-
     font-family: 'Helvetica Neue Light';
     src: url('../fonts/helvetica-neue-light.eot');
     src: url('../fonts/helvetica-neue-light.eot?iefix') format('eot'),
@@ -29,69 +27,57 @@
 }
 
 h1, h2, h3, h4 {
-
     line-height: normal;
     padding: 0;
     margin: 0;
 }
 
 h1, h2, h3 {
-
     font-family: 'Helvetica Neue Light', sans-serif;
 }
 
 body {
-
     font-family: 'Helvetica Neue', sans-serif;
     background-color: #f0eee9;
     color: #555;
 }
 
 h1 {
-
     font-size: 1.8em;
 }
 
 h2 {
-
     font-size: 2.2em;
 }
 
 h3 {
-
     font-size: 1.6em;
     margin-bottom: 0.3em;
 }
 
 h4 {
-
     font-size: 1.3em;
     font-family: 'Droid Serif', serif;
 }
 
 a {
-
     text-decoration: none;
     color: #3987cb;
 
     &:hover {
-
         color: #3987cb;
         text-decoration: underline;
     }
 
     &:visited {
-
         color: #3987cb;
     }
 }
 
 a.disabled {
-
     color: #999;
 
     &:hover {
-
         text-decoration: none;
         cursor: default;
     }
@@ -102,6 +88,7 @@ a.disabled {
     padding: 10px 0 20px 0;
     margin-bottom: 20px;
     border-bottom: 1px solid #ccc;
+
     .title {
         margin: 0;
         padding: 0;
@@ -130,11 +117,13 @@ a.disabled {
     .most-pipelined {
         margin-bottom: 1.3em;
         overflow: auto;
+
         li {
             display: inline;
             margin: 0 0.5em 0 0;
             font-size: 1em;
             float: left;
+
             span {
                 font-family: 'Helvetica Neue Light', sans-serif;
             }
@@ -145,6 +134,7 @@ a.disabled {
         width: 190px;
         float: left;
         position: relative;
+
         .subreddit {
             display: inline;
             margin: 0;
@@ -194,7 +184,6 @@ a.disabled {
 }
 
 #pipeline {
-
     clear: left;
 
     @include message;
