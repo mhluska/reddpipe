@@ -107,11 +107,25 @@ define [
             if @keyPressed event.which, 'pageUp', 'left', 'a'
 
                 event.preventDefault()
+
+                # TODO: Factor these into a function?
+                viewingIndex = @feedModel.get('viewingIndex')
+                if viewingIndex >= 1
+                    minimized = @imageViews[viewingIndex].minimize()
+                    @imageViews[viewingIndex - 1].maximize() if minimized
+
                 @feedModel.showPrev()
 
             else if @keyPressed event.which, 'pageDown', 'right', 'd'
 
                 event.preventDefault()
+
+                # TODO: Factor these into a function?
+                viewingIndex = @feedModel.get('viewingIndex')
+                unless viewingIndex is -1
+                    minimized = @imageViews[viewingIndex]?.minimize()
+                    @imageViews[viewingIndex + 1]?.maximize() if minimized
+
                 @feedModel.showNext()
 
             else if @keyPressed event.which, 'v'

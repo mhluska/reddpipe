@@ -6,10 +6,13 @@ define [
     'lib/backbone'
     'collections/thumbs'
     'views/thumb'
+    'views/maximized'
+    'models/maximized'
     'constants'
     'text!templates/image.html'
 
-], (_, Backbone, Thumbs, ThumbView, Const, imageTemplate) ->
+], (_, Backbone, Thumbs, ThumbView, MaximizedView, MaximizedModel, Const,
+        imageTemplate) ->
 
     Backbone.View.extend
 
@@ -19,19 +22,20 @@ define [
 
         events:
 
-            'click   .more a': 'loadThumbs'
-            'click   .urlBox': (event) -> event.target.select()
+            'click   .maximize': 'maximize'
+            'click     .more a': 'loadThumbs'
+            'click     .urlBox': (event) -> event.target.select()
 
         initialize: (options) ->
 
-            @imageModel = options.model
+            @maximizedView = null
 
-            thumbs = @imageModel.get 'thumbs'
+            thumbs = @model.get 'thumbs'
             thumbs.on 'add', @addThumbView, @
 
         render: ->
 
-            @$el.html @template @imageModel.toJSON()
+            @$el.html @template @model.toJSON()
 
             @
 
@@ -50,7 +54,7 @@ define [
             @thumbsView = $('<div class="thumbs row"></div>')
             @thumbsView.insertAfter @$el.closest('.image.row')
 
-            thumbs = @imageModel.get 'thumbs'
+            thumbs = @model.get 'thumbs'
             thumbs.url = event.target.href
             thumbs.fetch
 
@@ -97,7 +101,7 @@ define [
                 allThumbs.last().get(0).scrollIntoView false
                 window.scroll 0, window.scrollY + Const.scrollTopPadding
                 
-                @imageModel.set 'thumbsProcessed', true
+                @model.set 'thumbsProcessed', true
 
         selectURL: ->
 
@@ -106,3 +110,23 @@ define [
             window.scroll 0, window.scrollY - Const.scrollTopPadding
             urlBoxElem.select()
             urlBoxElem
+
+        maximize: ->
+
+            return if @maximizedView?.model.get('maximized')
+
+            # TODO: Once we have ImageModel's JSON data grouped, we can just
+            # pass the object here.
+            @maximizedView = new MaximizedView
+                model: new MaximizedModel
+                    url: @model.get('url')
+                    title: @model.get('title')
+
+            document.body.appendChild(@maximizedView.render().el)
+
+        minimize: ->
+
+            return false unless @maximizedView?.model.get('maximized')
+            @maximizedView.minimize()
+            @maximizedView.model.set('maximized', false)
+            true

@@ -1,22 +1,24 @@
 <div class="eleven columns alpha">
-    <a href="{{ url }}" target="_blank">
+    <a class="maximize" href="javascript: void(0)" target="_blank">
         <img class="feature scale-with-grid" title="{{ title }}" />
     </a>
     <div class="thumbs"></div>
 </div>
+
 <div class="five columns omega">
     <div class="info">
         <h4 class="title">
             <a href="{{ url }}" target="_blank">{{ title }}</a>
         </h4>
         <div class="votes-wrap"><div class="votes">{{ votes }}</div>votes</div>
-
         <div class="clearfix"></div>
+
         <ul class="footer">
-            <input class="urlBox" type="text" value="{{ url }}" />
-            <li><a href="{{ url }}" target="_blank">maximize image</a></li>
+            <li><input class="urlBox" type="text" value="{{ url }}" /></li>
+            <li><a class="maximize" href="javascript: void(0)" target="_blank">maximize image</a></li>
             <li><a href="{{ redditURL }}" 
                    target="_blank">view on reddit</a></li>
+            <li><a href="{{ url }}" target="_blank">raw image</a></li>
             <li class="more">
                 <a href="{{ basePath }}/more?url={{ url }}">show similar images</a>
                 <img class="loading" src="{{ basePath }}/images/loading.gif" alt="loading" />

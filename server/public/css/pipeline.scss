@@ -2,6 +2,7 @@
 @import 'message';
 @import 'thumbs';
 @import 'image';
+@import 'maximized';
 
 // TODO: Add the commented-out font formats.
 @font-face {
@@ -81,6 +82,8 @@ a.disabled {
         cursor: default;
     }
 }
+
+@include maximized;
 
 #header {
     background-color: #f8f8f8;
