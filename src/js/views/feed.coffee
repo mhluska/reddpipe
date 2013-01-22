@@ -25,7 +25,7 @@ define [
             @endNode = $(endHTML)
 
             @feedModel = new FeedModel @options.subreddit
-            @feedModel.get('images').on 'add', @addImageView, @
+            @feedModel.get('imageModels').on 'add', @addImageView, @
             @feedModel.on 'change:foundNone', => @$el.append noneHTML
 
             @imageViews = []
@@ -90,6 +90,13 @@ define [
 
         keydown: (event) ->
 
+            # If we are typing into a text box, do not use hotkeys. But if we
+            # are paging, blur the text box.
+            if event.target.tagName is 'INPUT'
+                if @keyPressed event.which, 'pageUp', 'pageDown'
+                    @feedModel.get('selectedURLBox')?.blur()
+                else return
+
             # Don't mess with events when shift/ctrl and arrows/paging are
             # involved (overrides browser functionality).
             if @keyPressed event.which, 'pageUp', 'pageDown', 'left', 'right'
@@ -110,4 +117,17 @@ define [
             else if @keyPressed event.which, 'v'
 
                 event.preventDefault()
-                @$('.urlBox').get(@feedModel.get 'viewingIndex')?.select()
+                @selectURL()
+
+        selectURL: ->
+
+            viewingIndex = @feedModel.get('viewingIndex')
+
+            # If we're at the top of the page, use the first image for
+            # convenience.
+            viewingIndex = 0 if viewingIndex < 0
+            @feedModel.set 'viewingIndex', viewingIndex
+
+            selectedURLBox = @imageViews[viewingIndex].selectURL()
+            @feedModel.set 'selectedURLBox', selectedURLBox
+

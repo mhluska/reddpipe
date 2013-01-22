@@ -6,9 +6,9 @@ define [
     'collections/images'
     'constants'
     
-], (Backbone, Images, Const) ->
+], (Backbone, ImageModels, Const) ->
 
-    # This model is a wrapper for the images collection. It holds meta data
+    # This model is a wrapper for the image collection. It holds meta data
     # about images.
     Backbone.Model.extend
 
@@ -20,6 +20,10 @@ define [
             foundNone: false
             viewingIndex: -1
 
+            # The currently selected URL input box in the feed. Used for
+            # blurring when navigating with PageUp/PageDown.
+            selectedURLBox: null
+
             topImageVotes: 0
             topImageData: null
 
@@ -28,7 +32,7 @@ define [
             _.extend @, Backbone.Events
 
             @set 'subreddit', subreddit or Const.defaultSub
-            @set 'images', new Images()
+            @set 'imageModels', new ImageModels()
 
             # TODO: Temporary hack to bootstrap the topImageVotes number. Used
             # for collecting statistics about top images while I finish this
@@ -51,9 +55,9 @@ define [
                         topImage.attr 'src', 'http://placekitten.com/700/400'
             ###
 
-            pending = new Images()
+            pending = new ImageModels()
             pending.url = "#{Const.baseURL}/r/#{@get 'subreddit'}.json?jsonp=?"
-            pending.on 'ready', (model) => @get('images').push model
+            pending.on 'ready', (model) => @get('imageModels').push model
             @set 'pending', pending
 
         loadItems: ->
@@ -92,7 +96,7 @@ define [
 
         scroll: ->
 
-            positions = @get('images').positions()
+            positions = @get('imageModels').positions()
             viewingIndex = @get 'viewingIndex'
 
             if window.scrollY is 0
@@ -128,21 +132,22 @@ define [
 
         showNext: ->
 
-            index = @get 'viewingIndex'
+            index = @get('viewingIndex')
 
-            if index is @get('images').length - 1
-
-                $(window).scrollTop $(document).height()
+            if index is @get('imageModels').length - 1
+                $(window).scrollTop($(document).height())
                 return
 
-            @set 'viewingIndex', index + 1
+            @set('viewingIndex', index + 1)
             @focusActiveImage()
 
         focusActiveImage: ->
+
+            @get('selectedURLBox')?.blur()
 
             if @get('viewingIndex') is -1
                 window.scroll 0, 0
                 return
 
-            activeModel = @get('images').at @get 'viewingIndex'
+            activeModel = @get('imageModels').at(@get('viewingIndex'))
             window.scroll 0, activeModel.scrollY()

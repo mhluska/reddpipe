@@ -6,9 +6,10 @@ define [
     'lib/backbone'
     'collections/thumbs'
     'views/thumb'
+    'constants'
     'text!templates/image.html'
 
-], (_, Backbone, Thumbs, ThumbView, imageTemplate) ->
+], (_, Backbone, Thumbs, ThumbView, Const, imageTemplate) ->
 
     Backbone.View.extend
 
@@ -20,18 +21,17 @@ define [
 
             'click   .more a': 'loadThumbs'
             'click   .urlBox': (event) -> event.target.select()
-            'keydown .urlBox': (event) -> event.stopPropagation()
 
         initialize: (options) ->
 
-            @model = options.model
+            @imageModel = options.model
 
-            thumbs = @model.get 'thumbs'
+            thumbs = @imageModel.get 'thumbs'
             thumbs.on 'add', @addThumbView, @
 
         render: ->
 
-            @$el.html @template @model.toJSON()
+            @$el.html @template @imageModel.toJSON()
 
             @
 
@@ -50,7 +50,7 @@ define [
             @thumbsView = $('<div class="thumbs row"></div>')
             @thumbsView.insertAfter @$el.closest('.image.row')
 
-            thumbs = @model.get 'thumbs'
+            thumbs = @imageModel.get 'thumbs'
             thumbs.url = event.target.href
             thumbs.fetch
 
@@ -95,6 +95,14 @@ define [
                     view.model.set 'position', view.$el.offset().top
 
                 allThumbs.last().get(0).scrollIntoView false
-                window.scroll 0, window.scrollY + 15
+                window.scroll 0, window.scrollY + Const.scrollTopPadding
                 
-                @model.set 'thumbsProcessed', true
+                @imageModel.set 'thumbsProcessed', true
+
+        selectURL: ->
+
+            urlBoxElem = @el.querySelector('.urlBox')
+            urlBoxElem.scrollIntoView()
+            window.scroll 0, window.scrollY - Const.scrollTopPadding
+            urlBoxElem.select()
+            urlBoxElem

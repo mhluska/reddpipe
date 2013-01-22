@@ -1,12 +1,13 @@
 define ->
 
-    class Const
+    class Constants
 
         @baseURL: 'http://www.reddit.com'
         @defaultSub: 'aww'
         @loadThreshold: 4
         @maxChunk: 15
         @APIRateLimit: 2000
+        @scrollTopPadding: 20
 
         @key:
             pageUp:   33
