@@ -86,7 +86,6 @@ define [
 
             for keyAttr in keys
                 return true if Const.key[keyAttr] is pressedCode
-
             false
 
         keydown: (event) ->
