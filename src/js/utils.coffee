@@ -4,8 +4,9 @@
 define [
 
     'lib/underscore'
+    'constants'
     
-], (_) ->
+], (_, Const) ->
 
     class Utils
 
@@ -23,3 +24,8 @@ define [
                 attributes[attr.nodeName] = attr.nodeValue
 
             attributes
+
+        @keyPressed: (pressedCode, keys...) ->
+            for keyAttr in keys
+                return true if Const.key[keyAttr] is pressedCode
+            false

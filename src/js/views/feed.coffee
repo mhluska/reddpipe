@@ -7,10 +7,9 @@ define [
     'views/image'
     'models/feed'
     'utils'
-    'constants'
     'text!templates/message.html'
     
-], ($, Backbone, ImageView, FeedModel, Utils, Const, messageTemplate) ->
+], ($, Backbone, ImageView, FeedModel, Utils, messageTemplate) ->
 
     Backbone.View.extend
 
@@ -82,53 +81,45 @@ define [
 
             @$el.append @endNode if @feedModel.get 'loadedAll'
 
-        keyPressed: (pressedCode, keys...) ->
-
-            for keyAttr in keys
-                return true if Const.key[keyAttr] is pressedCode
-            false
-
         keydown: (event) ->
-
             # If we are typing into a text box, do not use hotkeys. But if we
             # are paging, blur the text box.
             if event.target.tagName is 'INPUT'
-                if @keyPressed event.which, 'pageUp', 'pageDown'
+                if Utils.keyPressed event.which, 'pageUp', 'pageDown'
                     @feedModel.get('selectedURLBox')?.blur()
                 else return
 
             # Don't mess with events when shift/ctrl and arrows/paging are
             # involved (overrides browser functionality).
-            if @keyPressed event.which, 'pageUp', 'pageDown', 'left', 'right'
+            if Utils.keyPressed event.which, 'pageUp', 'pageDown', 'left', \
+                    'right'
 
                 return if event.shiftKey or event.ctrlKey or event.metaKey
 
             # Set up image navigation using arrows and page up/down.
-            if @keyPressed event.which, 'pageUp', 'left', 'a'
+            if Utils.keyPressed event.which, 'pageUp', 'left', 'a'
 
                 event.preventDefault()
 
-                # TODO: Factor these into a function?
                 viewingIndex = @feedModel.get('viewingIndex')
                 if viewingIndex >= 1
-                    minimized = @imageViews[viewingIndex].minimize()
-                    @imageViews[viewingIndex - 1].maximize() if minimized
+                    if @imageViews[viewingIndex].minimize()
+                        @imageViews[viewingIndex - 1].maximize()
 
                 @feedModel.showPrev()
 
-            else if @keyPressed event.which, 'pageDown', 'right', 'd'
+            else if Utils.keyPressed event.which, 'pageDown', 'right', 'd'
 
                 event.preventDefault()
 
-                # TODO: Factor these into a function?
                 viewingIndex = @feedModel.get('viewingIndex')
                 unless viewingIndex is -1
-                    minimized = @imageViews[viewingIndex]?.minimize()
-                    @imageViews[viewingIndex + 1]?.maximize() if minimized
+                    if @imageViews[viewingIndex]?.minimize()
+                        @imageViews[viewingIndex + 1]?.maximize()
 
                 @feedModel.showNext()
 
-            else if @keyPressed event.which, 'v'
+            else if Utils.keyPressed event.which, 'v'
 
                 event.preventDefault()
                 @selectURL()

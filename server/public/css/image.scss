@@ -16,18 +16,26 @@
 
         .votes-wrap {
             float: left;
+            padding: 8px 5px 5px 5px;
+            color: #fff;
+            background-color: #6c9494;
+            line-height: 1.2em;
             text-align: center;
+            margin-bottom: 20px;
+
             .votes {
-                font-size: 1.4em;
+                font-size: 1.3em;
             }
         }
 
-        .footer {
-            margin-top: 2em;
-            .urlBox {
-                width: 165px;
-            }
+        .urlBox {
+            width: 165px;
+            clear: left;
+            margin: 0;
+        }
 
+        .footer {
+            margin-top: 20px;
             li {
                 margin-bottom: 0.3em;
                 a {
@@ -45,6 +53,17 @@
                 .title {
                     margin-top: 20px;
                 }
+            }
+
+            .urlBox {
+                float: left;
+                clear: none;
+                margin-left: 20px;
+                margin-top: 0;
+            }
+
+            .footer {
+                margin-top: 0;
             }
         }
     }

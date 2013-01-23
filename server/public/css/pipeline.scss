@@ -87,11 +87,12 @@ a.disabled {
 
 #header {
     background-color: #f8f8f8;
-    padding: 8px 0;
+    padding: 14px 0 8px 0;
     margin-bottom: 20px;
     border-bottom: 1px solid #ddd;
 
     .title {
+        font-family: 'Droid Serif', serif;
         font-size: 1.3em;
         margin: 0;
         padding: 0;

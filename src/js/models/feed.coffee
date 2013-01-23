@@ -122,7 +122,6 @@ define [
             @loadItems()
 
         showPrev: ->
-
             index = @get 'viewingIndex'
 
             return if index < 0
@@ -131,7 +130,6 @@ define [
             @focusActiveImage()
 
         showNext: ->
-
             index = @get('viewingIndex')
 
             if index is @get('imageModels').length - 1

@@ -119,10 +119,11 @@ define [
             # pass the object here.
             @maximizedView = new MaximizedView
                 model: new MaximizedModel
-                    url: @model.get('url')
+                    url:   @model.get('url')
                     title: @model.get('title')
 
             document.body.appendChild(@maximizedView.render().el)
+            window.scroll(0, @model.scrollY())
 
         minimize: ->
 
