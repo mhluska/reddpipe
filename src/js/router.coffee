@@ -5,7 +5,7 @@ define [
     'lib/backbone'
     'views/toprow'
     'views/feed'
-    
+
 ], (Backbone, TopRowView, FeedView) ->
 
     Backbone.Router.extend
@@ -14,7 +14,7 @@ define [
 
             Backbone.history.start
                 pushState: true
-                root: basePath
+                root: app.basePath
 
         routes:
 

@@ -1,7 +1,7 @@
 'use strict'
 
 define [
-    
+
     'lib/backbone'
     'collections/thumbs'
     'constants'
@@ -37,9 +37,9 @@ define [
             @set 'thumbs', new Thumbs()
 
         parse: (response) ->
+            return unless response
 
             data = response.data
-
             url:           data.url
             votes:         data.score
             title:         data.title.replace /"/g, '&quot;'
@@ -121,7 +121,7 @@ define [
                 success: callback
 
                 error: (error) =>
-                    
+
                     # TODO: This most often happens when we run out of
                     # API tokens. In that case, guess the image
                     # extension as JPG and do an Image.load. If it

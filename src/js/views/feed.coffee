@@ -8,8 +8,8 @@ define [
     'models/feed'
     'utils'
     'text!templates/message.html'
-    
-], ($, Backbone, ImageView, FeedModel, Utils, messageTemplate) ->
+
+], ($, Backbone, ImageView, ImageModel, FeedModel, Utils, messageTemplate) ->
 
     Backbone.View.extend
 
@@ -60,24 +60,6 @@ define [
             imageModel.set
                 position: $(elem).offset().top
                 height:   $(elem).height()
-
-            # TODO: This is a huge hack. Move this to ImageModel and avoid
-            # restructuring the model on the fly. We really only want to save
-            # the JSON data that came from Reddit, so maybe create a
-            # RedditImageModel and wrap it in ImageModel which contains
-            # additional app-specific data.
-            votes = imageModel.get 'votes'
-            wrapper = newImage.closest '.alpha'
-
-            if newImage.width() is wrapper.width()
-                if votes > @feedModel.get 'topImageVotes'
-                    @feedModel.set 'topImageVotes', votes
-                    copiedImageModel = imageModel.clone()
-                    copiedImageModel.unset 'image'
-                    copiedImageModel.set 'subreddit', @options.subreddit
-                    copiedImageModel.set 'url', newImage.attr 'src'
-                    copiedImageModel.url = '/topimage'
-                    copiedImageModel.save()
 
             @$el.append @endNode if @feedModel.get 'loadedAll'
 

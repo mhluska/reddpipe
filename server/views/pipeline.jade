@@ -1,7 +1,11 @@
 extends layout
 
 block scripts
-    script var basePath='#{basePath}';
+    script
+        var app = {
+            basePath: '#{basePath}',
+            topImage: !{topImage}
+        };
     if process.env.NODE_ENV === 'production'
         script(src="#{basePath}/js/pipeline.js")
     else
@@ -12,12 +16,12 @@ block content
         .container
             h1.title Reddit Pipeline
             h2.description The fast, mouse-free way to browse image subreddits.
-    
+
     .container
         .top.row
             .eleven.columns.alpha
                 // span.top-image-title top image
-                img(class="scale-with-grid feature", src="http://placekitten.com/700/400")
+                img(class="scale-with-grid feature", src="")
             .five.columns.omega
                 .info
                     h3 Most Pipelined
@@ -25,9 +29,9 @@ block content
                         -each pair in hits
                             - subreddit = pair[0]
                             - count = pair[1]
-                            li 
+                            li
                                 a(href="#{basePath}/r/#{subreddit}") #{subreddit}
-                                span 
+                                span
                                     | #{count}
 
                     form.search

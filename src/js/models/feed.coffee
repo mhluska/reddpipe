@@ -5,7 +5,7 @@ define [
     'lib/backbone'
     'collections/images'
     'constants'
-    
+
 ], (Backbone, ImageModels, Const) ->
 
     # This model is a wrapper for the image collection. It holds meta data
@@ -13,7 +13,7 @@ define [
     Backbone.Model.extend
 
         defaults:
-            
+
             after: null
             loading: false
             loadedAll: false
@@ -33,27 +33,6 @@ define [
 
             @set 'subreddit', subreddit or Const.defaultSub
             @set 'imageModels', new ImageModels()
-
-            # TODO: Temporary hack to bootstrap the topImageVotes number. Used
-            # for collecting statistics about top images while I finish this
-            # feature. There's also a race condition here between loading the
-            # image data and finding a new image as the feed loads.
-            ###
-            $.ajax
-                type: 'GET'
-                url: '/topimage'
-                data: subreddit: @get 'subreddit'
-                success: (data) =>
-                    topImage = $('.top.row img')
-                    if data
-                        @set 'topImageData', data
-                        @set 'topImageVotes', data.votes
-                        topImage.attr 'src', data.url
-                        topImage.bind 'load', ->
-                            $('.top.row .top-image-title').show()
-                    else
-                        topImage.attr 'src', 'http://placekitten.com/700/400'
-            ###
 
             pending = new ImageModels()
             pending.url = "#{Const.baseURL}/r/#{@get 'subreddit'}.json?jsonp=?"

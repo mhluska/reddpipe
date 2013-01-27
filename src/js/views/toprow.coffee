@@ -1,11 +1,12 @@
 'use strict'
 
 define [
-    
+
     'lib/zepto'
     'lib/backbone'
+    'models/image'
 
-], ($, Backbone) ->
+], ($, Backbone, ImageModel) ->
 
     Backbone.View.extend
 
@@ -16,8 +17,13 @@ define [
             'keydown .search .subreddit': (event) -> event.stopPropagation()
             'click   .search input[type="submit"]': 'search'
 
-        search: (event) ->
+        initialize: ->
+            topImage = new ImageModel(ImageModel::parse(app.topImage))
+            url = 'http://placekitten.com/700/400'
+            url = topImage.get('url') if topImage.get('url')
+            @$('.feature').attr('src', url)
 
+        search: (event) ->
             event.preventDefault()
 
             form = $(event.target.form)
@@ -25,4 +31,4 @@ define [
 
             return unless subreddit
 
-            window.location = "#{basePath}/r/#{subreddit}"
+            window.location = "#{app.basePath}/r/#{subreddit}"
