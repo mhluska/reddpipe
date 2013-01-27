@@ -15,6 +15,13 @@ define [
 
         defaults:
 
+            url: 'http://placekitten.com/700/400'
+            votes: 0
+            title: 'Meow'
+            thumbURL: ''
+            largeThumbURL: ''
+            redditURL: ''
+
             thumbsProcessed: false # Used to run code when all thumbs load.
             thumbs: null # Collection of related images.
             image: null # In-memory image data.

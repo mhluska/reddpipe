@@ -18,10 +18,12 @@ define [
             'click   .search input[type="submit"]': 'search'
 
         initialize: ->
+            # TODO: We probably want a specialized view here for the top image.
             topImage = new ImageModel(ImageModel::parse(app.topImage))
-            url = 'http://placekitten.com/700/400'
-            url = topImage.get('url') if topImage.get('url')
-            @$('.feature').attr('src', url)
+            @$('.feature').attr('src', topImage.get('url'))
+            @$('.feature').parent().attr
+                href:  topImage.get('url')
+                title: topImage.get('title')
 
         search: (event) ->
             event.preventDefault()
