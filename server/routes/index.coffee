@@ -26,32 +26,35 @@ render = (req, res) ->
             return
 
         client.hgetall('hits', (error, hits) ->
-            # Only allow a counter increment for the client's IP for a
-            # subreddit every timeout seconds.
-            # TODO: Factor this out so the /image/save route can use it as
-            # well.
-            timeout = 10
-            hash = req.connection.remoteAddress + req.params.subreddit
+            client.hget('topimage', subreddit, (error, topImage) ->
+                topImage ?= 'null'
+                context =
+                    hits: sortHits hits
+                    topImage: topImage
 
-            client.ttl(hash, (error, time) ->
+                # Only allow a counter increment for the client's IP for a
+                # subreddit every timeout seconds.
+                # TODO: Factor this out so the /image/save route can use it as
+                # well.
+                timeout = 10
+                hash = req.connection.remoteAddress + req.params.subreddit
+                client.ttl(hash, (error, time) ->
 
-                if time > 0
-                    return res.render 'pipeline', hits: sortHits hits
-                else
-                    client.set hash, 'ratelimit'
-                    client.expire hash, timeout
+                    if time > 0
+                        res.render 'pipeline', context
+                        return
+                    else
+                        client.set hash, 'ratelimit'
+                        client.expire hash, timeout
 
-                client.hincrby 'hits', subreddit, 1
-                client.hget('topimage', subreddit, (error, topImage) ->
+                    client.hincrby 'hits', subreddit, 1
                     client.end()
 
                     hits ?= {}
                     hits[subreddit] ?= 0
                     hits[subreddit] = parseInt(hits[subreddit]) + 1
 
-                    res.render 'pipeline',
-                        hits: sortHits hits
-                        topImage: topImage or 'null'
+                    res.render 'pipeline', context
                 )
             )
         )
