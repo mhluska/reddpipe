@@ -13,7 +13,7 @@
          url('../fonts/helvetica-neue.ttf') format('truetype');
          // url('../fonts/helvetica-neue.svg') format('svg');
     font-weight: normal;
-    font-style: normal; 
+    font-style: normal;
 }
 
 @font-face {
@@ -24,7 +24,7 @@
          url('../fonts/helvetica-neue-light.ttf') format('truetype');
          // url('../fonts/helvetica-neue-light.svg') format('svg');
     font-weight: normal;
-    font-style: normal; 
+    font-style: normal;
 }
 
 h1, h2, h3, h4 {
@@ -87,20 +87,19 @@ a.disabled {
 
 #header {
     background-color: #f8f8f8;
-    padding: 14px 0 8px 0;
+    padding: 8px 0 4px 0;
     margin-bottom: 20px;
     border-bottom: 1px solid #ddd;
 
     .title {
         font-family: 'Droid Serif', serif;
         font-size: 1.3em;
-        margin: 0;
+        margin: 0 0 4px 0;
         padding: 0;
     }
 
     .description {
         font-size: 0.9em;
-        margin: -0.2em 0;
         padding: 0;
     }
 
@@ -195,7 +194,7 @@ a.disabled {
             }
         }
     }
-    
+
     @media only screen and (max-width: 767px) {
         .top.row {
             .alpha {

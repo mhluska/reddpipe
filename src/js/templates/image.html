@@ -10,7 +10,9 @@
         <h4 class="title">
             <a href="{{ url }}" target="_blank">{{ title }}</a>
         </h4>
-        <div class="votes-wrap"><div class="votes">{{ votes }}</div>votes</div>
+        <div class="votes-wrap"><div class="votes">{{ votes }}</div>
+            vote{% if (votes !== 1){ %}s{% } %}
+        </div>
         <input class="urlBox" type="text" value="{{ url }}" />
         <div class="clearfix"></div>
 
