@@ -9,7 +9,7 @@ define [
     'utils'
     'text!templates/message.html'
 
-], ($, Backbone, ImageView, ImageModel, FeedModel, Utils, messageTemplate) ->
+], ($, Backbone, ImageView, FeedModel, Utils, messageTemplate) ->
 
     Backbone.View.extend
 
