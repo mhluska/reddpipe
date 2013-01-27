@@ -36,18 +36,22 @@
         }
 
         .footer {
-            margin-top: 20px;
+            font-size: 0.9em;
+            margin-top: 10px;
             li {
-                margin-bottom: 0.3em;
+                margin-bottom: 0;
                 a {
-                    color: #222;
+                    color: #777;
+                }
+                a:hover {
+                    color: #111;
+                    text-decoration: none;
                 }
             }
         }
     }
 
     @media only screen and (max-width: 767px) {
-
         .image.row {
             .info {
                 padding: 0;
