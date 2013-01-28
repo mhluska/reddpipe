@@ -1,74 +1,65 @@
 @mixin image {
-    .loading {
-        vertical-align: middle;
-        margin-left: 5px;
-        display: none;
-    }
+    .image.row {
+        .loading {
+            vertical-align: middle;
+            margin-left: 5px;
+            display: none;
+        }
 
-    .info {
-        .title {
-            line-height: 1.3em;
-            margin-bottom: 1em;
-            &, a {
+        .info {
+            .votes-wrap {
+                float: left;
                 color: #222;
-            }
-        }
+                font-size: 0.8em;
+                padding: 8px 5px 5px 5px;
+                background-color: #e7eef5;
+                line-height: 1.2em;
+                text-align: center;
+                margin-bottom: 20px;
 
-        .votes-wrap {
-            float: left;
-            color: #222;
-            font-size: 0.8em;
-            padding: 8px 5px 5px 5px;
-            background-color: #e7eef5;
-            line-height: 1.2em;
-            text-align: center;
-            margin-bottom: 20px;
-
-            .votes {
-                font-size: 1.3em;
-            }
-        }
-
-        .urlBox {
-            width: 165px;
-            clear: left;
-            margin: 0;
-        }
-
-        .footer {
-            font-size: 0.9em;
-            margin-top: 10px;
-            li {
-                margin-bottom: 0;
-                a {
-                    color: #777;
-                }
-                a:hover {
-                    color: #111;
-                    text-decoration: none;
-                }
-            }
-        }
-    }
-
-    @media only screen and (max-width: 767px) {
-        .image.row {
-            .info {
-                padding: 0;
-                .title {
-                    margin-top: 20px;
+                .votes {
+                    font-size: 1.3em;
                 }
             }
 
             .urlBox {
-                float: left;
-                clear: none;
-                margin-left: 20px;
-                margin-top: 0;
+                width: 165px;
+                clear: left;
+                margin: 0;
             }
 
             .footer {
-                margin-top: 0;
+                font-size: 0.9em;
+                margin-top: 10px;
+                li {
+                    margin-bottom: 0;
+                    a {
+                        color: #777;
+                    }
+                    a:hover {
+                        color: #111;
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+
+        @media only screen and (max-width: 767px) {
+            .feature {
+                float: left;
+            }
+
+            .info {
+                .urlBox {
+                    float: left;
+                    clear: none;
+                    margin-left: 20px;
+                    margin-top: 0;
+                }
+
+                .footer {
+                    margin-top: 0;
+                }
             }
         }
     }

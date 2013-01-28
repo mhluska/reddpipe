@@ -1,7 +1,7 @@
 'use strict'
 
 define [
-    
+
     'lib/underscore'
     'lib/backbone'
     'collections/thumbs'
@@ -100,19 +100,21 @@ define [
 
                 allThumbs.last().get(0).scrollIntoView false
                 window.scroll 0, window.scrollY + Const.scrollTopPadding
-                
+
                 @model.set 'thumbsProcessed', true
 
         selectURL: ->
-
-            urlBoxElem = @el.querySelector('.urlBox')
+            urlBoxElem = @$('.urlBox').get(0)
             urlBoxElem.scrollIntoView()
             window.scroll 0, window.scrollY - Const.scrollTopPadding
             urlBoxElem.select()
             urlBoxElem
 
-        maximize: ->
+        toggleMaximize: ->
+            maximized = @maximizedView?.model.get('maximized')
+            if maximized then @minimize() else @maximize()
 
+        maximize: ->
             return if @maximizedView?.model.get('maximized')
 
             # TODO: Once we have ImageModel's JSON data grouped, we can just
@@ -126,8 +128,8 @@ define [
             window.scroll(0, @model.scrollY())
 
         minimize: ->
-
             return false unless @maximizedView?.model.get('maximized')
+
             @maximizedView.minimize()
             @maximizedView.model.set('maximized', false)
             true

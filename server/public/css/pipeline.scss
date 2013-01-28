@@ -3,6 +3,7 @@
 @import 'thumbs';
 @import 'image';
 @import 'maximized';
+@import 'header';
 
 // TODO: Add the commented-out font formats.
 @font-face {
@@ -37,7 +38,7 @@ h1, h2, h3 {
     font-family: 'Helvetica Neue Light', sans-serif;
 }
 
-body {
+body, h5 {
     font-family: 'Helvetica Neue', sans-serif;
     color: #555;
 }
@@ -58,6 +59,10 @@ h3 {
 h4 {
     font-size: 1.3em;
     font-family: 'Droid Serif', serif;
+}
+
+h5 {
+    font-size: 1.1em;
 }
 
 a {
@@ -83,54 +88,19 @@ a.disabled {
     }
 }
 
-@include maximized;
-
-#header {
-    background-color: #f8f8f8;
-    padding: 8px 0 4px 0;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #ddd;
-
-    .title {
-        font-family: 'Droid Serif', serif;
-        font-size: 1.3em;
-        margin: 0;
-        padding: 0;
-    }
-
-    .description {
-        font-size: 0.9em;
-        padding: 0;
-    }
-
-	@media only screen and (max-width: 479px) {
-        .title {
-            font-size: 1.6em;
-        }
-        .description {
-            display: none;
-        }
-    }
+.hidden {
+    display: none;
 }
 
+@include maximized;
+@include header;
+
 .container {
-    .alpha {
-        position: relative;
-        .top-image-title {
-            display: none;
-            color: #111;
-            position: absolute;
-            padding: 0 6px;
-            line-height: 1.6em;
-            right: 0;
-            top: 0;
-            font-size: 0.9em;
-            background-color: #ccc;
-            opacity: 0.8;
-            pointer-events: none;
-            border-radius: 0 0 0 3px;
-            -moz-border-radius: 0 0 0 3px;
-            -webkit-border-radius: 0 0 0 3px;
+    h4.title {
+        line-height: 1.3em;
+        margin: 0 0 10px 0;
+        &, a {
+            color: #222;
         }
     }
 
@@ -145,76 +115,83 @@ a.disabled {
         }
     }
 
-    .most-pipelined {
-        margin-bottom: 1.3em;
-        overflow: auto;
+    .top.row {
+        .most-pipelined {
+            margin-bottom: 1.3em;
+            overflow: auto;
 
-        li {
-            display: inline;
-            margin: 0 0.5em 0 0;
-            font-size: 1em;
-            float: left;
-
-            a {
-                margin-right: 3px;
-            }
-
-            span {
-                font-family: 'Helvetica Neue Light', sans-serif;
-            }
-        }
-    }
-
-    .search {
-        width: 100%;
-        float: left;
-        position: relative;
-
-        .subreddit-wrap {
-            margin-right: 10px;
-            .subreddit {
+            li {
                 display: inline;
-                margin: 0;
-                width: 100%;
+                margin: 0 0.5em 0 0;
+                font-size: 1em;
+                float: left;
+
+                a {
+                    margin-right: 3px;
+                }
+
+                span {
+                    font-family: 'Helvetica Neue Light', sans-serif;
+                }
             }
         }
 
-        input[type="submit"] {
-            background: url("../images/search-sprite.png") no-repeat 1px 9px;
-            width: 20px;
-            height: 100%;
-            border: none;
-            margin: 0;
+        .search {
+            width: 100%;
+            float: left;
+            position: relative;
 
-            color: transparent;
-            font-size: 0;
+            .subreddit-wrap {
+                margin-right: 10px;
+                .subreddit {
+                    display: inline;
+                    margin: 0;
+                    width: 100%;
+                }
+            }
 
-            position: absolute;
-            right: 0;
-            top: 0;
+            input[type="submit"] {
+                background: url("../images/search-sprite.png") no-repeat 1px 9px;
+                width: 20px;
+                height: 100%;
+                border: none;
+                margin: 0;
 
-            &:hover {
-                background-position: -19px 9px;
+                color: transparent;
+                font-size: 0;
+
+                position: absolute;
+                right: 0;
+                top: 0;
+
+                &:hover {
+                    background-position: -19px 9px;
+                }
             }
         }
     }
 
-    @media only screen and (max-width: 767px) {
+    #pipeline {
+        clear: left;
+        @include message;
+        @include thumbs;
+        @include image;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .container {
+        h4.title {
+            margin-top: 20px;
+        }
         .top.row {
             .alpha {
                 display: none;
             }
-            .info {
-                padding: 0;
-            }
+        }
+
+        .omega .info {
+            padding: 0;
         }
     }
-}
-
-#pipeline {
-    clear: left;
-
-    @include message;
-    @include thumbs;
-    @include image;
 }

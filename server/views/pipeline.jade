@@ -13,9 +13,37 @@ block scripts
 
 block content
     #header
+        #logo-bar
+            .container
+                h1.title Reddit Pipeline
+                h2.description The fast, mouse-free way to browse image subreddits.
+
         .container
-            h1.title Reddit Pipeline
-            h2.description The fast, mouse-free way to browse image subreddits.
+            .settings.row
+                .eleven.columns.alpha
+                    input(id='enable-hotkeys', type='checkbox', checked='checked')
+                    label(for='enable-hotkeys')
+                        | enable
+                    a(id="configure-hotkeys", href='javascript: void(0)') hotkeys
+
+                    #configure-area.hidden
+                        .setting
+                            h5.title Navigate
+                            .keys
+                                kbd ←
+                                kbd →
+                                kbd A
+                                kbd D
+
+                        .setting
+                            h5.title Highlight URL
+                            .keys
+                                kbd V
+
+                        .setting
+                            h5.title Maximize image
+                            .keys
+                                kbd C
 
     .container
         .top.row
@@ -24,7 +52,7 @@ block content
                     img(class="scale-with-grid feature", alt="Top image", src="")
             .five.columns.omega
                 .info
-                    h3 Most Pipelined
+                    h4.title Most Pipelined
                     ul.most-pipelined
                         -each pair in hits
                             - subreddit = pair[0]
@@ -33,7 +61,6 @@ block content
                                 a(href="#{basePath}/r/#{subreddit}") #{subreddit}
                                 span
                                     | #{count}
-
                     form.search
                         .subreddit-wrap
                             input.subreddit(type='text', placeholder='Search subreddits')

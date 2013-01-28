@@ -10,6 +10,7 @@ define ->
         @scrollTopPadding: 20
 
         @key:
+            esc:      27
             pageUp:   33
             pageDown: 34
             left:     37
@@ -17,3 +18,4 @@ define ->
             a:        65
             d:        68
             v:        86
+            c:        67

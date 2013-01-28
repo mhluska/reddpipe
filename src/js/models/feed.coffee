@@ -24,6 +24,10 @@ define [
             # blurring when navigating with PageUp/PageDown.
             selectedURLBox: null
 
+            # Whether or not hotkeys do anything in the application. Toggled by
+            # the header view.
+            hotkeysEnabled: true
+
             topImageVotes: 0
             topImageData: null
 

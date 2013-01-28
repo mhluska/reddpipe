@@ -23,19 +23,19 @@ define [
                 message: "We've hit the end!"
             @endNode = $(endHTML)
 
-            @feedModel = new FeedModel @options.subreddit
-            @feedModel.get('imageModels').on 'add', @addImageView, @
-            @feedModel.on 'change:foundNone', => @$el.append noneHTML
+            @model = new FeedModel @options.subreddit
+            @model.get('imageModels').on 'add', @addImageView, @
+            @model.on 'change:foundNone', => @$el.append noneHTML
 
             @imageViews = []
 
-            $(window).scroll @feedModel.scroll.bind @feedModel
+            $(window).scroll @model.scroll.bind @model
             $(window).keydown @keydown.bind @
 
         render: ->
 
             @$el.html ''
-            @feedModel.loadItems()
+            @model.loadItems()
 
             @
 
@@ -61,14 +61,16 @@ define [
                 position: $(elem).offset().top
                 height:   $(elem).height()
 
-            @$el.append @endNode if @feedModel.get 'loadedAll'
+            @$el.append @endNode if @model.get 'loadedAll'
 
         keydown: (event) ->
+            return unless @model.get('hotkeysEnabled')
+
             # If we are typing into a text box, do not use hotkeys. But if we
             # are paging, blur the text box.
             if event.target.tagName is 'INPUT'
                 if Utils.keyPressed event.which, 'pageUp', 'pageDown'
-                    @feedModel.get('selectedURLBox')?.blur()
+                    @model.get('selectedURLBox')?.blur()
                 else return
 
             # Don't mess with events when shift/ctrl and arrows/paging are
@@ -83,38 +85,42 @@ define [
 
                 event.preventDefault()
 
-                viewingIndex = @feedModel.get('viewingIndex')
+                viewingIndex = @model.get('viewingIndex')
                 if viewingIndex >= 1
                     if @imageViews[viewingIndex].minimize()
                         @imageViews[viewingIndex - 1].maximize()
 
-                @feedModel.showPrev()
+                @model.showPrev()
 
             else if Utils.keyPressed event.which, 'pageDown', 'right', 'd'
 
                 event.preventDefault()
 
-                viewingIndex = @feedModel.get('viewingIndex')
+                viewingIndex = @model.get('viewingIndex')
                 unless viewingIndex is -1
                     if @imageViews[viewingIndex]?.minimize()
                         @imageViews[viewingIndex + 1]?.maximize()
 
-                @feedModel.showNext()
+                @model.showNext()
 
             else if Utils.keyPressed event.which, 'v'
-
                 event.preventDefault()
-                @selectURL()
+                selectedURLBox = @getActiveImageView().selectURL()
+                @model.set 'selectedURLBox', selectedURLBox
 
-        selectURL: ->
+            else if Utils.keyPressed event.which, 'c'
+                event.preventDefault()
+                @getActiveImageView().toggleMaximize()
 
-            viewingIndex = @feedModel.get('viewingIndex')
+            else if Utils.keyPressed event.which, 'esc'
+                @getActiveImageView().minimize()
+
+        getActiveImageView: ->
+            viewingIndex = @model.get('viewingIndex')
 
             # If we're at the top of the page, use the first image for
             # convenience.
             viewingIndex = 0 if viewingIndex < 0
-            @feedModel.set 'viewingIndex', viewingIndex
+            @model.set('viewingIndex', viewingIndex)
 
-            selectedURLBox = @imageViews[viewingIndex].selectURL()
-            @feedModel.set 'selectedURLBox', selectedURLBox
-
+            @imageViews[viewingIndex]

@@ -1,0 +1,102 @@
+@mixin header {
+    #header {
+        #logo-bar {
+            background-color: #f8f8f8;
+            padding: 8px 0 4px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+
+            .title {
+                font-family: 'Droid Serif', serif;
+                font-size: 1.3em;
+                margin: 0;
+                padding: 0;
+            }
+
+            .description {
+                font-size: 0.9em;
+                padding: 0;
+            }
+
+            @media only screen and (max-width: 479px) {
+                .title {
+                    font-size: 1.6em;
+                }
+                .description {
+                    display: none;
+                }
+            }
+        }
+
+        .settings.row {
+            input, a {
+                margin-right: 10px;
+            }
+
+            label {
+                margin-right: 6px;
+                display: inline-block;
+                font-weight: normal;
+                font-size: inherit;
+            }
+
+            #configure-area {
+                background-color: #f8f8f8;
+                padding: 20px;
+                margin-top: 10px;
+
+                .setting {
+                    overflow: auto;
+                    margin-bottom: 5px;
+
+                    .title {
+                        display: inline-block;
+                        float: left;
+                    }
+
+                    .keys {
+                        float: right;
+
+                        kbd {
+                            background: #fff;
+                            border: 1px solid #d3d3d3;
+                            border-bottom-color: #bbb;
+                            color: #616161;
+                            display: inline-block;
+                            font-weight: bold;
+                            margin: 0 5px 3px 0;
+                            padding: 6px 10px;
+
+                            border-radius: 5px;
+                            -webkit-border-radius: 5px;
+                            -moz-border-radius: 5px;
+                            -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+                            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+                            -moz-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+
+                            &:last-child {
+                                margin-right: 0;
+                            }
+
+                            @media only screen and (max-width: 479px) {
+                                padding: 3px 5px;
+                            }
+                        }
+                    }
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                } // .setting
+            }
+
+            @media only screen and (max-width: 767px) {
+                margin: 0;
+
+                .configure-hotkeys {
+                    width: auto;
+                }
+            }
+        }
+    }
+}
