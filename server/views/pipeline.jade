@@ -23,27 +23,29 @@ block content
                 .eleven.columns.alpha
                     input(id='enable-hotkeys', type='checkbox', checked='checked')
                     label(for='enable-hotkeys')
-                        | enable
-                    a(id="configure-hotkeys", href='javascript: void(0)') hotkeys
+                        | enable hotkeys
+                    span.brackets
+                        a(id="configure-hotkeys", href='javascript: void(0)') ?
 
-                    #configure-area.hidden
-                        .setting
-                            h5.title Navigate
-                            .keys
-                                kbd ←
-                                kbd →
-                                kbd A
-                                kbd D
+                    #configure-area-wrap
+                        #configure-area
+                            .setting
+                                h5.title Navigate
+                                .keys
+                                    kbd ←
+                                    kbd →
+                                    kbd A
+                                    kbd D
 
-                        .setting
-                            h5.title Highlight URL
-                            .keys
-                                kbd V
+                            .setting
+                                h5.title Highlight URL
+                                .keys
+                                    kbd V
 
-                        .setting
-                            h5.title Maximize image
-                            .keys
-                                kbd C
+                            .setting
+                                h5.title Maximize image
+                                .keys
+                                    kbd C
 
     .container
         .top.row

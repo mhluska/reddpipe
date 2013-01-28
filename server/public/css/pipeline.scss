@@ -88,10 +88,6 @@ a.disabled {
     }
 }
 
-.hidden {
-    display: none;
-}
-
 @include maximized;
 @include header;
 

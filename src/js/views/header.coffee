@@ -13,21 +13,23 @@ define [
 
         events:
             'click #enable-hotkeys': 'toggleHotkeys'
-            'click #configure-hotkeys': 'configureHotkeys'
-
-        initialize: ->
-            console.log @options
+            'click .brackets': 'configureHotkeys'
 
         toggleHotkeys: ->
             enabled = @options.feedModel.get('hotkeysEnabled')
             @options.feedModel.set('hotkeysEnabled', !enabled)
 
         configureHotkeys: ->
-            area = @$('#configure-area')
+            area = @$('#configure-area-wrap')
             heightBefore = area.height()
-            area.toggleClass('hidden')
-            heightAfter = area.height()
+            heightAfter = 0
+            if heightBefore is 0
+                heightAfter = area.get(0).scrollHeight
 
-            # Update the in-memory y-positions of images.
-            delta = heightAfter - heightBefore
-            @options.feedModel.get('imageModels').addPositionY(delta)
+            area.animate { height: heightAfter },
+                duration: 200
+                easing: 'ease-out'
+                complete: =>
+                    # Update the in-memory y-positions of images.
+                    delta = heightAfter - heightBefore
+                    @options.feedModel.get('imageModels').addPositionY(delta)
