@@ -1,11 +1,9 @@
-module.exports = (grunt) ->
-
-    grunt.loadNpmTasks 'grunt-shell'
-    grunt.loadNpmTasks 'grunt-coffeelint'
-    grunt.loadNpmTasks 'grunt-requirejs'
+module.exports = ((grunt) ->
+    grunt.loadNpmTasks('grunt-shell')
+    grunt.loadNpmTasks('grunt-coffeelint')
+    grunt.loadNpmTasks('grunt-requirejs')
 
     grunt.initConfig
-
         shell:
             setup:
                 stdout: true
@@ -18,14 +16,13 @@ module.exports = (grunt) ->
                 command: 'grunt/task/compile'
 
         coffeelint:
-            app:
-                files: [
-                    'src/js/*.coffee'
-                    'server/*.coffee'
-                    'server/routes/*.coffee'
-                    'server/public/js/*.coffee'
+            app: [
+                'src/js/*.coffee'
+                'server/*.coffee'
+                'server/routes/*.coffee'
+                'server/public/js/*.coffee'
                 ]
-                options: grunt.file.readJSON 'coffeelint.json'
+            options: grunt.file.readJSON('coffeelint.json')
 
         requirejs:
             compile:
@@ -52,4 +49,5 @@ module.exports = (grunt) ->
                     preserveLicenseComments: false
                     logLevel: 0
 
-    grunt.registerTask 'default', 'shell coffeelint requirejs'
+    grunt.registerTask('default', ['shell', 'coffeelint', 'requirejs'])
+)

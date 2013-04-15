@@ -4,4 +4,3 @@ node_modules/
 *.css
 *.js
 !grunt.js
-todo.txt

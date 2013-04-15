@@ -18,6 +18,11 @@
                 padding: 0;
             }
 
+            .fb-like {
+                float: right;
+                margin: 10px 0;
+            }
+
             @media only screen and (max-width: 479px) {
                 .title {
                     font-size: 1.6em;
@@ -127,6 +132,16 @@
                 .configure-hotkeys {
                     width: auto;
                 }
+            }
+        }
+    }
+
+    @media only screen and (max-width: 767px) {
+        #header #logo-bar {
+            padding-bottom: 0;
+
+            .omega .fb-like {
+                float: none;
             }
         }
     }

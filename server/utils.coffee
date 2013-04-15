@@ -1,5 +1,6 @@
 request = require('request')
-Const = require('./constants')
+magick  = require('imagemagick')
+Const   = require('./constants')
 
 module.exports = class Utils
 
@@ -22,4 +23,23 @@ module.exports = class Utils
         request.head(options, (error, response, body) ->
             invalid = !!(error or response.statusCode isnt 200)
             if invalid then callback(false) else callback(true)
+        )
+
+    @getImageData: (url, callback) ->
+        options =
+            url: url
+            encoding: 'binary'
+
+        request.get(options, (error, response) =>
+            return if error
+            return unless @endsWithImage(response.headers['content-type'])
+            console.log response.headers['content-type']
+
+            magick.identify({ data: response.body }, (imageError, data) ->
+                if imageError
+                    console.error("Utils.getImageData: #{imageError}")
+                    return
+
+                callback(null, data.width)
+            )
         )
