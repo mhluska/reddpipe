@@ -1,15 +1,15 @@
-[submodule "sub/backbone"]
-	path = sub/backbone
+[submodule "modules/backbone"]
+	path = modules/backbone
 	url = https://github.com/documentcloud/backbone
-[submodule "sub/underscore"]
-	path = sub/underscore
+[submodule "modules/underscore"]
+	path = modules/underscore
 	url = https://github.com/documentcloud/underscore.git
-[submodule "sub/zepto"]
-	path = sub/zepto
+[submodule "modules/zepto"]
+	path = modules/zepto
 	url = https://github.com/madrobby/zepto.git
-[submodule "sub/text"]
-	path = sub/text
+[submodule "modules/text"]
+	path = modules/text
 	url = https://github.com/requirejs/text.git
-[submodule "sub/skeleton"]
-	path = sub/skeleton
+[submodule "modules/skeleton"]
+	path = modules/skeleton
 	url = https://github.com/dhgamache/Skeleton.git

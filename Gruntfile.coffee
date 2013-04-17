@@ -30,9 +30,9 @@ module.exports = ((grunt) ->
                     almond: true
                     modules: [name: 'pipeline']
                     dir: 'build'
-                    appDir: 'src'
+                    appDir: 'source'
                     baseUrl: 'js'
-                    paths: {}
+                    paths: lib: '../lib'
                     shim:
                         'lib/zepto': exports: '$'
                         'lib/underscore-lib': exports: '_'

@@ -3,6 +3,7 @@
 # TODO: Can we build AMD module versions of these libraries to prevent having
 # to shim?
 require.config
+    paths: lib: '../lib'
     shim:
         'lib/zepto': exports: '$'
         'lib/underscore-lib': exports: '_'
@@ -18,7 +19,7 @@ define [
     'lib/underscore'
     'lib/backbone'
     'router'
-    
+
 ], (_, Backbone, Router) ->
 
     router = new Router()
