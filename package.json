@@ -16,11 +16,13 @@
         "redis": "*",
         "hiredis": "*",
         "csso": "*",
-        "grunt": "0.4.1",
-        "grunt-requirejs": "0.3.5",
-        "grunt-shell": "0.2.2",
         "grunt-coffeelint": "*",
         "jsdom": "*",
         "contextify": "*"
+    },
+    "dev_dependencies": {
+        "requirejs": "2.1.5",
+        "grunt": "0.4.1",
+        "grunt-shell": "0.2.2"
     }
 }
