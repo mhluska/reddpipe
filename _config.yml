@@ -10,3 +10,8 @@ title: Reddpipe
 description: The fast, mouse-free way to browse image subreddits.
 permalink: pretty
 url: http://reddpipe.com
+
+assets:
+    compress:
+        js: uglifier
+        css: sass
