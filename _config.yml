@@ -1,0 +1,12 @@
+exclude: [
+  'Rakefile',
+  'Gemfile',
+  'Gemfile.lock',
+  'README.md',
+  'TODO.md'
+]
+
+title: Reddpipe
+description: The fast, mouse-free way to browse image subreddits.
+permalink: pretty
+url: http://reddpipe.com

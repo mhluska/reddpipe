@@ -1,6 +1,9 @@
-build/
-node_modules/
-
 *.css
+!_assets/stylesheets/vendor/*
+
 *.js
-!build.js
+!_assets/javascripts/vendor/*
+!_assets/javascripts/google-analytics.js
+!_assets/javascripts/is-mobile.js
+
+_site

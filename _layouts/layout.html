@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta name="author" content="Maros Hluska" />
+        <meta name="generator" content="Jekyll" />
+        <meta name="description" content="{{ site.description }}" />
+
+        <meta property="fb:app_id" content="359153047548989" />
+        <meta property="fb:admins" content="mhluska" />
+        <meta property="og:title" content="{{ site.title }}" />
+        <meta property="og:description" content="{{ site.description }}" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="{{ site.url }}" />
+        <meta property="og:image" content="{{ site.url }}{% asset_path logo.jpg %}" />
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="300">
+        <meta property="og:image:height" content="300">
+
+        <title>{{ site.title }}</title>
+
+        <link href="{% asset_path favicon.ico %}", rel="shortcut icon" />
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+
+        {% stylesheet application %}
+        {% javascript application %}
+        {% javascript google-analytics %}
+    </head>
+    <body>
+        <article class="about">
+            {% include logo.html %}
+
+            <p>{{ site.description }}</p>
+
+            <section class="instructions">
+                <p>Cycle images with Page Up and Page Down keys.</p>
+                <p>
+                    Navigate to /r/<i>subreddit</i> to view a specific
+                    subreddit. For example,
+                    <a href="/r/wallpapers">this</a>
+                    loads only images from wallpapers.
+                </p>
+            </section>
+
+            <p class="data-warning"><b>Mobile users</b>: lots of images ahead; WiFi is recommended.</p>
+
+            {% include facebook-like-button.html %}
+        </article>
+
+        <div class="content">
+            {{ content }}
+        </div>
+    </body>
+</html>
