@@ -1,7 +1,6 @@
 class window.FeedView extends Backbone.View
   initialize: (options) ->
     @collection = new ListingCollection()
-    @_spinnerElem = @$el.find('.ui-spinner')
     @_listingsElem = @$el.find('.listings')
 
     @_resetFeed()

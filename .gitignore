@@ -7,3 +7,5 @@
 !_assets/javascripts/is-mobile.js
 
 _site
+
+.sass-cache

@@ -32,9 +32,9 @@
         <article class="about">
             {% include logo.html %}
 
-            <p>{{ site.description }}</p>
+            <p class="description">{{ site.description }}</p>
 
-            <section class="instructions">
+            <section class="side-item instructions">
                 <p>Cycle images with Page Up and Page Down keys.</p>
                 <p>
                     Navigate to /r/<i>subreddit</i> to view a specific
@@ -44,9 +44,16 @@
                 </p>
             </section>
 
-            <p class="data-warning"><b>Mobile users</b>: lots of images ahead; WiFi is recommended.</p>
+            <p class="side-item data-warning"><b>Mobile users</b>: lots of images ahead; WiFi is recommended.</p>
 
             {% include facebook-like-button.html %}
+
+            <section class="side-item news">
+                <div class="news-item">
+                    <date>July 26, 2015</date>
+                    <p>Reddpipe was awarded <a href="http://fuckinghomepage.com/page/18" target="_blank">website of the fucking day</a>.</p>
+                </div>
+            </section>
         </article>
 
         <div class="content">

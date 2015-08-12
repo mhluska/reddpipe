@@ -1,6 +1,5 @@
 //= require_tree ./vendor
 
-@import 'compass/css3';
 @import 'ui-spinner';
 
 $body-padding: 30px;
@@ -35,7 +34,8 @@ ul {
   left: $body-padding;
   width: 20%;
   max-width: 250px;
-  margin-bottom: 1em;
+  margin-bottom: 2em;
+  font-size: 0.8em;
 
   .logo {
     display: block;
@@ -51,7 +51,7 @@ ul {
     .icon {
       $icon-size: 32px;
 
-      @include border-radius($icon-size);
+      border-radius: $icon-size;
 
       width: $icon-size;
       float: none;
@@ -59,22 +59,33 @@ ul {
     }
 
     h1 {
-      font-size: 1.2em;
+      font-size: 1.5em;
     }
   }
 
+  .description {
+    font-size: 1.3em;
+  }
+
   .like {
-    margin: 0.5em 0 1em 0;
     width: 100%;
   }
 
-  .instructions,
   .data-warning {
-    font-size: 0.8em;
+    margin-bottom: 0;
+    display: none;
   }
 
-  .data-warning {
-    display: none;
+  .news {
+    font-size: 0.9em;
+  }
+
+  .side-item {
+    margin-top: 2em;
+
+    p:last-of-type {
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -107,7 +118,7 @@ ul {
       }
 
       figure {
-        @include box-shadow(0 1px 1px #555);
+        box-shadow: 0 1px 1px #555;
 
         $figure-padding: 4px;
 
@@ -124,10 +135,9 @@ ul {
         }
 
         figcaption {
-          @include transition(opacity 0.4s ease);
-          @include word-break(break-all);
-          @include box-sizing(border-box);
-
+          transition: opacity 0.4s ease;
+          word-break: break-all;
+          box-sizing: border-box;
           padding: 1em;
           position: absolute;
           top: $figure-padding;
@@ -175,7 +185,6 @@ ul {
     .ui-spinner {
       margin: 2em auto;
     }
-    @include ui-spinner(white, 20px);
   }
 }
 
@@ -191,6 +200,10 @@ ul {
 
     .data-warning {
       display: block;
+    }
+
+    .news {
+      display: none;
     }
   }
 
@@ -217,6 +230,10 @@ ul {
 @media screen and (max-width: 480px){
   .about {
     max-width: 100%;
+
+    .news {
+      display: none;
+    }
   }
 
   .content .feed .listing {
@@ -228,7 +245,7 @@ ul {
     margin-right: -$body-padding-small;
 
     figure {
-      @include box-shadow(none);
+      box-shadow: none;
 
       display: block;
       padding: 0;
