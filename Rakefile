@@ -24,6 +24,6 @@ namespace :deploy do
   task all: [:staging, :production]
 
   def rsync(domain)
-    %x[ rsync -e 'ssh -p 17284' -rtz --delete _site/ mhluska@23.92.26.51:/home/mhluska/#{domain} ]
+    %x[ rsync -rtz --delete _site/ mhluska@104.236.9.238:/home/mhluska/#{domain} ]
   end
 end
